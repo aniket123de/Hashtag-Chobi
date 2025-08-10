@@ -28,7 +28,7 @@ const About = () => {
           <div className="animate-fade-in-up">
             {/* Heading */}
             <header className="mb-6">
-              <span className="text-sm font-medium text-blush-500 tracking-wide uppercase">
+              <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-['EB_Garamond']">
                 About Us
               </span>
               <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
@@ -38,7 +38,7 @@ const About = () => {
             </header>
 
             {/* Description paragraphs */}
-            <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+            <div className="space-y-6 text-gray-600 text-lg leading-relaxed font-['EB_Garamond']">
               <p>
                 With an artistic eye and a passion for storytelling, we have been capturing 
                 the magic of weddings since 2016. Every shot is handcrafted to reflect the 
@@ -60,19 +60,19 @@ const About = () => {
               {/* Weddings Captured */}
               <div className="text-center">
                 <div className="text-3xl font-serif text-blush-500 mb-2">500+</div>
-                <div className="text-sm text-gray-500 uppercase tracking-wide">Weddings Captured</div>
+                <div className="text-sm text-gray-500 uppercase tracking-wide font-['EB_Garamond']">Weddings Captured</div>
               </div>
 
               {/* Years Experience */}
               <div className="text-center">
                 <div className="text-3xl font-serif text-golden-500 mb-2">8+</div>
-                <div className="text-sm text-gray-500 uppercase tracking-wide">Years Experience</div>
+                <div className="text-sm text-gray-500 uppercase tracking-wide font-['EB_Garamond']">Years Experience</div>
               </div>
 
               {/* Client Satisfaction */}
               <div className="text-center">
                 <div className="text-3xl font-serif text-cream-600 mb-2">98%</div>
-                <div className="text-sm text-gray-500 uppercase tracking-wide">Client Satisfaction</div>
+                <div className="text-sm text-gray-500 uppercase tracking-wide font-['EB_Garamond']">Client Satisfaction</div>
               </div>
             </div>
           </div>

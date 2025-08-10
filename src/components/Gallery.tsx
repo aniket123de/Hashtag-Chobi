@@ -22,14 +22,14 @@ const Gallery = () => {
         {/* Header Section */}
         <div className="text-center mb-16 animate-fade-in">
           {/* Portfolio title and description */}
-          <span className="text-sm font-medium text-golden-500 tracking-wide uppercase">
+          <span className="text-sm font-medium text-golden-500 tracking-wide uppercase font-['EB_Garamond']">
             Portfolio
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
             Our Recent
             <span className="text-blush-500 italic block">Love Stories</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
             Explore a curated selection of our most beautiful weddings, each
             uniquely captured to reflect our couples' authentic love stories.
           </p>
@@ -59,10 +59,10 @@ const Gallery = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-6 left-6 text-white">
                   {/* Category and Description */}
-                  <div className="text-sm font-medium mb-1">
+                  <div className="text-sm font-medium mb-1 font-['EB_Garamond']">
                     {image.category}
                   </div>
-                  <div className="text-xs opacity-90">{image.alt}</div>
+                  <div className="text-xs opacity-90 font-['EB_Garamond']">{image.alt}</div>
                 </div>
               </div>
 

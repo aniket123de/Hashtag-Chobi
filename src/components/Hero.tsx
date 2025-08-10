@@ -47,7 +47,7 @@ const Hero = () => {
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed font-modern font-light tracking-wide">
+        <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed font-['EB_Garamond'] font-light tracking-wide">
           Premier wedding photography and videography since 2016, specializing in handcrafted weddings that beautifully narrate your unique love story
         </p>
 

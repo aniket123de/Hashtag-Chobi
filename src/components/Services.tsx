@@ -1,5 +1,12 @@
 import { Star, Calendar, Users, Image, Phone } from "lucide-react";
 import ServiceBG from "../assets/image/SERVICES.jpg";
+import Service1Img from "../assets/image/SERVICE1.jpg";
+import Service2Img from "../assets/image/SERVICE2.jpg";
+import Service3Img from "../assets/image/SERVICE3.jpg";
+import Service4Img from "../assets/image/SERVICE4.jpg";
+import Service5Img from "../assets/image/SERVICE5.jpg";
+import Service6Img from "../assets/image/SERVICE6.jpg";
+import { Carousel, Card } from "./ui/apple-cards-carousel";
 
 const Services = () => {
   /**
@@ -9,6 +16,8 @@ const Services = () => {
     {
       icon: Star,
       title: "Wedding Photography",
+      category: "Photography",
+      src: Service1Img,
       description:
         "Complete wedding photography coverage from getting ready to reception, capturing every precious moment of your special day.",
       features: [
@@ -20,6 +29,8 @@ const Services = () => {
     {
       icon: Calendar,
       title: "Wedding Videography",
+      category: "Videography",
+      src: Service2Img,
       description:
         "Cinematic wedding films that tell your love story, preserving the emotions and memories for generations to come.",
       features: [
@@ -31,6 +42,8 @@ const Services = () => {
     {
       icon: Users,
       title: "Engagement Sessions",
+      category: "Photography",
+      src: Service3Img,
       description:
         "Pre-wedding photo sessions that capture your love story and personality, perfect for save-the-dates and wedding websites.",
       features: [
@@ -42,6 +55,8 @@ const Services = () => {
     {
       icon: Image,
       title: "Destination Weddings",
+      category: "Photography",
+      src: Service4Img,
       description:
         "Exotic locations and dreamy destinations captured with seamless coordination and local expertise.",
       features: [
@@ -53,6 +68,8 @@ const Services = () => {
     {
       icon: Phone,
       title: "Wedding Consultation",
+      category: "Consultation",
+      src: Service5Img,
       description:
         "Expert guidance and personalized advice to help you plan the perfect photography package within your budget.",
       features: [
@@ -64,6 +81,8 @@ const Services = () => {
     {
       icon: Calendar,
       title: "Portrait Sessions",
+      category: "Photography",
+      src: Service6Img,
       description:
         "Professional portrait photography for couples, families, and individuals, creating timeless memories to treasure.",
       features: [
@@ -73,6 +92,46 @@ const Services = () => {
       ],
     },
   ];
+
+  const cards = services.map((service) => (
+    <Card
+      key={service.title}
+      card={{
+        src: service.src,
+        title: service.title,
+        category: service.category,
+        content: (
+          <div className="space-y-6">
+            <p className="text-lg text-gray-600 leading-relaxed font-['EB_Garamond']">
+              {service.description}
+            </p>
+            <div>
+              <h4 className="text-xl font-semibold text-gray-800 mb-4">
+                What's Included:
+              </h4>
+              <ul className="space-y-3">
+                {service.features.map((feature, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-center text-gray-600 font-['EB_Garamond']"
+                  >
+                    <span className="w-2 h-2 bg-blush-500 rounded-full mr-3" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="pt-6 border-t border-gray-200">
+              <p className="text-sm text-gray-500 font-['EB_Garamond']">
+                Contact us for personalized pricing and package options tailored to your special day.
+              </p>
+            </div>
+          </div>
+        ),
+      }}
+      index={services.indexOf(service)}
+    />
+  ));
 
   return (
     <section
@@ -95,70 +154,20 @@ const Services = () => {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <header className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-golden-500 tracking-wide uppercase">
+          <span className="text-sm font-medium text-golden-500 tracking-wide uppercase font-['EB_Garamond']">
             Our Services
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-200 mt-2 mb-6">
             Wedding Photography &
             <span className="text-blush-500 italic block">Videography Services</span>
           </h2>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
             From engagement sessions to wedding day coverage, we offer a full suite of photography and videography services to capture your love story
           </p>
         </header>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            // Create an id from the title for section linking
-            const id = service.title.toLowerCase().split(" ").join("-");
-
-            return (
-              <article
-                id={id}
-                key={service.title}
-                className="group bg-white rounded-lg p-8 shadow-lg border border-gray-100
-                           hover:shadow-2xl hover:border-blush-200 transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-                tabIndex={0} // Make cards focusable for accessibility
-                aria-labelledby={`${id}-title`}
-              >
-                {/* Icon Container */}
-                <div
-                  className="w-16 h-16 bg-gradient-to-br from-blush-100 to-golden-100
-                             rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
-                  aria-hidden="true"
-                >
-                  <service.icon className="w-8 h-8 text-blush-600" />
-                </div>
-
-                {/* Service Title */}
-                <h3
-                  id={`${id}-title`}
-                  className="text-xl font-elegant font-medium text-gray-800 mb-4 group-hover:text-blush-600 transition-colors duration-300 tracking-wide"
-                >
-                  {service.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
-
-                {/* Features List */}
-                <ul className="space-y-2">
-                  {service.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center text-sm text-gray-500"
-                    >
-                      <span className="w-1.5 h-1.5 bg-golden-400 rounded-full mr-3" aria-hidden="true" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            );
-          })}
-        </div>
+        {/* Services Carousel */}
+        <Carousel items={cards} />
       </div>
     </section>
   );

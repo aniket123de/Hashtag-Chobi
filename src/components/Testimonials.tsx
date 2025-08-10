@@ -45,14 +45,14 @@ const Testimonials = () => {
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <header className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase">
+          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-['EB_Garamond']">
             Testimonials
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
             What Our Clients
             <span className="text-golden-600 italic block">Are Saying</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
             Don't just take our word for it—hear from the couples and companies who trusted us with their most important celebrations
           </p>
         </header>
@@ -80,7 +80,7 @@ const Testimonials = () => {
               </div>
 
               {/* Testimonial Quote */}
-              <blockquote className="text-gray-600 leading-relaxed mb-6 italic">
+              <blockquote className="text-gray-600 leading-relaxed mb-6 italic font-['EB_Garamond']">
                 &quot;{testimonial.text}&quot;
               </blockquote>
 
@@ -103,7 +103,7 @@ const Testimonials = () => {
                   >
                     {testimonial.name}
                   </h3>
-                  <p className="text-sm text-gray-500">{testimonial.event}</p>
+                  <p className="text-sm text-gray-500 font-['EB_Garamond']">{testimonial.event}</p>
                 </div>
               </div>
             </article>

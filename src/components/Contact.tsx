@@ -148,7 +148,7 @@ const Contact = () => {
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase">
+          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-['EB_Garamond']">
             Contact Us
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
@@ -157,7 +157,7 @@ const Contact = () => {
               Love Story
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
             Ready to preserve your special moments? Get in touch with us today
             and let's create timeless memories together.
           </p>
@@ -175,7 +175,7 @@ const Contact = () => {
                 {/* Name Fields */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="firstName" className="text-gray-700 font-medium">
+                    <Label htmlFor="firstName" className="text-gray-700 font-medium font-['EB_Garamond']">
                       First Name
                     </Label>
                     <Input
@@ -184,12 +184,12 @@ const Contact = () => {
                       value={formData.firstName}
                       onChange={handleChange}
                       placeholder="Your first name"
-                      className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400"
+                      className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400 font-['EB_Garamond']"
                       required
                     />
                   </div>
                   <div>
-                    <Label htmlFor="lastName" className="text-gray-700 font-medium">
+                    <Label htmlFor="lastName" className="text-gray-700 font-medium font-['EB_Garamond']">
                       Last Name
                     </Label>
                     <Input
@@ -198,7 +198,7 @@ const Contact = () => {
                       value={formData.lastName}
                       onChange={handleChange}
                       placeholder="Your last name"
-                      className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400"
+                      className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400 font-['EB_Garamond']"
                       required
                     />
                   </div>
@@ -206,7 +206,7 @@ const Contact = () => {
 
                 {/* Contact Info */}
                 <div>
-                  <Label htmlFor="email" className="text-gray-700 font-medium">
+                  <Label htmlFor="email" className="text-gray-700 font-medium font-['EB_Garamond']">
                     Email Address
                   </Label>
                   <Input
@@ -216,7 +216,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="your.email@example.com"
-                    className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400"
+                    className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400 font-['EB_Garamond']"
                     required
                   />
                 </div>

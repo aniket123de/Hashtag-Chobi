@@ -76,10 +76,19 @@ const Services = () => {
 
   return (
     <section
-      className="relative py-20 bg-gradient-to-b from-cream-50 to-white bg-fixed bg-cover bg-center"
-      style={{ backgroundImage: `url(${ServiceBG})` }}
+      className="relative py-20 bg-gradient-to-b from-cream-50 to-white"
       aria-label="Our Services"
     >
+      {/* Background Image */}
+      <img
+        src={ServiceBG}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+        decoding="async"
+        aria-hidden="true"
+      />
+
       {/* Dark overlay for better text visibility */}
       <div className="absolute inset-0 bg-black opacity-50" aria-hidden="true" />
 

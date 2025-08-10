@@ -120,7 +120,7 @@ const NewHeader = () => {
                 handleItemClick(e);
                 setIsMobileMenuOpen(false);
               }}
-              className="block text-lg font-semibold text-white transition-colors duration-200"
+              className="block text-lg font-semibold text-gray-900 hover:text-blush-600 transition-colors duration-200"
             >
               {item.name}
             </a>

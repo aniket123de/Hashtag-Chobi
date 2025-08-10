@@ -59,13 +59,13 @@ const NewHeader = () => {
 
   const CustomLogo = () => (
     <div
-      className="flex h-20 items-center justify-center cursor-pointer flex-shrink-0"
+      className="flex items-center justify-center cursor-pointer flex-shrink-0 h-full"
       onClick={() => handleNavClick("hero")}
     >
       <img
         src={Logo}
         alt="Hashtag Chobi Logo"
-        className="block h-16 md:h-20 w-auto object-contain"
+        className="block h-16 md:h-18 w-auto object-contain"
       />
     </div>
   );
@@ -92,20 +92,23 @@ const NewHeader = () => {
       {/* Mobile Navigation */}
       <MobileNav>
         <MobileNavHeader>
+          <div className="flex-1" />
           <div
-            className="flex h-16 items-center justify-center cursor-pointer flex-shrink-0"
+            className="flex items-center justify-center cursor-pointer flex-shrink-0"
             onClick={() => handleNavClick("hero")}
           >
             <img
               src={Logo}
               alt="Hashtag Chobi Logo"
-              className="block h-14 w-auto object-contain"
+              className="block h-16 w-auto object-contain"
             />
           </div>
-          <MobileNavToggle
-            isOpen={isMobileMenuOpen}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          />
+          <div className="flex-1 flex justify-end">
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </div>
         </MobileNavHeader>
         <MobileNavMenu
           isOpen={isMobileMenuOpen}

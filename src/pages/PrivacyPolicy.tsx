@@ -1,10 +1,10 @@
-import Header from "@/components/Header";
+import NewHeader from "@/components/NewHeader";
 import Footer from "@/components/Footer";
 
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen">
-      <Header />
+      <NewHeader />
       <section className="py-24 bg-gradient-to-r from-blush-500 via-golden-500 to-blush-600 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">

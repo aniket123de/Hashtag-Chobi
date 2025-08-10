@@ -78,7 +78,6 @@ const NewHeader = () => {
         <NavItems
           items={navItems}
           onItemClick={handleItemClick}
-          className="text-white"
         />
         <NavbarButton
           variant="dark"

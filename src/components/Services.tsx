@@ -154,12 +154,12 @@ const Services = () => {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <header className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-golden-500 tracking-wide uppercase font-['EB_Garamond']">
+          <span className="text-sm font-medium text-white-500 tracking-wide uppercase font-['EB_Garamond']">
             Our Services
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-200 mt-2 mb-6">
             Wedding Photography &
-            <span className="text-blush-500 italic block">Videography Services</span>
+            <span className="text-blush-900 italic block">Videography Services</span>
           </h2>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
             From engagement sessions to wedding day coverage, we offer a full suite of photography and videography services to capture your love story

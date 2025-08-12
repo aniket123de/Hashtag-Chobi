@@ -28,8 +28,8 @@ const Services = () => {
     },
     {
       icon: Calendar,
-      title: "Wedding Videography",
-      category: "Videography",
+      title: "Wedding Cinematography",
+      category: "Cinematography",
       src: Service2Img,
       description:
         "Cinematic wedding films that tell your love story, preserving the emotions and memories for generations to come.",
@@ -159,10 +159,10 @@ const Services = () => {
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-200 mt-2 mb-6">
             Wedding Photography &
-            <span className="text-blush-900 italic block">Videography Services</span>
+            <span className="text-blush-900 italic block">Cinematography Services</span>
           </h2>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
-            From engagement sessions to wedding day coverage, we offer a full suite of photography and videography services to capture your love story
+            From engagement sessions to wedding day coverage, we offer a full suite of photography and Cinematography services to capture your love story
           </p>
         </header>
 

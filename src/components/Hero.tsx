@@ -32,11 +32,6 @@ const Hero = () => {
       {/* Overlay to darken background for better text contrast */}
       <div className="absolute inset-0 bg-black opacity-50" aria-hidden="true" />
 
-      {/* Decorative animated circles */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-blush-100 rounded-full opacity-40 animate-pulse" aria-hidden="true" />
-      <div className="absolute bottom-20 right-10 w-24 h-24 bg-golden-100 rounded-full opacity-40 animate-pulse" aria-hidden="true" />
-      <div className="absolute top-1/3 right-1/4 w-16 h-16 bg-cream-200 rounded-full opacity-30 animate-pulse" aria-hidden="true" />
-
       {/* Main Content Container */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center animate-fade-in">
         {/* Headline */}
@@ -48,7 +43,7 @@ const Hero = () => {
 
         {/* Subheadline */}
         <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed font-['EB_Garamond'] font-light tracking-wide">
-          Premier wedding photography and videography since 2016, specializing in handcrafted weddings that beautifully narrate your unique love story
+          Premier wedding photography and Cinematography since 2016, specializing in handcrafted weddings that beautifully narrate your unique love story
         </p>
 
         {/* Call to Action Buttons */}

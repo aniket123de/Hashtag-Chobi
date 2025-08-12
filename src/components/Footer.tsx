@@ -37,7 +37,7 @@ const Footer = () => {
             </div>
             <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
               Capturing love stories, frame by frame. Premier wedding photography 
-              and videography since 2016, creating timeless memories that will be 
+              and Cinematography since 2016, creating timeless memories that will be 
               cherished for generations to come.
             </p>
 

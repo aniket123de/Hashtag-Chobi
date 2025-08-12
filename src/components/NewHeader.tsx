@@ -83,7 +83,7 @@ const NewHeader = () => {
           variant="dark"
           onClick={() => handleNavClick("contact")}
           as="button"
-          className="flex-shrink-0 text-xs px-3 py-2 bg-black text-white rounded-full focus:bg-blush-700 focus:outline-none"
+          className="flex-shrink-0 text-xs px-3 py-2 bg-black text-white rounded-full focus:bg-blush-700 focus:outline-none font-sans ml-8"
         >
           Book Session
         </NavbarButton>
@@ -122,7 +122,7 @@ const NewHeader = () => {
                 handleItemClick(e);
                 setIsMobileMenuOpen(false);
               }}
-              className="block text-lg font-semibold text-gray-900 hover:text-blush-600 transition-colors duration-200"
+              className="block text-lg font-semibold text-gray-900 hover:text-blush-600 transition-colors duration-200 font-sans"
             >
               {item.name}
             </a>
@@ -134,7 +134,7 @@ const NewHeader = () => {
               setIsMobileMenuOpen(false);
             }}
             as="button"
-            className="w-full mt-4 bg-black text-white rounded-full focus:bg-blush-700 focus:outline-none"
+            className="w-full mt-4 bg-black text-white rounded-full focus:bg-blush-700 focus:outline-none font-sans"
           >
             Book Your Session
           </NavbarButton>

@@ -102,18 +102,18 @@ const Services = () => {
         category: service.category,
         content: (
           <div className="space-y-6">
-            <p className="text-lg text-gray-600 leading-relaxed font-['EB_Garamond']">
+            <p className="text-lg text-gray-600 leading-relaxed font-sans">
               {service.description}
             </p>
             <div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-4">
+              <h4 className="text-xl font-semibold text-gray-800 mb-4 font-serif">
                 What's Included:
               </h4>
               <ul className="space-y-3">
                 {service.features.map((feature, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center text-gray-600 font-['EB_Garamond']"
+                    className="flex items-center text-gray-600 font-sans"
                   >
                     <span className="w-2 h-2 bg-blush-500 rounded-full mr-3" />
                     {feature}
@@ -122,7 +122,7 @@ const Services = () => {
               </ul>
             </div>
             <div className="pt-6 border-t border-gray-200">
-              <p className="text-sm text-gray-500 font-['EB_Garamond']">
+              <p className="text-sm text-gray-500 font-sans">
                 Contact us for personalized pricing and package options tailored to your special day.
               </p>
             </div>
@@ -154,14 +154,14 @@ const Services = () => {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <header className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-white-500 tracking-wide uppercase font-['EB_Garamond']">
+          <span className="text-sm font-medium text-white-500 tracking-wide uppercase font-sans">
             Our Services
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-200 mt-2 mb-6">
             Wedding Photography &
             <span className="text-blush-900 italic block">Cinematography Services</span>
           </h2>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-sans">
             From engagement sessions to wedding day coverage, we offer a full suite of photography and Cinematography services to capture your love story
           </p>
         </header>

@@ -35,7 +35,7 @@ const Footer = () => {
                 className="h-[80px] w-auto object-contain cursor-pointer"
               />
             </div>
-            <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
+            <p className="text-gray-400 leading-relaxed mb-6 max-w-md font-sans">
               Capturing love stories, frame by frame. Premier wedding photography 
               and Cinematography since 2016, creating timeless memories that will be 
               cherished for generations to come.
@@ -76,7 +76,7 @@ const Footer = () => {
 
           {/* Services Navigation */}
           <div>
-            <h4 className="text-lg font-medium mb-6">Services</h4>
+            <h4 className="text-lg font-medium mb-6 font-serif">Services</h4>
             <ul className="space-y-3 text-gray-400">
               {[
                 { id: "wedding-planning", label: "Wedding Planning" },
@@ -105,7 +105,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-medium mb-6">Contact</h4>
+            <h4 className="text-lg font-medium mb-6 font-serif">Contact</h4>
             <div className="space-y-4 text-gray-400">
               {/* Phone */}
               <div className="flex items-center">
@@ -146,13 +146,13 @@ const Footer = () => {
 
         {/* Bottom Bar with copyright and policy link */}
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm font-sans">
             © {currentYear} Hashtag Chobi. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a
               href="/privacy-policy"
-              className="text-gray-400 hover:text-blush-400 text-sm transition-colors"
+              className="text-gray-400 hover:text-blush-400 text-sm transition-colors font-sans"
             >
               Privacy Policy
             </a>

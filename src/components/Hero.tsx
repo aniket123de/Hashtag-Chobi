@@ -42,7 +42,7 @@ const Hero = () => {
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed font-['EB_Garamond'] font-light tracking-wide">
+        <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed font-sans font-light tracking-wide">
           Premier wedding photography and Cinematography since 2016, specializing in handcrafted weddings that beautifully narrate your unique love story
         </p>
 
@@ -51,7 +51,7 @@ const Hero = () => {
           <Button
             size="lg"
             onClick={() => scrollToSection("contact")}
-            className="bg-blush-500 hover:bg-blush-600 text-white px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-blush-500 hover:bg-blush-600 text-white px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
             aria-label="Book Your Session"
           >
             Book Your Session
@@ -60,7 +60,7 @@ const Hero = () => {
             variant="outline"
             size="lg"
             onClick={() => scrollToSection("gallery")}
-            className="border-2 border-golden-400 hover:text-golden-700 hover:bg-golden-50 px-8 py-4 text-lg font-medium rounded-full transition-all duration-300"
+            className="border-2 border-golden-400 hover:text-golden-700 hover:bg-golden-50 px-8 py-4 text-lg font-medium rounded-full transition-all duration-300 font-sans"
             aria-label="View Our Portfolio"
           >
             View Our Portfolio

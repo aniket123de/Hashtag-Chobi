@@ -92,7 +92,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "60%" : "100%",
+        width: visible ? "62%" : "100%",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -101,7 +101,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
+        "relative z-[60] mx-auto hidden w-full max-w-[1600px] flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
         visible && "bg-gray-200/80 dark:bg-neutral-950/80",
         className
       )}
@@ -132,7 +132,7 @@ export const NavItems = ({
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "flex flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium transition duration-200 lg:flex lg:space-x-2",
+        "flex flex-1 flex-row items-center justify-center space-x-2 text-sm font-bold transition duration-200 lg:flex lg:space-x-2 font-poppins",
         textColor,
         className
       )}
@@ -265,7 +265,7 @@ export const NavbarLogo = () => {
   return (
     <a
       href="#"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black font-sans"
     >
       <img
         src="https://assets.aceternity.com/logo-dark.png"
@@ -273,7 +273,7 @@ export const NavbarLogo = () => {
         width={30}
         height={30}
       />
-      <span className="font-medium text-black dark:text-white">Startup</span>
+      <span className="font-medium text-black dark:text-white font-serif">Startup</span>
     </a>
   );
 };
@@ -298,7 +298,7 @@ export const NavbarButton = ({
   | React.ComponentPropsWithoutRef<"button">
 )) => {
   const baseStyles =
-    "px-4 py-2 rounded-md bg-white button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
+    "px-4 py-2 rounded-md bg-white button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center font-poppins";
 
   const variantStyles = {
     primary:

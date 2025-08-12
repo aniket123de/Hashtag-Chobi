@@ -103,10 +103,11 @@ export default {
 			},
 			fontFamily: {
 				'serif': ['Playfair Display', 'serif'],
-				'sans': ['Inter', 'system-ui', 'sans-serif'],
-				'elegant': ['Crimson Text', 'Playfair Display', 'serif'],
-				'modern': ['Poppins', 'Inter', 'sans-serif'],
-				'display': ['Montserrat', 'sans-serif'],
+				'sans': ['EB Garamond', 'serif'],
+				'elegant': ['Playfair Display', 'serif'],
+				'modern': ['EB Garamond', 'serif'],
+				'display': ['Playfair Display', 'serif'],
+				'poppins': ['Poppins', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

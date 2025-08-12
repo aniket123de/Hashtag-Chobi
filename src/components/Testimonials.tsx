@@ -45,14 +45,14 @@ const Testimonials = () => {
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <header className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-['EB_Garamond']">
+          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-sans">
             Testimonials
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
             What Our Clients
             <span className="text-golden-600 italic block">Are Saying</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans">
             Don't just take our word for it—hear from the couples and companies who trusted us with their most important celebrations
           </p>
         </header>
@@ -80,7 +80,7 @@ const Testimonials = () => {
               </div>
 
               {/* Testimonial Quote */}
-              <blockquote className="text-gray-600 leading-relaxed mb-6 italic font-['EB_Garamond']">
+              <blockquote className="text-gray-600 leading-relaxed mb-6 italic font-sans">
                 &quot;{testimonial.text}&quot;
               </blockquote>
 
@@ -99,11 +99,11 @@ const Testimonials = () => {
                 <div>
                   <h3
                     id={`${testimonial.name.replace(/\s+/g, "-").toLowerCase()}-title`}
-                    className="font-modern font-semibold text-gray-800 tracking-wide"
+                    className="font-serif font-semibold text-gray-800 tracking-wide"
                   >
                     {testimonial.name}
                   </h3>
-                  <p className="text-sm text-gray-500 font-['EB_Garamond']">{testimonial.event}</p>
+                  <p className="text-sm text-gray-500 font-sans">{testimonial.event}</p>
                 </div>
               </div>
             </article>
@@ -112,14 +112,14 @@ const Testimonials = () => {
 
         {/* Call to Action */}
         <div className="text-center mt-16 animate-fade-in">
-          <p className="text-lg text-gray-600 mb-6">
+          <p className="text-lg text-gray-600 mb-6 font-sans">
             Ready to create your own unforgettable experience?
           </p>
           <Button
             size="lg"
             onClick={() => scrollToSection("contact")}
             className="bg-blush-500 hover:bg-blush-600 text-white px-8 py-4 text-lg font-medium
-                       rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                       rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
           >
             Start Planning Today
           </Button>

@@ -148,7 +148,7 @@ const Contact = () => {
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-['EB_Garamond']">
+          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-sans">
             Contact Us
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
@@ -157,7 +157,7 @@ const Contact = () => {
               Love Story
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-['EB_Garamond']">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans">
             Ready to preserve your special moments? Get in touch with us today
             and let's create timeless memories together.
           </p>
@@ -167,7 +167,7 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="animate-fade-in-up">
             <div className="bg-white rounded-lg p-8 shadow-lg border border-gray-100">
-              <h3 className="text-2xl font-elegant font-semibold text-gray-800 mb-6 tracking-wide">
+              <h3 className="text-2xl font-serif font-semibold text-gray-800 mb-6 tracking-wide">
                 Send us a message
               </h3>
 
@@ -175,7 +175,7 @@ const Contact = () => {
                 {/* Name Fields */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="firstName" className="text-gray-700 font-medium font-['EB_Garamond']">
+                    <Label htmlFor="firstName" className="text-gray-700 font-medium font-sans">
                       First Name
                     </Label>
                     <Input
@@ -189,7 +189,7 @@ const Contact = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="lastName" className="text-gray-700 font-medium font-['EB_Garamond']">
+                    <Label htmlFor="lastName" className="text-gray-700 font-medium font-sans">
                       Last Name
                     </Label>
                     <Input
@@ -206,7 +206,7 @@ const Contact = () => {
 
                 {/* Contact Info */}
                 <div>
-                  <Label htmlFor="email" className="text-gray-700 font-medium font-['EB_Garamond']">
+                  <Label htmlFor="email" className="text-gray-700 font-medium font-sans">
                     Email Address
                   </Label>
                   <Input
@@ -222,7 +222,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="phone" className="text-gray-700 font-medium">
+                  <Label htmlFor="phone" className="text-gray-700 font-medium font-sans">
                     Phone Number
                   </Label>
                   <Input
@@ -239,7 +239,7 @@ const Contact = () => {
 
                 {/* Event Type */}
                 <div>
-                  <Label htmlFor="eventType" className="text-gray-700 font-medium">
+                  <Label htmlFor="eventType" className="text-gray-700 font-medium font-sans">
                     Photography Service
                   </Label>
                   <Input
@@ -255,7 +255,7 @@ const Contact = () => {
 
                 {/* Message */}
                 <div>
-                  <Label htmlFor="message" className="text-gray-700 font-medium">
+                  <Label htmlFor="message" className="text-gray-700 font-medium font-sans">
                     Tell us about your special day
                   </Label>
                   <Textarea
@@ -273,7 +273,7 @@ const Contact = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full bg-blush-500 hover:bg-blush-600 text-white py-3 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="w-full bg-blush-500 hover:bg-blush-600 text-white py-3 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
                   disabled={isSubmitting}
                   aria-busy={isSubmitting}
                 >
@@ -293,7 +293,7 @@ const Contact = () => {
                     <Phone className="w-6 h-6 text-blush-600" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-800">Phone</h4>
+                    <h4 className="font-medium text-gray-800 font-sans">Phone</h4>
                     <Link to="tel:+15551234567" className="hover:text-blush-400">
                       +1 (555) 123-4567
                     </Link>
@@ -308,7 +308,7 @@ const Contact = () => {
                     <Mail className="w-6 h-6 text-golden-600" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-800">Email</h4>
+                    <h4 className="font-medium text-gray-800 font-sans">Email</h4>
                     <Link to="mailto:hello@eventory.com" className="hover:text-blush-400">
                       hello@eventory.com
                     </Link>
@@ -323,7 +323,7 @@ const Contact = () => {
                     <MapPin className="w-6 h-6 text-cream-700" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-800">Location</h4>
+                    <h4 className="font-medium text-gray-800 font-sans">Location</h4>
                     <address className="not-italic text-gray-600">
                       123 Event Plaza, Suite 456
                       <br />
@@ -335,7 +335,7 @@ const Contact = () => {
 
               {/* Free Consultation CTA */}
               <div className="bg-gradient-to-br from-blush-500 to-golden-500 rounded-lg p-8 text-white text-center">
-                <h3 className="text-2xl font-elegant font-semibold mb-4 tracking-wide">Free Consultation</h3>
+                <h3 className="text-2xl font-serif font-semibold mb-4 tracking-wide">Free Consultation</h3>
                 <p className="mb-6 opacity-90">
                   Schedule a complimentary 30-minute consultation to discuss your
                   event vision and how we can bring it to life.
@@ -343,7 +343,7 @@ const Contact = () => {
                 <Link to="tel:+15551234567" aria-label="Call Us Now">
                   <Button
                     size="lg"
-                    className="bg-white text-blush-600 hover:bg-gray-50 px-6 py-2 rounded-full font-medium"
+                    className="bg-white text-blush-600 hover:bg-gray-50 px-6 py-2 rounded-full font-medium font-sans"
                   >
                     Call Us Now
                   </Button>

@@ -83,7 +83,7 @@ const NewHeader = () => {
           variant="dark"
           onClick={() => handleNavClick("contact")}
           as="button"
-          className="flex-shrink-0 text-xs px-3 py-2 bg-black text-white rounded-full focus:bg-blush-700 focus:outline-none font-sans ml-8"
+          className="flex-shrink-0 text-xs px-3 py-2 bg-black text-white rounded-full focus:bg-blush-700 focus:outline-none font-sans ml-4"
         >
           Book Session
         </NavbarButton>

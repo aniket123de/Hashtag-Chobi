@@ -225,17 +225,105 @@ export const MobileNavMenu = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] text-gray-900 dark:bg-neutral-950 dark:text-white",
-            className
-          )}
-        >
-          {children}
-        </motion.div>
+        <>
+          {/* Backdrop overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            onClick={onClose}
+          />
+          
+          {/* Menu container */}
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+            }}
+            className={cn(
+              "absolute inset-x-4 top-20 z-50 mx-auto max-w-sm rounded-2xl bg-white/95 backdrop-blur-xl border border-white/20 shadow-2xl overflow-hidden",
+              "dark:bg-gray-900/95 dark:border-gray-700/30",
+              className
+            )}
+          >
+            {/* Gradient header */}
+            <div className="bg-gradient-to-r from-blush-500/10 via-golden-500/10 to-blush-600/10 px-6 py-4 border-b border-gray-100/50 dark:border-gray-700/50">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white font-serif">
+                  Navigation
+                </h3>
+                <button
+                  onClick={onClose}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  aria-label="Close menu"
+                >
+                  <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Menu content */}
+            <div className="px-6 py-6 space-y-1">
+              {React.Children.map(children, (child, index) => {
+                if (React.isValidElement(child)) {
+                  // If it's a navigation link
+                  if (child.type === 'a') {
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="group"
+                      >
+                        <div className="relative overflow-hidden rounded-xl">
+                          {React.cloneElement(child as React.ReactElement, {
+                            className: cn(
+                              "flex items-center px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-200 rounded-xl transition-all duration-200",
+                              "hover:bg-gradient-to-r hover:from-blush-500/10 hover:to-golden-500/10 hover:text-gray-900 dark:hover:text-white",
+                              "group-hover:translate-x-1 group-hover:shadow-sm",
+                              child.props.className
+                            )
+                          })}
+                        </div>
+                      </motion.div>
+                    );
+                  }
+                  // If it's a button
+                  else {
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: (index + 1) * 0.1 }}
+                        className="pt-4 border-t border-gray-100/50 dark:border-gray-700/50"
+                      >
+                        {React.cloneElement(child as React.ReactElement, {
+                          className: cn(
+                            "w-full bg-gradient-to-r from-blush-500 to-golden-500 text-black font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
+                            child.props.className
+                          )
+                        })}
+                      </motion.div>
+                    );
+                  }
+                }
+                return child;
+              })}
+            </div>
+
+            {/* Decorative bottom gradient */}
+            <div className="h-1 bg-gradient-to-r from-blush-500 via-golden-500 to-blush-600" />
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
@@ -252,10 +340,24 @@ export const MobileNavToggle = ({
 }) => {
   const iconClass = visible ? "text-white" : "text-white";
 
-  return isOpen ? (
-    <IconX className={iconClass} onClick={onClick} />
-  ) : (
-    <IconMenu2 className={iconClass} onClick={onClick} />
+  return (
+    <motion.button
+      onClick={onClick}
+      className="p-2 rounded-full hover:bg-white/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/20"
+      whileTap={{ scale: 0.95 }}
+      aria-label={isOpen ? "Close menu" : "Open menu"}
+    >
+      <motion.div
+        animate={{ rotate: isOpen ? 180 : 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
+        {isOpen ? (
+          <IconX className={cn(iconClass, "w-6 h-6")} />
+        ) : (
+          <IconMenu2 className={cn(iconClass, "w-6 h-6")} />
+        )}
+      </motion.div>
+    </motion.button>
   );
 };
 

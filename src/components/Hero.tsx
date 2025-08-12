@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { FadeInText } from "@/components/ui/fade-in-section";
 import HeroBG from "../assets/image/HERO.jpg";
 
 const Hero = () => {
@@ -33,25 +34,35 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black opacity-50" aria-hidden="true" />
 
       {/* Main Content Container */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center animate-fade-in">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         {/* Headline */}
-        <h1 className="text-5xl md:text-7xl font-serif text-gray-200 mb-6 leading-tight">
+        <FadeInText 
+          as="h1" 
+          className="text-5xl md:text-7xl font-serif text-gray-200 mb-6 leading-tight"
+          delay={0.2}
+          duration={0.8}
+        >
           Capturing
           <span className="block text-blush-500 italic">Love Stories</span>
           Frame by Frame
-        </h1>
+        </FadeInText>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed font-sans font-light tracking-wide">
+        <FadeInText 
+          as="p" 
+          className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed font-sans font-light tracking-wide"
+          delay={0.5}
+          duration={0.8}
+        >
           Premier wedding photography and Cinematography since 2016, specializing in handcrafted weddings that beautifully narrate your unique love story
-        </p>
+        </FadeInText>
 
         {/* Call to Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button
             size="lg"
             onClick={() => scrollToSection("contact")}
-            className="bg-blush-500 hover:bg-blush-600 text-white px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+            className="bg-blush-500 hover:bg-blush-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
             aria-label="Book Your Session"
           >
             Book Your Session

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { FadeInText } from "@/components/ui/fade-in-section";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -147,29 +148,45 @@ const Contact = () => {
     <section className="py-20 bg-gradient-to-br from-cream-50 to-blush-50">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-sans">
+        <div className="text-center mb-16">
+          <FadeInText 
+            as="span" 
+            className="text-sm font-medium text-black tracking-wide uppercase font-sans"
+            delay={0.1}
+          >
             Contact Us
-          </span>
-          <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
+          </FadeInText>
+          <FadeInText 
+            as="h2" 
+            className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6"
+            delay={0.3}
+          >
             Let's Capture Your
             <span className="text-golden-600 italic block">
               Love Story
             </span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans">
+          </FadeInText>
+          <FadeInText 
+            as="p" 
+            className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans"
+            delay={0.5}
+          >
             Ready to preserve your special moments? Get in touch with us today
             and let's create timeless memories together.
-          </p>
+          </FadeInText>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Form */}
           <div className="animate-fade-in-up">
             <div className="bg-white rounded-lg p-8 shadow-lg border border-gray-100">
-              <h3 className="text-2xl font-serif font-semibold text-gray-800 mb-6 tracking-wide">
+              <FadeInText 
+                as="h3" 
+                className="text-2xl font-serif font-semibold text-gray-800 mb-6 tracking-wide"
+                delay={0.2}
+              >
                 Send us a message
-              </h3>
+              </FadeInText>
 
               <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                 {/* Name Fields */}
@@ -273,7 +290,7 @@ const Contact = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full bg-blush-500 hover:bg-blush-600 text-white py-3 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                  className="w-full bg-blush-500 hover:bg-blush-600 text-black py-3 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
                   disabled={isSubmitting}
                   aria-busy={isSubmitting}
                 >
@@ -334,7 +351,7 @@ const Contact = () => {
               </div>
 
               {/* Free Consultation CTA */}
-              <div className="bg-gradient-to-br from-blush-500 to-golden-500 rounded-lg p-8 text-white text-center">
+              <div className="bg-gradient-to-br from-blush-500 to-golden-500 rounded-lg p-8 text-black text-center">
                 <h3 className="text-2xl font-serif font-semibold mb-4 tracking-wide">Free Consultation</h3>
                 <p className="mb-6 opacity-90">
                   Schedule a complimentary 30-minute consultation to discuss your
@@ -343,7 +360,7 @@ const Contact = () => {
                 <Link to="tel:+15551234567" aria-label="Call Us Now">
                   <Button
                     size="lg"
-                    className="bg-white text-blush-600 hover:bg-gray-50 px-6 py-2 rounded-full font-medium font-sans"
+                    className="bg-white text-black hover:bg-gray-50 px-6 py-2 rounded-full font-medium font-sans"
                   >
                     Call Us Now
                   </Button>

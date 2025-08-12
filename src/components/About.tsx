@@ -1,4 +1,5 @@
 import AboutImage from "../assets/image/ABOUT.jpg";
+import { FadeInText } from "@/components/ui/fade-in-section";
 
 const About = () => {
   return (
@@ -25,53 +26,73 @@ const About = () => {
           </div>
 
           {/* Content Section */}
-          <div className="animate-fade-in-up">
+          <div>
             {/* Heading */}
             <header className="mb-6">
-              <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-sans">
+              <FadeInText 
+                as="span" 
+                className="text-sm font-medium text-black tracking-wide uppercase font-sans"
+                delay={0.1}
+              >
                 About Us
-              </span>
-              <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
+              </FadeInText>
+              <FadeInText 
+                as="h2" 
+                className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6"
+                delay={0.3}
+              >
                 Preserving Love Stories,
                 <span className="text-golden-600 italic block">Frame by Frame</span>
-              </h2>
+              </FadeInText>
             </header>
 
             {/* Description paragraphs */}
-            <div className="space-y-6 text-gray-600 text-lg leading-relaxed font-sans">
-              <p>
+            <div className="space-y-6">
+              <FadeInText 
+                as="p" 
+                className="text-gray-600 text-lg leading-relaxed font-sans"
+                delay={0.5}
+              >
                 With an artistic eye and a passion for storytelling, we have been capturing 
                 the magic of weddings since 2016. Every shot is handcrafted to reflect the 
                 unique essence of each couple's journey.
-              </p>
-              <p>
+              </FadeInText>
+              <FadeInText 
+                as="p" 
+                className="text-gray-600 text-lg leading-relaxed font-sans"
+                delay={0.7}
+              >
                 We believe in telling your authentic love story through our lens, creating 
                 timeless memories that will be cherished for generations to come. Let us turn 
                 your special moments into an unforgettable masterpiece.
-              </p>
-              <p>
+              </FadeInText>
+              <FadeInText 
+                as="p" 
+                className="text-gray-600 text-lg leading-relaxed font-sans"
+                delay={0.9}
+              >
                 From intimate ceremonies to grand celebrations, we approach each wedding 
                 with meticulous attention to detail and an unwavering commitment to excellence.
-              </p>
+              </FadeInText>
             </div>
 
             {/* Statistics Section */}
             <div className="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-gray-200">
               {/* Weddings Captured */}
               <div className="text-center">
-                <div className="text-3xl font-serif text-blush-500 mb-2">500+</div>
+                <div className="text-3xl font-serif text-black mb-2">500+</div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide font-sans">Weddings Captured</div>
               </div>
 
               {/* Years Experience */}
               <div className="text-center">
-                <div className="text-3xl font-serif text-golden-500 mb-2">8+</div>
+                <div className="text-3xl font-serif text-black mb-2">8+</div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide font-sans">Years Experience</div>
               </div>
 
               {/* Client Satisfaction */}
               <div className="text-center">
-                <div className="text-3xl font-serif text-cream-600 mb-2">98%</div>
+                <div className="text-3xl font-serif text-black mb-2">98%</div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide font-sans">Client Satisfaction</div>
               </div>
             </div>

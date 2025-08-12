@@ -4,6 +4,7 @@ import Social from "../assets/image/SOCIAL.jpg";
 import Destination from "../assets/image/DESTINATION.jpg";
 import BehindtheScenes from "../assets/image/BTS.jpg";
 import Reception from "../assets/image/RECEPTION.jpg";
+import { FadeInText } from "@/components/ui/fade-in-section";
 
 const Gallery = () => {
   // Define gallery images with their properties (url, alt text, and category)
@@ -20,19 +21,31 @@ const Gallery = () => {
     <section className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header Section */}
-        <div className="text-center mb-16 animate-fade-in">
+        <div className="text-center mb-16">
           {/* Portfolio title and description */}
-          <span className="text-sm font-medium text-golden-500 tracking-wide uppercase font-sans">
+          <FadeInText 
+            as="span" 
+            className="text-sm font-medium text-golden-500 tracking-wide uppercase font-sans"
+            delay={0.1}
+          >
             Portfolio
-          </span>
-          <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
+          </FadeInText>
+          <FadeInText 
+            as="h2" 
+            className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6"
+            delay={0.3}
+          >
             Our Recent
             <span className="text-blush-500 italic block">Love Stories</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans">
+          </FadeInText>
+          <FadeInText 
+            as="p" 
+            className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans"
+            delay={0.5}
+          >
             Explore a curated selection of our most beautiful weddings, each
             uniquely captured to reflect our couples' authentic love stories.
-          </p>
+          </FadeInText>
         </div>
 
         {/* Gallery Grid Section */}

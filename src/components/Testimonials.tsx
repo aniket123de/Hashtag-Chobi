@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FadeInText } from "@/components/ui/fade-in-section";
 
 const Testimonials = () => {
   /**
@@ -44,17 +45,29 @@ const Testimonials = () => {
     >
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
-        <header className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-blush-500 tracking-wide uppercase font-sans">
+        <header className="text-center mb-16">
+          <FadeInText 
+            as="span" 
+            className="text-sm font-medium text-black tracking-wide uppercase font-sans"
+            delay={0.1}
+          >
             Testimonials
-          </span>
-          <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6">
+          </FadeInText>
+          <FadeInText 
+            as="h2" 
+            className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6"
+            delay={0.3}
+          >
             What Our Clients
             <span className="text-golden-600 italic block">Are Saying</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans">
+          </FadeInText>
+          <FadeInText 
+            as="p" 
+            className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans"
+            delay={0.5}
+          >
             Don't just take our word for it—hear from the couples and companies who trusted us with their most important celebrations
-          </p>
+          </FadeInText>
         </header>
 
         {/* Testimonials Grid */}
@@ -111,18 +124,27 @@ const Testimonials = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-16 animate-fade-in">
-          <p className="text-lg text-gray-600 mb-6 font-sans">
-            Ready to create your own unforgettable experience?
-          </p>
-          <Button
-            size="lg"
-            onClick={() => scrollToSection("contact")}
-            className="bg-blush-500 hover:bg-blush-600 text-white px-8 py-4 text-lg font-medium
-                       rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+        <div className="text-center mt-16">
+          <FadeInText 
+            as="p" 
+            className="text-lg text-gray-600 mb-6 font-sans"
+            delay={0.7}
           >
-            Start Planning Today
-          </Button>
+            Ready to create your own unforgettable experience?
+          </FadeInText>
+          <FadeInText 
+            as="div" 
+            delay={0.9}
+          >
+            <Button
+              size="lg"
+              onClick={() => scrollToSection("contact")}
+              className="bg-blush-500 hover:bg-blush-600 text-black px-8 py-4 text-lg font-medium
+                         rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+            >
+              Start Planning Today
+            </Button>
+          </FadeInText>
         </div>
       </div>
     </section>

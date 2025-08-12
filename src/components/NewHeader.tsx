@@ -80,10 +80,10 @@ const NewHeader = () => {
           onItemClick={handleItemClick}
         />
         <NavbarButton
-          variant="dark"
+          variant="primary"
           onClick={() => handleNavClick("contact")}
           as="button"
-          className="flex-shrink-0 text-xs px-3 py-2 bg-black text-white rounded-full focus:bg-blush-700 focus:outline-none font-sans ml-4"
+          className="flex-shrink-0 text-xs focus:outline-none ml-4"
         >
           Book Session
         </NavbarButton>
@@ -128,13 +128,13 @@ const NewHeader = () => {
             </a>
           ))}
           <NavbarButton
-            variant="dark"
+            variant="primary"
             onClick={() => {
               handleNavClick("contact");
               setIsMobileMenuOpen(false);
             }}
             as="button"
-            className="w-full mt-4 bg-black text-white rounded-full focus:bg-blush-700 focus:outline-none font-sans"
+            className="w-full mt-4 focus:outline-none"
           >
             Book Your Session
           </NavbarButton>

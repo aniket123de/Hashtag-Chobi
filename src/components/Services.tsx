@@ -7,6 +7,7 @@ import Service4Img from "../assets/image/SERVICE4.jpg";
 import Service5Img from "../assets/image/SERVICE5.jpg";
 import Service6Img from "../assets/image/SERVICE6.jpg";
 import { Carousel, Card } from "./ui/apple-cards-carousel";
+import { FadeInText } from "@/components/ui/fade-in-section";
 
 const Services = () => {
   /**
@@ -153,17 +154,29 @@ const Services = () => {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <header className="text-center mb-16 animate-fade-in">
-          <span className="text-sm font-medium text-white-500 tracking-wide uppercase font-sans">
+        <header className="text-center mb-16">
+          <FadeInText 
+            as="span" 
+            className="text-sm font-medium text-white-500 tracking-wide uppercase font-sans"
+            delay={0.1}
+          >
             Our Services
-          </span>
-          <h2 className="text-4xl md:text-5xl font-serif text-gray-200 mt-2 mb-6">
+          </FadeInText>
+          <FadeInText 
+            as="h2" 
+            className="text-4xl md:text-5xl font-serif text-gray-200 mt-2 mb-6"
+            delay={0.3}
+          >
             Wedding Photography &
             <span className="text-blush-900 italic block">Cinematography Services</span>
-          </h2>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-sans">
+          </FadeInText>
+          <FadeInText 
+            as="p" 
+            className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-sans"
+            delay={0.5}
+          >
             From engagement sessions to wedding day coverage, we offer a full suite of photography and Cinematography services to capture your love story
-          </p>
+          </FadeInText>
         </header>
 
         {/* Services Carousel */}

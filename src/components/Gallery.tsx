@@ -36,7 +36,7 @@ const Gallery = () => {
             delay={0.3}
           >
             Our Recent
-            <span className="text-blush-500 italic block">Love Stories</span>
+            <span className="text-blush-900 italic block">Love Stories</span>
           </FadeInText>
           <FadeInText 
             as="p" 

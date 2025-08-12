@@ -1,6 +1,7 @@
 import NewHeader from "@/components/NewHeader";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import VideoShowcase from "@/components/VideoShowcase";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 import Gallery from "@/components/Gallery";
@@ -22,6 +23,11 @@ const Index = () => {
       {/* About Us Section */}
       <section id="about" aria-label="About Section">
         <About />
+      </section>
+
+      {/* Video Showcase Section */}
+      <section id="video" aria-label="Video Showcase Section">
+        <VideoShowcase />
       </section>
 
       {/* Services Section */}

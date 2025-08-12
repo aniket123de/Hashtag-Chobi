@@ -255,7 +255,7 @@ export const MobileNavMenu = ({
             <div className="bg-gradient-to-r from-blush-500/10 via-golden-500/10 to-blush-600/10 px-6 py-4 border-b border-gray-100/50 dark:border-gray-700/50">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white font-serif">
-                  Navigation
+                  Menu
                 </h3>
                 <button
                   onClick={onClose}

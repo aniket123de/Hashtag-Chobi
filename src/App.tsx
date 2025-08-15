@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import GalleryExtended from "./pages/GalleryExtended";
 import NotFound from "./pages/NotFound";
 
 // Initialize React Query client for data fetching and caching
@@ -25,6 +26,9 @@ const App = () => (
         <Routes>
           {/* Home page route */}
           <Route path="/" element={<Index />} />
+
+          {/* Extended gallery page */}
+          <Route path="/gallery" element={<GalleryExtended />} />
 
           {/* Privacy policy page */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

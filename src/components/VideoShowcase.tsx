@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
@@ -17,12 +19,17 @@ const VideoShowcase = () => {
   // State to control video playback
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [playerReady, setPlayerReady] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [showControls, setShowControls] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
   const playerRef = useRef<any>(null);
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Use intersection observer to detect when video section is visible
   const { elementRef, isIntersecting } = useIntersectionObserver({
-    threshold: 0.3, // Trigger when 30% of the section is visible
-    rootMargin: "0px",
+    threshold: 0.5, // Trigger when 50% of the section is visible
+    rootMargin: "-100px 0px -100px 0px", // Add some margin to prevent immediate triggering
     triggerOnce: false, // Allow multiple triggers for play/pause
   });
 
@@ -63,13 +70,16 @@ const VideoShowcase = () => {
           showinfo: 0,
         },
         events: {
-          onReady: (event: any) => {
+          onReady: () => {
             console.log("YouTube player ready");
+            setPlayerReady(true);
           },
           onStateChange: (event: any) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
               setIsPlaying(true);
             } else if (event.data === window.YT.PlayerState.PAUSED) {
+              setIsPlaying(false);
+            } else if (event.data === window.YT.PlayerState.ENDED) {
               setIsPlaying(false);
             }
           },
@@ -78,29 +88,107 @@ const VideoShowcase = () => {
     }
   };
 
-  // Handle play/pause based on intersection
-  useEffect(() => {
-    if (
-      playerRef.current &&
-      playerRef.current.playVideo &&
-      playerRef.current.pauseVideo
-    ) {
-      if (isIntersecting) {
-        // Start playing when section comes into view
-        if (!hasStarted) {
-          setHasStarted(true);
-          playerRef.current.playVideo();
-        } else if (!isPlaying) {
-          playerRef.current.playVideo();
-        }
+  // Manual control functions
+  const togglePlayPause = () => {
+    if (!playerRef.current) return;
+    
+    setUserInteracted(true);
+    
+    try {
+      const currentState = playerRef.current.getPlayerState();
+      if (currentState === window.YT.PlayerState.PLAYING) {
+        playerRef.current.pauseVideo();
       } else {
-        // Pause when section goes out of view
-        if (isPlaying) {
-          playerRef.current.pauseVideo();
-        }
+        playerRef.current.playVideo();
+        if (!hasStarted) setHasStarted(true);
+      }
+    } catch (error) {
+      console.error('Error toggling play/pause:', error);
+    }
+  };
+
+  const toggleMute = () => {
+    if (!playerRef.current) return;
+    
+    try {
+      if (isMuted) {
+        playerRef.current.unMute();
+        setIsMuted(false);
+      } else {
+        playerRef.current.mute();
+        setIsMuted(true);
+      }
+    } catch (error) {
+      console.error('Error toggling mute:', error);
+    }
+  };
+
+  const toggleFullscreen = () => {
+    const playerElement = document.getElementById('youtube-player');
+    if (playerElement) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        playerElement.requestFullscreen();
       }
     }
-  }, [isIntersecting, hasStarted, isPlaying]);
+  };
+
+  // Show/hide controls
+  const handleMouseEnter = () => {
+    setShowControls(true);
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    controlsTimeoutRef.current = setTimeout(() => {
+      setShowControls(false);
+    }, 2000);
+  };
+
+  // Handle play/pause based on intersection (only if user hasn't interacted)
+  useEffect(() => {
+    if (!playerReady || !playerRef.current || userInteracted) return;
+
+    console.log('Intersection changed:', isIntersecting, 'Has started:', hasStarted);
+
+    if (isIntersecting) {
+      // Start playing when section comes into view
+      if (!hasStarted) {
+        setHasStarted(true);
+        setTimeout(() => {
+          if (playerRef.current && playerRef.current.playVideo) {
+            console.log('Starting video playback');
+            playerRef.current.playVideo();
+          }
+        }, 500);
+      } else {
+        // Resume playing if paused
+        try {
+          const currentState = playerRef.current.getPlayerState();
+          if (currentState === window.YT.PlayerState.PAUSED || currentState === window.YT.PlayerState.CUED) {
+            console.log('Resuming video playback');
+            playerRef.current.playVideo();
+          }
+        } catch (error) {
+          console.error('Error getting player state:', error);
+        }
+      }
+    } else if (hasStarted) {
+      // Pause when section goes out of view (only if video has started)
+      try {
+        const currentState = playerRef.current.getPlayerState();
+        if (currentState === window.YT.PlayerState.PLAYING) {
+          console.log('Pausing video');
+          playerRef.current.pauseVideo();
+        }
+      } catch (error) {
+        console.error('Error pausing video:', error);
+      }
+    }
+  }, [isIntersecting, hasStarted, playerReady, userInteracted]);
 
   return (
     <section
@@ -130,14 +218,119 @@ const VideoShowcase = () => {
 
         {/* Video Player Container */}
         <div className="relative max-w-4xl mx-auto">
-          <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl">
+          <div 
+            className="relative bg-black rounded-2xl overflow-hidden shadow-2xl group"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             {/* YouTube Video Player */}
-            <div className="aspect-video">
+            <div className="aspect-video relative">
               <div
                 id="youtube-player"
                 className="w-full h-full"
                 style={{ border: 0 }}
               />
+              
+              {/* Custom Video Controls Overlay */}
+              <AnimatePresence>
+                {showControls && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
+                  >
+                    {/* Play/Pause Button - Center */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
+                      <motion.button
+                        onClick={togglePlayPause}
+                        className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-4 transition-all duration-300 group"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {isPlaying ? (
+                          <Pause className="w-8 h-8 text-white" />
+                        ) : (
+                          <Play className="w-8 h-8 text-white ml-1" />
+                        )}
+                      </motion.button>
+                    </div>
+
+                    {/* Bottom Controls */}
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-auto">
+                      {/* Left Controls */}
+                      <div className="flex items-center gap-3">
+                        <motion.button
+                          onClick={togglePlayPause}
+                          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 transition-all duration-300"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          {isPlaying ? (
+                            <Pause className="w-5 h-5 text-white" />
+                          ) : (
+                            <Play className="w-5 h-5 text-white ml-0.5" />
+                          )}
+                        </motion.button>
+
+                        <motion.button
+                          onClick={toggleMute}
+                          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 transition-all duration-300"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          {isMuted ? (
+                            <VolumeX className="w-5 h-5 text-white" />
+                          ) : (
+                            <Volume2 className="w-5 h-5 text-white" />
+                          )}
+                        </motion.button>
+                      </div>
+
+                      {/* Right Controls */}
+                      <div className="flex items-center gap-3">
+                        <motion.button
+                          onClick={toggleFullscreen}
+                          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 transition-all duration-300"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <Maximize2 className="w-5 h-5 text-white" />
+                        </motion.button>
+                      </div>
+                    </div>
+
+                    {/* Video Status Indicator */}
+                    <div className="absolute top-4 left-4 pointer-events-none">
+                      <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
+                        <span className="text-white text-sm font-medium">
+                          {isPlaying ? 'Playing' : 'Paused'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Auto-play Indicator */}
+                    {!userInteracted && (
+                      <div className="absolute top-4 right-4 pointer-events-none">
+                        <div className="bg-blush-500/90 backdrop-blur-sm rounded-full px-3 py-1">
+                          <span className="text-black text-sm font-medium">
+                            Auto-play
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Loading State */}
+              {!playerReady && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
+                    <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

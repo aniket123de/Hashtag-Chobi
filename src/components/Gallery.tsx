@@ -5,6 +5,8 @@ import Destination from "../assets/image/DESTINATION.jpg";
 import BehindtheScenes from "../assets/image/BTS.jpg";
 import Reception from "../assets/image/RECEPTION.jpg";
 import { FadeInText } from "@/components/ui/fade-in-section";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 const Gallery = () => {
   // Define gallery images with their properties (url, alt text, and category)
@@ -52,9 +54,10 @@ const Gallery = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Loop through each image */}
           {images.map((image, index) => (
-            <div
+            <Link
               key={index}
-              className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 animate-fade-in-up"
+              to="/gallery"
+              className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 animate-fade-in-up cursor-pointer"
               style={{ animationDelay: `${index * 100}ms` }} // Stagger animation for each image
             >
               <div className="aspect-square overflow-hidden">
@@ -77,12 +80,33 @@ const Gallery = () => {
                   </div>
                   <div className="text-xs opacity-90 font-sans">{image.alt}</div>
                 </div>
+                
+                {/* View Gallery Icon */}
+                <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2">
+                  <ArrowRight className="w-4 h-4 text-white" />
+                </div>
               </div>
 
               {/* Hover Effect Border */}
-              <div className="absolute inset-0 border-2 border-blush-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
-            </div>
+              <div className="absolute inset-0 border-2 border-blush-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+            </Link>
           ))}
+        </div>
+
+        {/* View Full Gallery Button */}
+        <div className="text-center mt-12">
+          <FadeInText
+            as="div"
+            delay={0.7}
+          >
+            <Link
+              to="/gallery"
+              className="inline-flex items-center gap-3 bg-blush-500 hover:bg-blush-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans group"
+            >
+              View Complete Gallery
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </FadeInText>
         </div>
       </div>
     </section>

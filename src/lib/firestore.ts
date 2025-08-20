@@ -1,5 +1,5 @@
 import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
-import { getFirestore, doc, getDoc, type Firestore } from "firebase/firestore/lite";
+import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, type Firestore, type Timestamp } from "firebase/firestore/lite";
 
 // Types
 export type AboutImage = { url: string; alt: string; cloudinaryId?: string };
@@ -10,6 +10,52 @@ export type AboutData = {
 	description: string;
 	images: AboutImage[];
 	stats: AboutStat[];
+};
+
+// Gallery Types
+export type GalleryItem = {
+	_id: string;
+	url: string;
+	alt: string;
+	category: string;
+	title?: string; // Optional title for the image
+	description?: string; // Optional description for the image
+	cloudinaryId?: string;
+	createdAt?: Timestamp; // Firestore timestamp
+};
+
+// Services Types
+export type Service = {
+	_id: string;
+	title: string;
+	description: string;
+	image: string;
+	price: string;
+	order: number;
+	category?: string; // Optional category for service classification
+	cloudinaryId?: string;
+};
+
+// Testimonials Types
+export type Testimonial = {
+	_id: string;
+	name: string;
+	role: string;
+	content: string;
+	rating: number;
+	image: string;
+	cloudinaryId?: string;
+	createdAt?: Timestamp; // Firestore timestamp
+};
+
+// Hero Types
+export type HeroData = {
+	title: string;
+	subtitle: string;
+	description: string;
+	ctaText: string;
+	backgroundImage: string;
+	cloudinaryId?: string;
 };
 
 // Default fallback for when the document doesn't exist
@@ -26,6 +72,14 @@ export const DEFAULT_ABOUT_DATA: AboutData = {
 		{ label: "Years Experience", value: "8+" },
 		{ label: "Client Satisfaction", value: "98%" }
 	]
+};
+
+export const DEFAULT_HERO_DATA: HeroData = {
+	title: "Capturing Life's Beautiful Moments",
+	subtitle: "Professional Photography Services",
+	description: "From weddings to corporate events, we specialize in creating timeless memories through our lens.",
+	ctaText: "Book Your Session",
+	backgroundImage: "/src/assets/image/HERO.jpg"
 };
 
 // Lazy singleton initialization
@@ -77,4 +131,141 @@ export async function getAboutData(): Promise<AboutData> {
 		images: Array.isArray(data.images) ? data.images as AboutImage[] : DEFAULT_ABOUT_DATA.images,
 		stats: Array.isArray(data.stats) ? data.stats as AboutStat[] : DEFAULT_ABOUT_DATA.stats
 	};
+}
+
+// Gallery Service
+export async function getGalleryData(): Promise<GalleryItem[]> {
+	try {
+		const database = getDb();
+		const galleryRef = collection(database, "gallery");
+		const galleryQuery = query(galleryRef, orderBy("createdAt", "desc"));
+		const snapshot = await getDocs(galleryQuery);
+
+		if (snapshot.empty) {
+			return [];
+		}
+
+		return snapshot.docs.map(doc => ({
+			_id: doc.id,
+			...doc.data()
+		})) as GalleryItem[];
+	} catch (error) {
+		console.error("Error fetching gallery data:", error);
+		return [];
+	}
+}
+
+export async function getGalleryByCategory(category: string): Promise<GalleryItem[]> {
+	try {
+		const allGallery = await getGalleryData();
+		return allGallery.filter(item => 
+			item.category.toLowerCase() === category.toLowerCase()
+		);
+	} catch (error) {
+		console.error(`Error fetching gallery data for category ${category}:`, error);
+		return [];
+	}
+}
+
+// Services Service
+export async function getServicesData(): Promise<Service[]> {
+	try {
+		const database = getDb();
+		const servicesRef = collection(database, "services");
+		const servicesQuery = query(servicesRef, orderBy("order", "asc"));
+		const snapshot = await getDocs(servicesQuery);
+
+		if (snapshot.empty) {
+			return [];
+		}
+
+		return snapshot.docs.map(doc => ({
+			_id: doc.id,
+			...doc.data()
+		})) as Service[];
+	} catch (error) {
+		console.error("Error fetching services data:", error);
+		return [];
+	}
+}
+
+// Testimonials Service
+export async function getTestimonialsData(): Promise<Testimonial[]> {
+	try {
+		const database = getDb();
+		const testimonialsRef = collection(database, "testimonials");
+		const testimonialsQuery = query(testimonialsRef, orderBy("createdAt", "desc"));
+		const snapshot = await getDocs(testimonialsQuery);
+
+		if (snapshot.empty) {
+			return [];
+		}
+
+		return snapshot.docs.map(doc => ({
+			_id: doc.id,
+			...doc.data()
+		})) as Testimonial[];
+	} catch (error) {
+		console.error("Error fetching testimonials data:", error);
+		return [];
+	}
+}
+
+// Hero Service
+export async function getHeroData(): Promise<HeroData> {
+	try {
+		const database = getDb();
+		const heroRef = doc(database, "hero", "main");
+		const snapshot = await getDoc(heroRef);
+
+		if (!snapshot.exists()) {
+			return DEFAULT_HERO_DATA;
+		}
+
+		const data = snapshot.data() as Partial<HeroData> | undefined;
+		if (!data) return DEFAULT_HERO_DATA;
+
+		// Basic normalization with fallbacks
+		return {
+			title: data.title ?? DEFAULT_HERO_DATA.title,
+			subtitle: data.subtitle ?? DEFAULT_HERO_DATA.subtitle,
+			description: data.description ?? DEFAULT_HERO_DATA.description,
+			ctaText: data.ctaText ?? DEFAULT_HERO_DATA.ctaText,
+			backgroundImage: data.backgroundImage ?? DEFAULT_HERO_DATA.backgroundImage,
+			cloudinaryId: data.cloudinaryId
+		};
+	} catch (error) {
+		console.error("Error fetching hero data:", error);
+		return DEFAULT_HERO_DATA;
+	}
+}
+
+// Utility function to get all website data at once
+export async function getAllWebsiteData() {
+	try {
+		const [about, gallery, services, testimonials, hero] = await Promise.all([
+			getAboutData(),
+			getGalleryData(),
+			getServicesData(),
+			getTestimonialsData(),
+			getHeroData()
+		]);
+
+		return {
+			about,
+			gallery,
+			services,
+			testimonials,
+			hero
+		};
+	} catch (error) {
+		console.error("Error fetching all website data:", error);
+		return {
+			about: DEFAULT_ABOUT_DATA,
+			gallery: [],
+			services: [],
+			testimonials: [],
+			hero: DEFAULT_HERO_DATA
+		};
+	}
 } 

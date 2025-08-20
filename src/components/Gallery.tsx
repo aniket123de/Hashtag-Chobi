@@ -1,23 +1,144 @@
-import Wedding from "../assets/image/WEDDING.jpg";
-import Corporate from "../assets/image/CORPORATE.jpg";
-import Social from "../assets/image/SOCIAL.jpg";
-import Destination from "../assets/image/DESTINATION.jpg";
-import BehindtheScenes from "../assets/image/BTS.jpg";
-import Reception from "../assets/image/RECEPTION.jpg";
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { useGalleryData } from "@/hooks/useWebsiteData";
+import { GalleryItem } from "@/lib/services";
 
 const Gallery = () => {
-  // Define gallery images with their properties (url, alt text, and category)
-  const images = [
-    { url: Wedding, alt: "Elegant wedding setup", category: "Wedding" },
-    { url: Corporate, alt: "Corporate event", category: "Corporate" },
-    { url: Social, alt: "Birthday celebration", category: "Social" },
-    { url: Destination, alt: "Destination wedding", category: "Destination" },
-    { url: BehindtheScenes, alt: "Event planning session", category: "Behind the Scenes" },
-    { url: Reception, alt: "Luxury reception", category: "Reception" },
-  ];
+  // Fetch gallery data from Firestore
+  const { data: galleryItems, loading, error } = useGalleryData();
+
+  // Show loading state
+  if (loading) {
+    return (
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Header Section */}
+          <div className="text-center mb-16">
+            <FadeInText 
+              as="span" 
+              className="text-sm font-medium text-golden-500 tracking-wide uppercase font-sans"
+              delay={0.1}
+            >
+              Portfolio
+            </FadeInText>
+            <FadeInText 
+              as="h2" 
+              className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6"
+              delay={0.3}
+            >
+              Our Recent
+              <span className="text-blush-900 italic block">Love Stories</span>
+            </FadeInText>
+            <FadeInText 
+              as="p" 
+              className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans"
+              delay={0.5}
+            >
+              Explore a curated selection of our most beautiful weddings, each
+              uniquely captured to reflect our couples' authentic love stories.
+            </FadeInText>
+          </div>
+
+          {/* Loading Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+              <div key={item} className="animate-pulse">
+                <div className="aspect-square bg-gray-200 rounded-lg"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Header Section */}
+          <div className="text-center mb-16">
+            <FadeInText 
+              as="span" 
+              className="text-sm font-medium text-golden-500 tracking-wide uppercase font-sans"
+              delay={0.1}
+            >
+              Portfolio
+            </FadeInText>
+            <FadeInText 
+              as="h2" 
+              className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6"
+              delay={0.3}
+            >
+              Our Recent
+              <span className="text-blush-900 italic block">Love Stories</span>
+            </FadeInText>
+            <FadeInText 
+              as="p" 
+              className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans"
+              delay={0.5}
+            >
+              Explore a curated selection of our most beautiful weddings, each
+              uniquely captured to reflect our couples' authentic love stories.
+            </FadeInText>
+          </div>
+
+          {/* Error Message */}
+          <div className="text-center">
+            <div className="text-red-500">
+              <p>Error loading gallery. Please try again later.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // If no gallery items, show empty state
+  if (!galleryItems || galleryItems.length === 0) {
+    return (
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Header Section */}
+          <div className="text-center mb-16">
+            <FadeInText 
+              as="span" 
+              className="text-sm font-medium text-golden-500 tracking-wide uppercase font-sans"
+              delay={0.1}
+            >
+              Portfolio
+            </FadeInText>
+            <FadeInText 
+              as="h2" 
+              className="text-4xl md:text-5xl font-serif text-gray-800 mt-2 mb-6"
+              delay={0.3}
+            >
+              Our Recent
+              <span className="text-blush-900 italic block">Love Stories</span>
+            </FadeInText>
+            <FadeInText 
+              as="p" 
+              className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans"
+              delay={0.5}
+            >
+              Explore a curated selection of our most beautiful weddings, each
+              uniquely captured to reflect our couples' authentic love stories.
+            </FadeInText>
+          </div>
+
+          {/* Empty State */}
+          <div className="text-center">
+            <p className="text-gray-500">No gallery items available at the moment.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Take first 6 items for the preview gallery
+  const previewItems = galleryItems.slice(0, 6);
 
   return (
     <section className="py-20 bg-white">
@@ -52,10 +173,10 @@ const Gallery = () => {
 
         {/* Gallery Grid Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Loop through each image */}
-          {images.map((image, index) => (
+          {/* Loop through each gallery item */}
+          {previewItems.map((item: GalleryItem, index: number) => (
             <Link
-              key={index}
+              key={item._id}
               to="/gallery"
               className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 animate-fade-in-up cursor-pointer"
               style={{ animationDelay: `${index * 100}ms` }} // Stagger animation for each image
@@ -63,8 +184,8 @@ const Gallery = () => {
               <div className="aspect-square overflow-hidden">
                 {/* Image with hover zoom effect */}
                 <img
-                  src={image.url}
-                  alt={image.alt}
+                  src={item.url}
+                  alt={item.alt}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                   decoding="async"
@@ -76,9 +197,9 @@ const Gallery = () => {
                 <div className="absolute bottom-6 left-6 text-white">
                   {/* Category and Description */}
                   <div className="text-sm font-medium mb-1 font-sans">
-                    {image.category}
+                    {item.category}
                   </div>
-                  <div className="text-xs opacity-90 font-sans">{image.alt}</div>
+                  <div className="text-xs opacity-90 font-sans">{item.alt}</div>
                 </div>
                 
                 {/* View Gallery Icon */}

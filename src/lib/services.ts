@@ -7,12 +7,15 @@ import {
 	getHeroData, 
 	getVideoShowcaseData,
 	getAllWebsiteData,
+	getExtendedGalleryData,
 	type AboutData,
 	type GalleryItem,
 	type Service,
 	type Testimonial,
 	type HeroData,
-	type VideoShowcaseData
+	type VideoShowcaseData,
+	type ExtendedGalleryDoc,
+	type ExtendedGalleryImage
 } from './firestore';
 
 // Cache for storing fetched data
@@ -111,6 +114,26 @@ export class GalleryService {
 		} catch (error) {
 			console.error('GalleryService: Error fetching categories:', error);
 			return [];
+		}
+	}
+}
+
+// Extended Gallery Service
+export class ExtendedGalleryService {
+	static async getData(): Promise<ExtendedGalleryDoc> {
+		const cacheKey = 'extended-gallery-data';
+		
+		if (isCacheValid(cacheKey)) {
+			return getCache(cacheKey);
+		}
+
+		try {
+			const data = await getExtendedGalleryData();
+			setCache(cacheKey, data);
+			return data;
+		} catch (error) {
+			console.error('ExtendedGalleryService: Error fetching extended gallery data:', error);
+			throw error;
 		}
 	}
 }
@@ -280,5 +303,7 @@ export type {
 	Service,
 	Testimonial,
 	HeroData,
-	VideoShowcaseData
+	VideoShowcaseData,
+	ExtendedGalleryDoc,
+	ExtendedGalleryImage
 }; 

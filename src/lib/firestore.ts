@@ -24,6 +24,23 @@ export type GalleryItem = {
 	createdAt?: Timestamp; // Firestore timestamp
 };
 
+// Extended Gallery Types
+export type ExtendedGalleryImage = {
+	id: string;
+	url: string;
+	alt: string;
+	category: string;
+	title: string;
+	description: string;
+	size: string;
+	cloudinaryId?: string;
+};
+
+export type ExtendedGalleryDoc = {
+	pageContent: unknown;
+	images: ExtendedGalleryImage[];
+};
+
 // Services Types
 export type Service = {
 	_id: string;
@@ -98,6 +115,11 @@ export const DEFAULT_VIDEO_SHOWCASE_DATA: VideoShowcaseData = {
 	description: "Experience the magic of our wedding photography and videography through this cinematic showcase. Watch how we capture the essence of love, joy, and celebration in every frame.",
 	videoUrl: "https://www.youtube.com/watch?v=XDp_YjH62B4",
 	thumbnailUrl: "/src/assets/image/VIDEO_THUMBNAIL.jpg"
+};
+
+export const DEFAULT_EXTENDED_GALLERY_DATA: ExtendedGalleryDoc = {
+	pageContent: {},
+	images: []
 };
 
 // Lazy singleton initialization
@@ -182,6 +204,30 @@ export async function getGalleryByCategory(category: string): Promise<GalleryIte
 	} catch (error) {
 		console.error(`Error fetching gallery data for category ${category}:`, error);
 		return [];
+	}
+}
+
+// Extended Gallery Service
+export async function getExtendedGalleryData(): Promise<ExtendedGalleryDoc> {
+	try {
+		const database = getDb();
+		const ref = doc(database, "extendedGallery", "main");
+		const snapshot = await getDoc(ref);
+
+		if (!snapshot.exists()) {
+			return DEFAULT_EXTENDED_GALLERY_DATA;
+		}
+
+		const data = snapshot.data() as Partial<ExtendedGalleryDoc> | undefined;
+		if (!data) return DEFAULT_EXTENDED_GALLERY_DATA;
+
+		return {
+			pageContent: data.pageContent ?? {},
+			images: Array.isArray(data.images) ? data.images as ExtendedGalleryImage[] : []
+		};
+	} catch (error) {
+		console.error("Error fetching extended gallery data:", error);
+		return DEFAULT_EXTENDED_GALLERY_DATA;
 	}
 }
 

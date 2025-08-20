@@ -7,12 +7,15 @@ import {
 	HeroService,
 	VideoShowcaseService,
 	WebsiteService,
+	ExtendedGalleryService,
 	type AboutData,
 	type GalleryItem,
 	type Service,
 	type Testimonial,
 	type HeroData,
-	type VideoShowcaseData
+	type VideoShowcaseData,
+	type ExtendedGalleryDoc,
+	type ExtendedGalleryImage
 } from '../lib/services';
 
 // Generic hook for data fetching
@@ -68,6 +71,11 @@ export function useGalleryByCategory(category: string) {
 
 export function useGalleryCategories() {
 	return useDataFetching(() => GalleryService.getCategories());
+}
+
+// Extended Gallery data hook
+export function useExtendedGalleryData() {
+	return useDataFetching<ExtendedGalleryDoc>(() => ExtendedGalleryService.getData());
 }
 
 // Services data hooks
@@ -160,5 +168,7 @@ export type {
 	Service,
 	Testimonial,
 	HeroData,
-	VideoShowcaseData
+	VideoShowcaseData,
+	ExtendedGalleryDoc,
+	ExtendedGalleryImage
 }; 

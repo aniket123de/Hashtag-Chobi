@@ -58,6 +58,16 @@ export type HeroData = {
 	cloudinaryId?: string;
 };
 
+// VideoShowcase Types
+export type VideoShowcaseData = {
+	title: string;
+	subtitle: string;
+	description: string;
+	videoUrl: string;
+	thumbnailUrl: string;
+	cloudinaryId?: string;
+};
+
 // Default fallback for when the document doesn't exist
 export const DEFAULT_ABOUT_DATA: AboutData = {
 	title: "About Us",
@@ -80,6 +90,14 @@ export const DEFAULT_HERO_DATA: HeroData = {
 	description: "From weddings to corporate events, we specialize in creating timeless memories through our lens.",
 	ctaText: "Book Your Session",
 	backgroundImage: "/src/assets/image/HERO.jpg"
+};
+
+export const DEFAULT_VIDEO_SHOWCASE_DATA: VideoShowcaseData = {
+	title: "Our Story in Motion",
+	subtitle: "Cinematic Wedding Stories",
+	description: "Experience the magic of our wedding photography and videography through this cinematic showcase. Watch how we capture the essence of love, joy, and celebration in every frame.",
+	videoUrl: "https://www.youtube.com/watch?v=XDp_YjH62B4",
+	thumbnailUrl: "/src/assets/image/VIDEO_THUMBNAIL.jpg"
 };
 
 // Lazy singleton initialization
@@ -240,15 +258,45 @@ export async function getHeroData(): Promise<HeroData> {
 	}
 }
 
+// VideoShowcase Service
+export async function getVideoShowcaseData(): Promise<VideoShowcaseData> {
+	try {
+		const database = getDb();
+		const videoShowcaseRef = doc(database, "videoShowcase", "main");
+		const snapshot = await getDoc(videoShowcaseRef);
+
+		if (!snapshot.exists()) {
+			return DEFAULT_VIDEO_SHOWCASE_DATA;
+		}
+
+		const data = snapshot.data() as Partial<VideoShowcaseData> | undefined;
+		if (!data) return DEFAULT_VIDEO_SHOWCASE_DATA;
+
+		// Basic normalization with fallbacks
+		return {
+			title: data.title ?? DEFAULT_VIDEO_SHOWCASE_DATA.title,
+			subtitle: data.subtitle ?? DEFAULT_VIDEO_SHOWCASE_DATA.subtitle,
+			description: data.description ?? DEFAULT_VIDEO_SHOWCASE_DATA.description,
+			videoUrl: data.videoUrl ?? DEFAULT_VIDEO_SHOWCASE_DATA.videoUrl,
+			thumbnailUrl: data.thumbnailUrl ?? DEFAULT_VIDEO_SHOWCASE_DATA.thumbnailUrl,
+			cloudinaryId: data.cloudinaryId
+		};
+	} catch (error) {
+		console.error("Error fetching video showcase data:", error);
+		return DEFAULT_VIDEO_SHOWCASE_DATA;
+	}
+}
+
 // Utility function to get all website data at once
 export async function getAllWebsiteData() {
 	try {
-		const [about, gallery, services, testimonials, hero] = await Promise.all([
+		const [about, gallery, services, testimonials, hero, videoShowcase] = await Promise.all([
 			getAboutData(),
 			getGalleryData(),
 			getServicesData(),
 			getTestimonialsData(),
-			getHeroData()
+			getHeroData(),
+			getVideoShowcaseData()
 		]);
 
 		return {
@@ -256,7 +304,8 @@ export async function getAllWebsiteData() {
 			gallery,
 			services,
 			testimonials,
-			hero
+			hero,
+			videoShowcase
 		};
 	} catch (error) {
 		console.error("Error fetching all website data:", error);
@@ -265,7 +314,8 @@ export async function getAllWebsiteData() {
 			gallery: [],
 			services: [],
 			testimonials: [],
-			hero: DEFAULT_HERO_DATA
+			hero: DEFAULT_HERO_DATA,
+			videoShowcase: DEFAULT_VIDEO_SHOWCASE_DATA
 		};
 	}
 } 

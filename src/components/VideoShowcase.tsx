@@ -3,18 +3,46 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { useVideoShowcaseData } from "@/hooks/useWebsiteData";
+import { VideoShowcaseData } from "@/lib/services";
 
 // YouTube API type declarations
 declare global {
   interface Window {
-    YT: any;
+    YT: {
+      Player: new (elementId: string, config: unknown) => YouTubePlayer;
+      PlayerState: {
+        PLAYING: number;
+        PAUSED: number;
+        ENDED: number;
+        CUED: number;
+      };
+    };
     onYouTubeIframeAPIReady: () => void;
   }
 }
 
+interface YouTubePlayer {
+  playVideo(): void;
+  pauseVideo(): void;
+  mute(): void;
+  unMute(): void;
+  getPlayerState(): number;
+  destroy(): void;
+}
+
 const VideoShowcase = () => {
-  // YouTube video ID extracted from the URL
-  const youtubeVideoId = "XDp_YjH62B4";
+  // Fetch video showcase data from Firestore
+  const { data: videoShowcaseData, loading, error } = useVideoShowcaseData();
+
+  // Extract YouTube video ID from the URL
+  const getYouTubeVideoId = (url: string): string => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : "XDp_YjH62B4"; // Fallback to default
+  };
+
+  const youtubeVideoId = videoShowcaseData?.videoUrl ? getYouTubeVideoId(videoShowcaseData.videoUrl) : "XDp_YjH62B4";
 
   // State to control video playback
   const [isPlaying, setIsPlaying] = useState(false);
@@ -23,7 +51,7 @@ const VideoShowcase = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
-  const playerRef = useRef<any>(null);
+  const playerRef = useRef<YouTubePlayer | null>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Use intersection observer to detect when video section is visible
@@ -54,7 +82,7 @@ const VideoShowcase = () => {
         playerRef.current.destroy();
       }
     };
-  }, []);
+  }, [youtubeVideoId]); // Re-initialize when video ID changes
 
   // Initialize YouTube player
   const initializePlayer = () => {
@@ -74,7 +102,7 @@ const VideoShowcase = () => {
             console.log("YouTube player ready");
             setPlayerReady(true);
           },
-          onStateChange: (event: any) => {
+          onStateChange: (event: { data: number }) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
               setIsPlaying(true);
             } else if (event.data === window.YT.PlayerState.PAUSED) {
@@ -190,6 +218,49 @@ const VideoShowcase = () => {
     }
   }, [isIntersecting, hasStarted, playerReady, userInteracted]);
 
+  // Show loading state
+  if (loading) {
+    return (
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="animate-pulse">
+              <div className="h-12 bg-gray-300 rounded w-96 mx-auto mb-6"></div>
+              <div className="h-6 bg-gray-300 rounded w-80 mx-auto"></div>
+            </div>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="aspect-video bg-gray-200 rounded-2xl animate-pulse"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="text-red-500">
+              <p>Error loading video showcase. Please try again later.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Use default data if no data is available
+  const data: VideoShowcaseData = videoShowcaseData || {
+    title: "Our Story in Motion",
+    subtitle: "Cinematic Wedding Stories",
+    description: "Experience the magic of our wedding photography and videography through this cinematic showcase. Watch how we capture the essence of love, joy, and celebration in every frame.",
+    videoUrl: "https://www.youtube.com/watch?v=XDp_YjH62B4",
+    thumbnailUrl: "/src/assets/image/VIDEO_THUMBNAIL.jpg"
+  };
+
   return (
     <section
       ref={elementRef}
@@ -203,16 +274,14 @@ const VideoShowcase = () => {
             className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-serif"
             delay={0.1}
           >
-            Our Story in Motion
+            {data.title}
           </FadeInText>
           <FadeInText
             as="p"
             className="text-lg text-gray-600 max-w-3xl mx-auto font-sans"
             delay={0.3}
           >
-            Experience the magic of our wedding photography and videography
-            through this cinematic showcase. Watch how we capture the essence of
-            love, joy, and celebration in every frame.
+            {data.description}
           </FadeInText>
         </div>
 

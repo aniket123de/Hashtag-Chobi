@@ -1,21 +1,16 @@
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Facebook,
-  Instagram,
-  Twitter,
-} from "lucide-react";
 import { Link } from "react-router-dom";
-import Logo from "../assets/image/HashtagChobi-LOGO.png";
-import FooterBG from "../assets/image/FOOTER.jpg";
+import { Facebook, Instagram, Twitter, Phone, Mail, MapPin } from "lucide-react";
 import { FadeInText } from "@/components/ui/fade-in-section";
+import { useHeroData } from "@/hooks/useWebsiteData";
 
 const Footer = () => {
-  // Get current year dynamically for copyright
-  const currentYear = new Date().getFullYear();
+  // Fetch hero data from Firestore for consistent messaging
+  const { data: heroData } = useHeroData();
 
-  // Smooth scroll to a section by ID
+  /**
+   * Smoothly scrolls to a section by its ID
+   * @param sectionId - id of the target element
+   */
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -23,29 +18,19 @@ const Footer = () => {
     }
   };
 
+  // Use hero data or fallback content
+  const description = heroData?.description || 
+    "Capturing love stories, frame by frame. Premier wedding photography and Cinematography since 2016, creating timeless memories that will be cherished for generations to come.";
+
   return (
-    <footer className="relative text-white py-16 overflow-hidden">
-      {/* Background Image */}
-      <img
-        src={FooterBG}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover"
-        loading="lazy"
-        decoding="async"
-        aria-hidden="true"
-      />
-
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/70" aria-hidden="true" />
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Brand & Description */}
-          <div className="md:col-span-2">
-            <div className="flex items-center mb-3">
-              {/* Logo */}
+    <footer className="bg-gray-900 text-white">
+      <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <div className="lg:col-span-2">
+            <div className="mb-6">
               <img
-                src={Logo}
+                src="/src/assets/image/HashtagChobi-LOGO.png"
                 alt="Hashtag Chobi Logo"
                 className="h-[80px] w-auto object-contain cursor-pointer"
               />
@@ -55,9 +40,7 @@ const Footer = () => {
               className="text-white leading-relaxed mb-6 max-w-md font-sans"
               delay={0.1}
             >
-              Capturing love stories, frame by frame. Premier wedding photography 
-              and Cinematography since 2016, creating timeless memories that will be 
-              cherished for generations to come.
+              {description}
             </FadeInText>
 
             {/* Social Media Links */}
@@ -178,7 +161,7 @@ const Footer = () => {
         {/* Bottom Bar with copyright and policy link */}
         <div className="border-t border-white/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-white text-sm font-sans">
-            © {currentYear} Hashtag Chobi. All rights reserved.
+            © {new Date().getFullYear()} Hashtag Chobi. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a

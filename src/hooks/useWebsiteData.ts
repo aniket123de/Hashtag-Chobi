@@ -1,16 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
+import { 
 	AboutService,
 	GalleryService,
 	ServicesService,
 	TestimonialsService,
 	HeroService,
+	VideoShowcaseService,
 	WebsiteService,
 	type AboutData,
 	type GalleryItem,
 	type Service,
 	type Testimonial,
-	type HeroData
+	type HeroData,
+	type VideoShowcaseData
 } from '../lib/services';
 
 // Generic hook for data fetching
@@ -97,6 +99,11 @@ export function useHeroData() {
 	return useDataFetching(() => HeroService.getData());
 }
 
+// VideoShowcase data hook
+export function useVideoShowcaseData() {
+	return useDataFetching(() => VideoShowcaseService.getData());
+}
+
 // Website data hooks
 export function useAllWebsiteData() {
 	return useDataFetching(() => WebsiteService.getAllData());
@@ -152,5 +159,6 @@ export type {
 	GalleryItem,
 	Service,
 	Testimonial,
-	HeroData
+	HeroData,
+	VideoShowcaseData
 }; 

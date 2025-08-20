@@ -5,12 +5,14 @@ import {
 	getServicesData, 
 	getTestimonialsData, 
 	getHeroData, 
+	getVideoShowcaseData,
 	getAllWebsiteData,
 	type AboutData,
 	type GalleryItem,
 	type Service,
 	type Testimonial,
-	type HeroData
+	type HeroData,
+	type VideoShowcaseData
 } from './firestore';
 
 // Cache for storing fetched data
@@ -193,6 +195,26 @@ export class HeroService {
 	}
 }
 
+// VideoShowcase Service
+export class VideoShowcaseService {
+	static async getData(): Promise<VideoShowcaseData> {
+		const cacheKey = 'video-showcase-data';
+		
+		if (isCacheValid(cacheKey)) {
+			return getCache(cacheKey);
+		}
+
+		try {
+			const data = await getVideoShowcaseData();
+			setCache(cacheKey, data);
+			return data;
+		} catch (error) {
+			console.error('VideoShowcaseService: Error fetching video showcase data:', error);
+			throw error;
+		}
+	}
+}
+
 // Main Website Service - combines all services
 export class WebsiteService {
 	static async getAllData() {
@@ -214,16 +236,18 @@ export class WebsiteService {
 
 	static async getHomePageData() {
 		try {
-			const [hero, services, testimonials] = await Promise.all([
+			const [hero, services, testimonials, videoShowcase] = await Promise.all([
 				HeroService.getData(),
 				ServicesService.getAll(),
-				TestimonialsService.getFeatured(3)
+				TestimonialsService.getFeatured(3),
+				VideoShowcaseService.getData()
 			]);
 
 			return {
 				hero,
 				services,
-				testimonials
+				testimonials,
+				videoShowcase
 			};
 		} catch (error) {
 			console.error('WebsiteService: Error fetching home page data:', error);
@@ -255,5 +279,6 @@ export type {
 	GalleryItem,
 	Service,
 	Testimonial,
-	HeroData
+	HeroData,
+	VideoShowcaseData
 }; 

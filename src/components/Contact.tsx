@@ -21,11 +21,11 @@ const Contact = () => {
 
   // Form state containing all input fields
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    fullName: "",
     phone: "",
     eventType: "",
+    eventDate: "",
+    location: "",
     message: "",
   });
 
@@ -47,33 +47,14 @@ const Contact = () => {
 
   // Basic validation with user-friendly toast error messages
   const validateForm = () => {
-    const { firstName, lastName, email, phone, eventType, message } = formData;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const { fullName, phone, eventType, eventDate, location, message } = formData;
     const phoneRegex =
       /^\+?\d{1,3}[\s-]?\(?\d{1,4}?\)?[\s-]?\d{1,4}[\s-]?\d{1,4}$/;
 
-    if (!firstName.trim()) {
+    if (!fullName.trim()) {
       toast({
-        title: "Missing First Name",
-        description: "Please enter your first name.",
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    if (!lastName.trim()) {
-      toast({
-        title: "Missing Last Name",
-        description: "Please enter your last name.",
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    if (!emailRegex.test(email)) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
+        title: "Missing Full Name",
+        description: "Please enter your full name.",
         variant: "destructive",
       });
       return false;
@@ -97,6 +78,24 @@ const Contact = () => {
       return false;
     }
 
+    if (!eventDate.trim()) {
+      toast({
+        title: "Event Date Required",
+        description: "Please select your event date.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    if (!location.trim()) {
+      toast({
+        title: "Location Required",
+        description: "Please enter your event location.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
     if (!message.trim() || message.length < 10) {
       toast({
         title: "Incomplete Message",
@@ -109,7 +108,7 @@ const Contact = () => {
     return true;
   };
 
-  // Handle form submission
+  // Handle form submission - redirect to WhatsApp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -117,25 +116,43 @@ const Contact = () => {
 
     setIsSubmitting(true);
 
-    // Simulate API call or backend integration delay
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+    // Create WhatsApp message with better formatting
+    const { fullName, phone, eventType, eventDate, location, message } = formData;
+    const whatsappMessage = `*New Customer Enquiry*
+
+*Name:* ${fullName}
+*Phone:* ${phone}
+*Service:* ${eventType}
+*Date:* ${eventDate}
+*Location:* ${location}
+
+*Message:* ${message}`;
+    
+    // Encode the message for URL
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    
+    // WhatsApp API URL with the specified phone number
+    const whatsappUrl = `https://wa.me/917003216321?text=${encodedMessage}`;
+    
+    // Open WhatsApp in new tab
+    window.open(whatsappUrl, '_blank');
 
     setIsSubmitting(false);
 
     // Reset form after successful submission
     setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
+      fullName: "",
       phone: "",
       eventType: "",
+      eventDate: "",
+      location: "",
       message: "",
     });
 
     // Show success toast
     toast({
-      title: "Message Sent ✉️",
-      description: "Thank you! We’ll get back to you within 24 hours.",
+      title: "Redirecting to WhatsApp 📱",
+      description: "You're being redirected to WhatsApp to send your message.",
     });
 
     // Scroll to hero section after 2 seconds
@@ -189,55 +206,23 @@ const Contact = () => {
               </FadeInText>
 
               <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-                {/* Name Fields */}
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="firstName" className="text-gray-700 font-medium font-sans">
-                      First Name
-                    </Label>
-                    <Input
-                      id="firstName"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      placeholder="Your first name"
-                      className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400 font-['EB_Garamond']"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="lastName" className="text-gray-700 font-medium font-sans">
-                      Last Name
-                    </Label>
-                    <Input
-                      id="lastName"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      placeholder="Your last name"
-                      className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400 font-['EB_Garamond']"
-                      required
-                    />
-                  </div>
-                </div>
-
-                {/* Contact Info */}
+                {/* Full Name Field */}
                 <div>
-                  <Label htmlFor="email" className="text-gray-700 font-medium font-sans">
-                    Email Address
+                  <Label htmlFor="fullName" className="text-gray-700 font-medium font-sans">
+                    Full Name
                   </Label>
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
                     onChange={handleChange}
-                    placeholder="your.email@example.com"
+                    placeholder="Your full name"
                     className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400 font-['EB_Garamond']"
                     required
                   />
                 </div>
 
+                {/* Phone Number */}
                 <div>
                   <Label htmlFor="phone" className="text-gray-700 font-medium font-sans">
                     Phone Number
@@ -248,7 +233,7 @@ const Contact = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="+91 70032 16321"
                     className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400"
                     required
                   />
@@ -270,6 +255,38 @@ const Contact = () => {
                   />
                 </div>
 
+                {/* Event Date */}
+                <div>
+                  <Label htmlFor="eventDate" className="text-gray-700 font-medium font-sans">
+                    Event Date
+                  </Label>
+                  <Input
+                    id="eventDate"
+                    name="eventDate"
+                    type="date"
+                    value={formData.eventDate}
+                    onChange={handleChange}
+                    className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400"
+                    required
+                  />
+                </div>
+
+                {/* Location */}
+                <div>
+                  <Label htmlFor="location" className="text-gray-700 font-medium font-sans">
+                    Event Location
+                  </Label>
+                  <Input
+                    id="location"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    placeholder="Enter your event location (e.g., Hotel Name, Venue Name)"
+                    className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400"
+                    required
+                  />
+                </div>
+
                 {/* Message */}
                 <div>
                   <Label htmlFor="message" className="text-gray-700 font-medium font-sans">
@@ -280,7 +297,7 @@ const Contact = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Share your vision, wedding date, venue, style preferences, and any special requirements..."
+                    placeholder="Share your vision, style preferences, and any special requirements..."
                     rows={4}
                     className="mt-2 border-gray-200 focus:border-blush-400 focus:ring-blush-400"
                     required
@@ -294,7 +311,7 @@ const Contact = () => {
                   disabled={isSubmitting}
                   aria-busy={isSubmitting}
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {isSubmitting ? "Redirecting..." : "Send Message via WhatsApp"}
                 </Button>
               </form>
             </div>
@@ -311,8 +328,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-800 font-sans">Phone</h4>
-                    <Link to="tel:+15551234567" className="hover:text-blush-400">
-                      +1 (555) 123-4567
+                    <Link to="tel:+917003216321" className="hover:text-blush-400">
+                      +91 70032 16321
                     </Link>
                   </div>
                 </div>
@@ -326,8 +343,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-800 font-sans">Email</h4>
-                    <Link to="mailto:hello@eventory.com" className="hover:text-blush-400">
-                      hello@eventory.com
+                    <Link to="mailto:hello@hashtagchobi.com" className="hover:text-blush-400">
+                      hello@hashtagchobi.com
                     </Link>
                   </div>
                 </div>
@@ -357,7 +374,7 @@ const Contact = () => {
                   Schedule a complimentary 30-minute consultation to discuss your
                   event vision and how we can bring it to life.
                 </p>
-                <Link to="tel:+15551234567" aria-label="Call Us Now">
+                <Link to="tel:+917003216321" aria-label="Call Us Now">
                   <Button
                     size="lg"
                     className="bg-white text-black hover:bg-gray-50 px-6 py-2 rounded-full font-medium font-sans"

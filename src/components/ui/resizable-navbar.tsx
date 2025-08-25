@@ -72,14 +72,15 @@ export const Navbar = ({ children, className }: NavbarProps) => {
       // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
       className={cn("fixed inset-x-0 top-0 z-40 w-full", className)}
     >
-      {React.Children.map(children, (child) =>
-        React.isValidElement(child)
-          ? React.cloneElement(
-              child as React.ReactElement<{ visible?: boolean }>,
-              { visible }
-            )
-          : child
-      )}
+      {React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) return child;
+        // Do not pass custom props to DOM nodes; omit when child is intrinsic element
+        if (typeof child.type === "string") return child;
+        return React.cloneElement(
+          child as React.ReactElement<{ visible?: boolean }>,
+          { visible: visible ? true : undefined }
+        );
+      })}
     </motion.div>
   );
 };
@@ -180,14 +181,14 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         className
       )}
     >
-      {React.Children.map(children, (child) =>
-        React.isValidElement(child)
-          ? React.cloneElement(
-              child as React.ReactElement<{ visible?: boolean }>,
-              { visible }
-            )
-          : child
-      )}
+      {React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) return child;
+        if (typeof child.type === "string") return child;
+        return React.cloneElement(
+          child as React.ReactElement<{ visible?: boolean }>,
+          { visible: visible ? true : undefined }
+        );
+      })}
     </motion.div>
   );
 };
@@ -204,14 +205,14 @@ export const MobileNavHeader = ({
         className
       )}
     >
-      {React.Children.map(children, (child) =>
-        React.isValidElement(child)
-          ? React.cloneElement(
-              child as React.ReactElement<{ visible?: boolean }>,
-              { visible: visible ? true : undefined }
-            )
-          : child
-      )}
+      {React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) return child;
+        if (typeof child.type === "string") return child;
+        return React.cloneElement(
+          child as React.ReactElement<{ visible?: boolean }>,
+          { visible: visible ? true : undefined }
+        );
+      })}
     </div>
   );
 };

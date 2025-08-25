@@ -343,8 +343,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-800 font-sans">Email</h4>
-                    <Link to="mailto:hello@hashtagchobi.com" className="hover:text-blush-400">
-                      hello@hashtagchobi.com
+                    <Link to="mailto:Hashtagchobi@gmail.com" className="hover:text-blush-400">
+                    Hashtagchobi@gmail.com
                     </Link>
                   </div>
                 </div>
@@ -359,9 +359,9 @@ const Contact = () => {
                   <div>
                     <h4 className="font-medium text-gray-800 font-sans">Location</h4>
                     <address className="not-italic text-gray-600">
-                      123 Event Plaza, Suite 456
+                      103/1a raja dinendra street
                       <br />
-                      New York, NY 10001
+                      Kolkata - 700006
                     </address>
                   </div>
                 </div>

@@ -1,10 +1,23 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Navbar, NavBody, NavItems, NavbarButton, MobileNav, MobileNavHeader, MobileNavMenu, MobileNavToggle } from "@/components/ui/resizable-navbar";
 import Logo from "../assets/image/HashtagChobi-LOGO.png";
 import { useHeroData } from "@/hooks/useWebsiteData";
 
-const NewHeader = () => {
+interface NewHeaderProps {
+  variant?: 'default' | 'dark';
+}
+
+const NewHeader = ({ variant }: NewHeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Auto-detect if we need dark variant for white background pages
+  const shouldUseDarkVariant = variant === 'dark' || 
+    location.pathname === '/gallery' || 
+    location.pathname === '/couple1' || 
+    location.pathname === '/couple2' || 
+    location.pathname === '/couple3';
 
   // Fetch hero data from Firestore for consistent CTA text
   const { data: heroData } = useHeroData();
@@ -12,7 +25,7 @@ const NewHeader = () => {
   // Use hero data or fallback text
   const ctaText = heroData?.ctaText || "Book Your Session";
 
-  const navItems = [
+  const allNavItems = [
     { name: "Home", link: "#hero" },
     { name: "About", link: "#about" },
     { name: "Services", link: "#services" },
@@ -20,7 +33,16 @@ const NewHeader = () => {
     { name: "Contact", link: "#contact" },
   ];
 
+  // Show only 'Home' option for gallery and couple pages
+  const navItems = shouldUseDarkVariant ? [{ name: "Home", link: "/" }] : allNavItems;
+
   const handleNavClick = (sectionId: string) => {
+    // Handle navigation to home page from other pages
+    if (shouldUseDarkVariant && sectionId === "/") {
+      window.location.href = "/";
+      return;
+    }
+    
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -31,15 +53,26 @@ const NewHeader = () => {
     e.preventDefault();
     const href = e.currentTarget.getAttribute("href");
     if (href) {
-      const sectionId = href.replace("#", "");
-      handleNavClick(sectionId);
+      if (href === "/") {
+        // Navigate to home page
+        window.location.href = "/";
+      } else {
+        const sectionId = href.replace("#", "");
+        handleNavClick(sectionId);
+      }
     }
   };
 
   const CustomLogo = () => (
     <div
       className="flex items-center justify-center cursor-pointer flex-shrink-0 h-full"
-      onClick={() => handleNavClick("hero")}
+      onClick={() => {
+        if (shouldUseDarkVariant) {
+          window.location.href = "/";
+        } else {
+          handleNavClick("hero");
+        }
+      }}
     >
       <img
         src={Logo}
@@ -50,7 +83,7 @@ const NewHeader = () => {
   );
 
   return (
-    <Navbar>
+    <Navbar variant={shouldUseDarkVariant ? 'dark' : 'default'}>
       {/* Desktop Navigation */}
       <NavBody className="h-20 px-6">
         <CustomLogo />
@@ -60,9 +93,16 @@ const NewHeader = () => {
         />
         <NavbarButton
           variant="primary"
-          onClick={() => handleNavClick("contact")}
+          onClick={() => {
+            if (shouldUseDarkVariant) {
+              window.location.href = "/#contact";
+            } else {
+              handleNavClick("contact");
+            }
+          }}
           as="button"
           className="flex-shrink-0 text-xs focus:outline-none ml-4"
+          navVariant={shouldUseDarkVariant ? 'dark' : 'default'}
         >
           {ctaText}
         </NavbarButton>
@@ -74,7 +114,13 @@ const NewHeader = () => {
           <div className="flex-1" />
           <div
             className="flex items-center justify-center cursor-pointer flex-shrink-0"
-            onClick={() => handleNavClick("hero")}
+            onClick={() => {
+              if (shouldUseDarkVariant) {
+                window.location.href = "/";
+              } else {
+                handleNavClick("hero");
+              }
+            }}
           >
             <img
               src={Logo}
@@ -92,6 +138,7 @@ const NewHeader = () => {
         <MobileNavMenu
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}
+          navVariant={shouldUseDarkVariant ? 'dark' : 'default'}
         >
           {navItems.map((item, idx) => (
             <a
@@ -101,7 +148,11 @@ const NewHeader = () => {
                 handleItemClick(e);
                 setIsMobileMenuOpen(false);
               }}
-              className="block text-lg font-semibold text-gray-900 hover:text-blush-600 transition-colors duration-200 font-sans"
+              className={`block text-lg font-semibold transition-colors duration-200 font-sans ${
+                shouldUseDarkVariant 
+                  ? 'text-gray-900 hover:text-blush-600' 
+                  : 'text-gray-900 hover:text-blush-600'
+              }`}
             >
               {item.name}
             </a>
@@ -109,11 +160,16 @@ const NewHeader = () => {
           <NavbarButton
             variant="primary"
             onClick={() => {
-              handleNavClick("contact");
+              if (shouldUseDarkVariant) {
+                window.location.href = "/#contact";
+              } else {
+                handleNavClick("contact");
+              }
               setIsMobileMenuOpen(false);
             }}
             as="button"
             className="w-full mt-4 focus:outline-none"
+            navVariant={shouldUseDarkVariant ? 'dark' : 'default'}
           >
             {ctaText}
           </NavbarButton>

@@ -1,7 +1,6 @@
 import ServiceBG from "../assets/image/SERVICES.jpg";
 import { Carousel, Card } from "./ui/apple-cards-carousel";
 import { FadeInText } from "@/components/ui/fade-in-section";
-import { useNavigate } from "react-router-dom";
 
 // Sample couples data - you can later fetch this from Firestore
 const couplesData = [
@@ -48,12 +47,6 @@ const couplesData = [
 ];
 
 const Services = () => {
-  const navigate = useNavigate();
-
-  // Handle card click to navigate to couple's album page
-  const handleCardClick = (coupleId: string) => {
-    navigate(`/${coupleId}`);
-  };
 
   // Map couples to cards
   const cards = couplesData.map((couple, index) => (
@@ -63,6 +56,7 @@ const Services = () => {
         src: couple.coverImage,
         title: `${couple.groomName} ♥ ${couple.brideName}`,
         category: couple.category,
+        href: `/${couple.id}`, // Add href for direct navigation
         content: (
           <div className="space-y-6">
             <div className="text-center">
@@ -88,12 +82,9 @@ const Services = () => {
             </div>
             
             <div className="pt-6 border-t border-gray-200">
-              <button 
-                onClick={() => handleCardClick(couple.id)}
-                className="w-full bg-blush-500 hover:bg-blush-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300 font-sans"
-              >
+              <div className="w-full bg-blush-500 text-white font-medium py-3 px-6 rounded-lg text-center font-sans">
                 View Wedding Album
-              </button>
+              </div>
             </div>
             
             <div className="pt-4">

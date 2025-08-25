@@ -13,12 +13,14 @@ import React, { useRef, useState } from "react";
 interface NavbarProps {
   children: React.ReactNode;
   className?: string;
+  variant?: 'default' | 'dark';
 }
 
 interface NavBodyProps {
   children: React.ReactNode;
   className?: string;
   visible?: boolean;
+  variant?: 'default' | 'dark';
 }
 
 interface NavItemsProps {
@@ -29,12 +31,14 @@ interface NavItemsProps {
   className?: string;
   onItemClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   visible?: boolean;
+  variant?: 'default' | 'dark';
 }
 
 interface MobileNavProps {
   children: React.ReactNode;
   className?: string;
   visible?: boolean;
+  variant?: 'default' | 'dark';
 }
 
 interface MobileNavHeaderProps {
@@ -48,9 +52,10 @@ interface MobileNavMenuProps {
   className?: string;
   isOpen: boolean;
   onClose: () => void;
+  navVariant?: 'default' | 'dark';
 }
 
-export const Navbar = ({ children, className }: NavbarProps) => {
+export const Navbar = ({ children, className, variant = 'default' }: NavbarProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll({
     target: ref,
@@ -77,19 +82,23 @@ export const Navbar = ({ children, className }: NavbarProps) => {
         // Do not pass custom props to DOM nodes; omit when child is intrinsic element
         if (typeof child.type === "string") return child;
         return React.cloneElement(
-          child as React.ReactElement<{ visible?: boolean }>,
-          { visible: visible ? true : undefined }
+          child as React.ReactElement<{ visible?: boolean; variant?: 'default' | 'dark' }>,
+          { visible: visible ? true : undefined, variant }
         );
       })}
     </motion.div>
   );
 };
 
-export const NavBody = ({ children, className, visible }: NavBodyProps) => {
+export const NavBody = ({ children, className, visible, variant = 'default' }: NavBodyProps) => {
+  const isDarkVariant = variant === 'dark';
+  
   return (
     <motion.div
       animate={{
-        backgroundColor: visible ? "#111827" : "rgba(0, 0, 0, 0)",
+        backgroundColor: visible 
+          ? (isDarkVariant ? "#ffffff" : "#111827")
+          : "rgba(0, 0, 0, 0)",
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
@@ -109,8 +118,8 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(
-              child as React.ReactElement<{ visible?: boolean }>,
-              { visible }
+              child as React.ReactElement<{ visible?: boolean; variant?: 'default' | 'dark'; navVariant?: 'default' | 'dark' }>,
+              { visible, variant, navVariant: variant }
             )
           : child
       )}
@@ -123,10 +132,14 @@ export const NavItems = ({
   className,
   onItemClick,
   visible,
+  variant = 'default',
 }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
-  const textColor = visible ? "text-white" : "text-white";
+  const isDarkVariant = variant === 'dark';
+  const textColor = visible 
+    ? (isDarkVariant ? "text-gray-900" : "text-white")
+    : (isDarkVariant ? "text-gray-900" : "text-white");
 
   return (
     <motion.div
@@ -148,7 +161,10 @@ export const NavItems = ({
           {hovered === idx && (
             <motion.div
               layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-white/20"
+              className={cn(
+                "absolute inset-0 h-full w-full rounded-full",
+                isDarkVariant ? "bg-gray-200" : "bg-white/20"
+              )}
             />
           )}
           <span className="relative z-20">{item.name}</span>
@@ -158,11 +174,15 @@ export const NavItems = ({
   );
 };
 
-export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
+export const MobileNav = ({ children, className, visible, variant = 'default' }: MobileNavProps) => {
+  const isDarkVariant = variant === 'dark';
+  
   return (
     <motion.div
       animate={{
-        backgroundColor: visible ? "#111827" : "rgba(0, 0, 0, 0)",
+        backgroundColor: visible 
+          ? (isDarkVariant ? "#ffffff" : "#111827")
+          : "rgba(0, 0, 0, 0)",
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
@@ -185,8 +205,8 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         if (!React.isValidElement(child)) return child;
         if (typeof child.type === "string") return child;
         return React.cloneElement(
-          child as React.ReactElement<{ visible?: boolean }>,
-          { visible: visible ? true : undefined }
+          child as React.ReactElement<{ visible?: boolean; variant?: 'default' | 'dark'; navVariant?: 'default' | 'dark' }>,
+          { visible: visible ? true : undefined, variant, navVariant: variant }
         );
       })}
     </motion.div>
@@ -197,7 +217,8 @@ export const MobileNavHeader = ({
   children,
   className,
   visible,
-}: MobileNavHeaderProps) => {
+  navVariant,
+}: MobileNavHeaderProps & { navVariant?: 'default' | 'dark' }) => {
   return (
     <div
       className={cn(
@@ -209,8 +230,8 @@ export const MobileNavHeader = ({
         if (!React.isValidElement(child)) return child;
         if (typeof child.type === "string") return child;
         return React.cloneElement(
-          child as React.ReactElement<{ visible?: boolean }>,
-          { visible: visible ? true : undefined }
+          child as React.ReactElement<{ visible?: boolean; navVariant?: 'default' | 'dark' }>,
+          { visible: visible ? true : undefined, navVariant }
         );
       })}
     </div>
@@ -222,6 +243,7 @@ export const MobileNavMenu = ({
   className,
   isOpen,
   onClose,
+  navVariant = 'default',
 }: MobileNavMenuProps) => {
   return (
     <AnimatePresence>
@@ -299,6 +321,11 @@ export const MobileNavMenu = ({
                   }
                   // If it's a button
                   else {
+                    const isDarkMobileVariant = navVariant === 'dark';
+                    const buttonClasses = isDarkMobileVariant 
+                      ? "w-full bg-black hover:bg-gray-800 text-white border border-gray-600 hover:border-gray-500 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                      : "w-full bg-white hover:bg-gray-50 text-black border border-gray-200 hover:border-gray-300 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200";
+                    
                     return (
                       <motion.div
                         key={index}
@@ -309,9 +336,10 @@ export const MobileNavMenu = ({
                       >
                         {React.cloneElement(child as React.ReactElement, {
                           className: cn(
-                            "w-full bg-gradient-to-r from-blush-500 to-golden-500 text-black font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
+                            buttonClasses,
                             child.props.className
-                          )
+                          ),
+                          navVariant
                         })}
                       </motion.div>
                     );
@@ -334,17 +362,27 @@ export const MobileNavToggle = ({
   isOpen,
   onClick,
   visible = false,
+  variant = 'default',
 }: {
   isOpen: boolean;
   onClick: () => void;
   visible?: boolean;
+  variant?: 'default' | 'dark';
 }) => {
-  const iconClass = visible ? "text-white" : "text-white";
+  const isDarkVariant = variant === 'dark';
+  const iconClass = visible 
+    ? (isDarkVariant ? "text-gray-900" : "text-white")
+    : (isDarkVariant ? "text-gray-900" : "text-white");
 
   return (
     <motion.button
       onClick={onClick}
-      className="p-2 rounded-full hover:bg-white/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/20"
+      className={cn(
+        "p-2 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2",
+        isDarkVariant 
+          ? "hover:bg-gray-200 focus:ring-gray-300" 
+          : "hover:bg-white/10 focus:ring-white/20"
+      )}
       whileTap={{ scale: 0.95 }}
       aria-label={isOpen ? "Close menu" : "Open menu"}
     >
@@ -388,6 +426,7 @@ export const NavbarButton = ({
   className,
   variant = "primary",
   visible, // Extract visible prop to prevent it from being passed to DOM
+  navVariant, // Add navVariant prop to know if we're on dark variant pages
   ...props
 }: {
   href?: string;
@@ -396,18 +435,27 @@ export const NavbarButton = ({
   className?: string;
   variant?: "primary" | "secondary" | "dark" | "gradient";
   visible?: boolean;
+  navVariant?: 'default' | 'dark';
 } & (
   | React.ComponentPropsWithoutRef<"a">
   | React.ComponentPropsWithoutRef<"button">
 )) => {
-  // Dynamic button styling based on navbar visibility state
+  const isDarkVariant = navVariant === 'dark';
+  
+  // Dynamic button styling based on navbar visibility state and page variant
   const getButtonStyles = () => {
-    if (visible) {
-      // When navbar is scrolled (dark background)
-      return "bg-white/90 hover:bg-white text-black border border-white/20 hover:border-white";
+    if (isDarkVariant) {
+      // For gallery/couple pages - black button
+      return "bg-black hover:bg-gray-800 text-white border border-gray-600 hover:border-gray-500";
     } else {
-      // When navbar is transparent
-      return "bg-white/80 hover:bg-white/90 text-black border border-white/30 hover:border-white/50 backdrop-blur-sm";
+      // For main page - white button (original behavior)
+      if (visible) {
+        // When navbar is scrolled (dark background)
+        return "bg-white hover:bg-white text-black border border-white/20 hover:border-white";
+      } else {
+        // When navbar is transparent
+        return "bg-white hover:bg-white text-black border border-white/30 hover:border-white/50 backdrop-blur-sm";
+      }
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
 import { FadeInText } from "@/components/ui/fade-in-section";
@@ -72,34 +72,8 @@ const VideoShowcase = () => {
     triggerOnce: false, // Allow multiple triggers for play/pause
   });
 
-  // Load YouTube Player API
-  useEffect(() => {
-    // Load YouTube API script if not already loaded
-    if (!window.YT) {
-      const script = document.createElement("script");
-      script.src = "https://www.youtube.com/iframe_api";
-      document.body.appendChild(script);
-
-      window.onYouTubeIframeAPIReady = () => {
-        initializePlayer();
-      };
-    } else {
-      initializePlayer();
-    }
-
-    return () => {
-      // Cleanup
-      if (playerRef.current) {
-        playerRef.current.destroy();
-      }
-      if (playerRef2.current) {
-        playerRef2.current.destroy();
-      }
-    };
-  }, [youtubeVideoId]); // Re-initialize when video ID changes
-
-  // Initialize YouTube player
-  const initializePlayer = () => {
+  // Initialize YouTube player (memoized to satisfy exhaustive-deps)
+  const initializePlayer = useCallback(() => {
     if (window.YT && window.YT.Player) {
       // Initialize first player
       playerRef.current = new window.YT.Player("youtube-player-1", {
@@ -157,7 +131,33 @@ const VideoShowcase = () => {
         },
       });
     }
-  };
+  }, [youtubeVideoId]);
+
+  // Load YouTube Player API
+  useEffect(() => {
+    // Load YouTube API script if not already loaded
+    if (!window.YT) {
+      const script = document.createElement("script");
+      script.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(script);
+
+      window.onYouTubeIframeAPIReady = () => {
+        initializePlayer();
+      };
+    } else {
+      initializePlayer();
+    }
+
+    return () => {
+      // Cleanup
+      if (playerRef.current) {
+        playerRef.current.destroy();
+      }
+      if (playerRef2.current) {
+        playerRef2.current.destroy();
+      }
+    };
+  }, [initializePlayer]);
 
   // Manual control functions for first video
   const togglePlayPause = () => {
@@ -684,32 +684,7 @@ const VideoShowcase = () => {
             glimpse of how we bring your special moments to life."
           </FadeInText>
 
-          {/* Statistics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
-            {[
-              { number: "500+", label: "Weddings Captured" },
-              { number: "50k+", label: "Photos Delivered" },
-              { number: "200+", label: "Video Stories" },
-              { number: "98%", label: "Happy Couples" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <FadeInText
-                  as="div"
-                  className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 font-serif"
-                  delay={0.7 + index * 0.1}
-                >
-                  {stat.number}
-                </FadeInText>
-                <FadeInText
-                  as="div"
-                  className="text-sm text-gray-600 font-sans"
-                  delay={0.8 + index * 0.1}
-                >
-                  {stat.label}
-                </FadeInText>
-              </div>
-            ))}
-          </div>
+          {/* Statistics removed as requested */}
         </div>
       </div>
     </section>

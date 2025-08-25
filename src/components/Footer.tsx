@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Twitter, Phone, Mail, MapPin } from "lucide-react";
+import { Facebook, Instagram, Twitter, Phone, Mail, MapPin, Youtube } from "lucide-react";
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { useHeroData } from "@/hooks/useWebsiteData";
 
@@ -57,19 +57,19 @@ const Footer = () => {
             <div className="flex space-x-4">
               {[
                 {
-                  href: "https://www.facebook.com",
+                  href: "https://www.facebook.com/hashtagchobi",
                   label: "Facebook",
                   icon: <Facebook className="h-5 w-5" aria-hidden="true" />,
                 },
                 {
-                  href: "https://www.instagram.com",
+                  href: "https://www.instagram.com/hashtagchobi",
                   label: "Instagram",
                   icon: <Instagram className="h-5 w-5" aria-hidden="true" />,
                 },
                 {
-                  href: "https://www.twitter.com",
-                  label: "Twitter",
-                  icon: <Twitter className="h-5 w-5" aria-hidden="true" />,
+                  href: "https://youtube.com/@raulhalder",
+                  label: "Youtube",
+                  icon: <Youtube className="h-5 w-5" aria-hidden="true" />,
                 },
               ].map(({ href, label, icon }) => (
                 <a
@@ -139,7 +139,7 @@ const Footer = () => {
                   className="hover:text-blush-500"
                   aria-label="Call us"
                 >
-                  +1 (555) 123-4567
+                  +91 70032 16321
                 </Link>
               </div>
 
@@ -147,11 +147,11 @@ const Footer = () => {
               <div className="flex items-center">
                 <Mail className="w-4 h-4 mr-3 text-blush-500" />
                 <Link
-                  to="mailto:hello@eventory.com"
+                  to="mailto:Hashtagchobi@gmail.com"
                   className="hover:text-blush-500"
                   aria-label="Email us"
                 >
-                  hello@eventory.com
+                  Hashtagchobi@gmail.com
                 </Link>
               </div>
 
@@ -159,9 +159,9 @@ const Footer = () => {
               <div className="flex items-start">
                 <MapPin className="w-4 h-4 mr-3 text-blush-500 mt-1" />
                 <address className="not-italic">
-                  123 Event Plaza, Suite 456
+                  103/1a raja dinendra street
                   <br />
-                  New York, NY 10001
+                  Kolkata - 700006
                 </address>
               </div>
             </div>

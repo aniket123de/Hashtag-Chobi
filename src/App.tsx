@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import PageLoader from "@/components/ui/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -26,25 +27,27 @@ const App = () => (
 
       {/* Routing provider for client-side navigation */}
       <BrowserRouter>
-        <Routes>
-          {/* Home page route */}
-          <Route path="/" element={<Index />} />
+        <PageLoader initialLoading={true} loadingDuration={3500}>
+          <Routes>
+            {/* Home page route */}
+            <Route path="/" element={<Index />} />
 
-          {/* Extended gallery page */}
-          <Route path="/gallery" element={<GalleryExtended />} />
+            {/* Extended gallery page */}
+            <Route path="/gallery" element={<GalleryExtended />} />
 
-          {/* Privacy policy page */}
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            {/* Privacy policy page */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-          {/* Couple album pages */}
-          <Route path="/couple1" element={<Couple1 />} />
-          <Route path="/couple2" element={<Couple2 />} />
-          <Route path="/couple3" element={<Couple3 />} />
+            {/* Couple album pages */}
+            <Route path="/couple1" element={<Couple1 />} />
+            <Route path="/couple2" element={<Couple2 />} />
+            <Route path="/couple3" element={<Couple3 />} />
 
-          {/* Catch-all route for 404 Not Found */}
-          {/* Place custom routes above this to ensure proper routing */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            {/* Catch-all route for 404 Not Found */}
+            {/* Place custom routes above this to ensure proper routing */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PageLoader>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

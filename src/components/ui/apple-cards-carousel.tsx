@@ -31,7 +31,7 @@ export const CarouselContext = createContext<{
   onCardClose: (index: number) => void;
   currentIndex: number;
 }>({
-  onCardClose: () => {},
+  onCardClose: () => { },
   currentIndex: 0,
 });
 
@@ -57,7 +57,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
       const scrollInterval = setInterval(() => {
         if (carouselRef.current) {
           const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-          
+
           if (scrollDirection === 'right') {
             // Scrolling to the right
             if (scrollLeft >= scrollWidth - clientWidth - 10) {

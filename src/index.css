@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import custom loader styles */
+@import './components/ui/loader.css';
+
 /* 
   Custom Design System Definitions:
   - Colors are defined in HSL format.

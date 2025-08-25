@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Heart, Calendar, MapPin, Camera, X, ChevronLeft, ChevronRight, Share2, Download, Play } from 'lucide-react';
@@ -18,6 +18,22 @@ interface WeddingImage {
 const Couple2 = () => {
   const [selectedImage, setSelectedImage] = useState<WeddingImage | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  
+  // Fix scrolling issues on component mount
+  useEffect(() => {
+    // Ensure page starts at top
+    window.scrollTo(0, 0);
+    
+    // Reset any overflow restrictions
+    document.body.style.overflow = "auto";
+    document.documentElement.style.overflow = "auto";
+    
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
+    };
+  }, []);
   
   // Couple information
   const coupleInfo = {
@@ -173,7 +189,7 @@ const Couple2 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-blue-50 overflow-auto">
       <NewHeader />
       
       {/* Hero Section */}

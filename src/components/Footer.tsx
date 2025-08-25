@@ -23,14 +23,24 @@ const Footer = () => {
     "Capturing love stories, frame by frame. Premier wedding photography and Cinematography since 2016, creating timeless memories that will be cherished for generations to come.";
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-6xl mx-auto px-6 py-16">
+    <footer className="relative bg-gray-900 text-white overflow-hidden">
+      {/* Background Image with Low Opacity */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+        style={{ backgroundImage: 'url(/src/assets/image/FOOTER.jpg)' }}
+      ></div>
+      
+      {/* Overlay to ensure text readability */}
+      <div className="absolute inset-0 bg-gray-900/60"></div>
+      
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="mb-6">
               <img
-                src="/src/assets/image/HashtagChobi-LOGO.png"
+                src="/HashtagChobi-LOGO.png"
                 alt="Hashtag Chobi Logo"
                 className="h-[80px] w-auto object-contain cursor-pointer"
               />

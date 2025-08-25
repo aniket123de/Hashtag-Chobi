@@ -156,7 +156,7 @@ const GalleryExtended = () => {
 		"Explore our comprehensive collection of wedding photography, portraits, and special events. Each image tells a unique story of love, joy, and celebration.";
 
 	return (
-		<div className="min-h-screen bg-white">
+		<div className="min-h-screen bg-background">
 			<NewHeader />
 
 			{/* Hero Section */}
@@ -183,7 +183,7 @@ const GalleryExtended = () => {
 			</section>
 
 			{/* Filter Categories */}
-			<section className="py-8 bg-white border-b border-gray-100">
+			<section className="py-8 bg-background border-b border-gray-100">
 				<div className="max-w-6xl mx-auto px-6">
 					<div className="flex flex-wrap justify-center gap-4">
 						{availableCategories.map((category) => (
@@ -206,7 +206,7 @@ const GalleryExtended = () => {
 			</section>
 
 			{/* Bento Grid Gallery */}
-			<section className="py-16 bg-white">
+			<section className="py-16 bg-background">
 				<div className="max-w-7xl mx-auto px-6">
 					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
 						{filteredImages.map((image, index) => (

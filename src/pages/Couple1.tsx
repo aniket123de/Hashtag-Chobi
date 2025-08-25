@@ -167,7 +167,7 @@ const Couple1 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white overflow-auto">
+    <div className="min-h-screen bg-background overflow-auto">
       <NewHeader />
 
       {/* Hero Section */}
@@ -193,7 +193,7 @@ const Couple1 = () => {
       </section>
 
       {/* Filter Categories */}
-      <section className="py-8 bg-white border-b border-gray-100">
+      <section className="py-8 bg-background border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-wrap justify-center gap-4">
             {categories.map((category) => (
@@ -215,7 +215,7 @@ const Couple1 = () => {
       </section>
 
       {/* Bento Grid Gallery */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
             {filteredPhotos.map((photo, index) => (

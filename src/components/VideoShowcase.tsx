@@ -43,6 +43,7 @@ const VideoShowcase = () => {
   };
 
   const youtubeVideoId = videoShowcaseData?.videoUrl ? getYouTubeVideoId(videoShowcaseData.videoUrl) : "XDp_YjH62B4";
+  const youtubeVideoId2 = videoShowcaseData?.videoUrl2 ? getYouTubeVideoId(videoShowcaseData.videoUrl2) : "XDp_YjH62B4";
 
   // State to control video playback
   const [isPlaying, setIsPlaying] = useState(false);
@@ -105,7 +106,7 @@ const VideoShowcase = () => {
 
       // Initialize second player
       playerRef2.current = new window.YT.Player("youtube-player-2", {
-        videoId: youtubeVideoId,
+        videoId: youtubeVideoId2,
         playerVars: {
           autoplay: 0,
           mute: 1,
@@ -401,11 +402,13 @@ const VideoShowcase = () => {
     subtitle: "Cinematic Wedding Stories",
     description: "Experience the magic of our wedding photography and videography through this cinematic showcase. Watch how we capture the essence of love, joy, and celebration in every frame.",
     videoUrl: "https://www.youtube.com/watch?v=XDp_YjH62B4",
+    videoUrl2: "https://www.youtube.com/watch?v=XDp_YjH62B4",
     thumbnailUrl: "/src/assets/image/VIDEO_THUMBNAIL.jpg"
   };
 
   return (
     <section
+      id="video-showcase"
       ref={elementRef}
       className="py-20 bg-gradient-to-b from-white to-gray-50"
     >

@@ -24,11 +24,13 @@ const Footer = () => {
 
   return (
     <footer className="relative bg-gray-900 text-white overflow-hidden">
-      {/* Background Image with Low Opacity */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
-        style={{ backgroundImage: 'url(/src/assets/image/FOOTER.jpg)' }}
-      ></div>
+      {/* Background Image with Low Opacity - Only show when we have Firestore data */}
+      {heroData && heroData.footerImage && heroData.footerImage.trim() !== "" && (
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+          style={{ backgroundImage: `url(${heroData.footerImage})` }}
+        ></div>
+      )}
       
       {/* Overlay to ensure text readability */}
       <div className="absolute inset-0 bg-gray-900/60"></div>

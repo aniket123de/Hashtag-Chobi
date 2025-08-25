@@ -13,6 +13,7 @@ The VideoShowcase section uses a single document with the following structure:
   "subtitle": "Cinematic Wedding Stories",
   "description": "Experience the magic of our wedding photography and videography through this cinematic showcase. Watch how we capture the essence of love, joy, and celebration in every frame.",
   "videoUrl": "https://www.youtube.com/watch?v=XDp_YjH62B4",
+  "videoUrl2": "https://www.youtube.com/watch?v=ANOTHER_VIDEO_ID",
   "thumbnailUrl": "/src/assets/image/VIDEO_THUMBNAIL.jpg",
   "cloudinaryId": "optional-cloudinary-id"
 }
@@ -23,7 +24,8 @@ The VideoShowcase section uses a single document with the following structure:
 - **`title`** (string): Main heading for the video showcase section
 - **`subtitle`** (string): Secondary heading or tagline
 - **`description`** (string): Detailed description of the video content
-- **`videoUrl`** (string): Full YouTube URL of the video to showcase
+- **`videoUrl`** (string): Full YouTube URL of the first video to showcase
+- **`videoUrl2`** (string): Full YouTube URL of the second video to showcase
 
 ## Optional Fields
 
@@ -38,6 +40,7 @@ The VideoShowcase section uses a single document with the following structure:
   "subtitle": "Cinematic Wedding Stories",
   "description": "Experience the magic of our wedding photography and videography through this cinematic showcase. Watch how we capture the essence of love, joy, and celebration in every frame.",
   "videoUrl": "https://www.youtube.com/watch?v=XDp_YjH62B4",
+  "videoUrl2": "https://www.youtube.com/watch?v=ANOTHER_VIDEO_ID",
   "thumbnailUrl": "/src/assets/image/VIDEO_THUMBNAIL.jpg"
 }
 ```
@@ -79,11 +82,12 @@ The component automatically extracts YouTube video IDs from various URL formats:
 ## Features
 
 - **Dynamic Content**: Title, subtitle, and description are loaded from Firestore
+- **Dual Video Support**: Two independent YouTube videos with separate controls
 - **YouTube Integration**: Automatically extracts video ID from YouTube URLs
 - **Fallback Support**: Uses default content if Firestore data is unavailable
 - **Loading States**: Shows skeleton loading while fetching data
 - **Error Handling**: Gracefully handles network errors or missing data
-- **Auto-play**: Video automatically plays when section comes into view
+- **Auto-play**: Videos automatically play when section comes into view
 - **Responsive Controls**: Custom video controls with play/pause, mute, and fullscreen
 
 ## YouTube Player Configuration

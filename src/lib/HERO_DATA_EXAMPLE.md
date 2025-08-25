@@ -14,7 +14,9 @@ The Hero section uses a single document with the following structure:
   "description": "Premier wedding photography and Cinematography since 2016, specializing in handcrafted weddings that beautifully narrate your unique love story",
   "ctaText": "Book Your Session",
   "backgroundImage": "/src/assets/image/HERO.jpg",
-  "cloudinaryId": "optional-cloudinary-id"
+  "footerImage": "/src/assets/image/FOOTER.jpg",
+  "cloudinaryId": "optional-cloudinary-id",
+  "footerCloudinaryId": "optional-footer-cloudinary-id"
 }
 ```
 
@@ -28,7 +30,9 @@ The Hero section uses a single document with the following structure:
 
 ## Optional Fields
 
+- **`footerImage`** (string): URL to the footer decoration image (optional)
 - **`cloudinaryId`** (string): Cloudinary image ID if using Cloudinary for image management
+- **`footerCloudinaryId`** (string): Cloudinary image ID for the footer image if using Cloudinary
 
 ## Example Hero Document
 
@@ -64,6 +68,18 @@ This creates a visually appealing three-line layout with the middle line highlig
   - Local assets folder (`/src/assets/image/`)
   - External CDN
   - Firebase Storage
+
+## Footer Image Requirements
+
+- **Format**: JPG, PNG, WebP recommended
+- **Size**: Recommended minimum 1920x128px for footer decoration
+- **Aspect Ratio**: Wide format (16:1 or similar) for footer strip
+- **Storage**: Can be stored in:
+  - Cloudinary (recommended for production)
+  - Local assets folder (`/src/assets/image/`)
+  - External CDN
+  - Firebase Storage
+- **Usage**: This image is displayed as a background in the Footer component, not in the Hero section
 
 ## Content Guidelines
 
@@ -102,6 +118,7 @@ This creates a visually appealing three-line layout with the middle line highlig
 - **Dynamic Content**: Title, subtitle, description, and CTA text are loaded from Firestore
 - **Smart Title Formatting**: Automatically splits title into three lines for visual appeal
 - **Dynamic Background**: Background image is loaded from Firestore
+- **Optional Footer Image**: Footer decoration image is loaded from Firestore (if provided)
 - **Loading States**: Shows skeleton loading while fetching data
 - **Error Handling**: Gracefully handles network errors or missing data
 - **Fallback Support**: Uses default content if Firestore data is unavailable
@@ -111,6 +128,7 @@ This creates a visually appealing three-line layout with the middle line highlig
 
 - **Title Splitting**: Automatically splits title into three lines for display
 - **Background Image**: Dynamically loads background image from Firestore
+- **Footer Image**: Dynamically loads footer decoration image from Firestore (used in Footer component)
 - **CTA Button**: Primary button text is dynamically loaded
 - **Scroll Functionality**: CTA buttons scroll to respective sections
 - **Animation**: Fade-in animations with staggered delays
@@ -135,6 +153,13 @@ This creates a visually appealing three-line layout with the middle line highlig
 - Check that the image URL is accessible
 - Ensure the image format is supported by the browser
 - Verify the image path is correct
+
+### Footer Image Not Loading
+- The footerImage field is optional - if not provided, no footer image will be displayed
+- If you want a footer image, check that the footerImage field is provided in Firestore
+- Verify the footer image URL is accessible
+- Ensure the footer image format is supported by the browser
+- Check that the footer image path is correct
 
 ### Title Formatting Issues
 - Ensure the title has at least 4 words for proper formatting

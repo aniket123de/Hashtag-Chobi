@@ -1,10 +1,16 @@
 import React from 'react';
 
-const PrismaticVideo = () => {
+interface PrismaticVideoProps {
+  youtubeVideoId?: string;
+}
+
+const PrismaticVideo: React.FC<PrismaticVideoProps> = ({ 
+  youtubeVideoId = "lpz7exWaiCE" // Default video ID (you can change this)
+}) => {
   return (
     <div className="relative w-full">
       {/* Video Section with Content */}
-      <div className="relative min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center justify-center bg-black bg-[url('/crafting-unforgettable-moments.webp')] bg-cover bg-center">
+      <div className="relative min-h-[50vh] sm:min-h-[65vh] lg:min-h-[85vh] xl:min-h-[90vh] flex items-center justify-center bg-black bg-[url('/crafting-unforgettable-moments.webp')] bg-cover bg-center overflow-hidden">
         {/* Upper Angular Border - Overlapping the video */}
         <div className="absolute top-0 left-0 right-0 h-16 sm:h-20 lg:h-24 z-20">
           <svg
@@ -14,27 +20,31 @@ const PrismaticVideo = () => {
           >
             <polygon
               points="0,0 80,20 100,0 100,0 0,0"
-              fill="white"
+              fill="#FCFAF9"
               className="drop-shadow-lg"
             />
           </svg>
         </div>
-        {/* Background Video */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/crafting-unforgettable-moments.webp"
-          onError={(e) => console.error('Video error:', e)}
-          onLoadStart={() => console.log('Video loading started')}
-          onCanPlay={() => console.log('Video can play')}
-        >
-          <source src="/Prismatic.mp4" type="video/mp4" />
-          <source src="/prismatic.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {/* Background Video - YouTube Embed */}
+        <iframe
+          className="absolute"
+          src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&loop=1&playlist=${youtubeVideoId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&start=0`}
+          title="Background Video"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen={false}
+          style={{ 
+            pointerEvents: 'none',
+            top: '50%',
+            left: '50%',
+            width: '177.77vh', // Force 16:9 aspect ratio based on height
+            height: '56.25vw', // Force 16:9 aspect ratio based on width
+            minWidth: '100%',
+            minHeight: '100%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1
+          }}
+        ></iframe>
 
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40"></div>
@@ -60,7 +70,7 @@ const PrismaticVideo = () => {
           >
             <polygon
               points="0,20 20,0 100,20 100,20 0,20"
-              fill="white"
+              fill="#FCFAF9"
               className="drop-shadow-lg"
             />
           </svg>

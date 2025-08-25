@@ -51,8 +51,19 @@ const VideoShowcase = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
+  
+  // State for second video
+  const [isPlaying2, setIsPlaying2] = useState(false);
+  const [hasStarted2, setHasStarted2] = useState(false);
+  const [playerReady2, setPlayerReady2] = useState(false);
+  const [isMuted2, setIsMuted2] = useState(true);
+  const [showControls2, setShowControls2] = useState(false);
+  const [userInteracted2, setUserInteracted2] = useState(false);
+  
   const playerRef = useRef<YouTubePlayer | null>(null);
+  const playerRef2 = useRef<YouTubePlayer | null>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const controlsTimeoutRef2 = useRef<NodeJS.Timeout | null>(null);
 
   // Use intersection observer to detect when video section is visible
   const { elementRef, isIntersecting } = useIntersectionObserver({
@@ -81,13 +92,17 @@ const VideoShowcase = () => {
       if (playerRef.current) {
         playerRef.current.destroy();
       }
+      if (playerRef2.current) {
+        playerRef2.current.destroy();
+      }
     };
   }, [youtubeVideoId]); // Re-initialize when video ID changes
 
   // Initialize YouTube player
   const initializePlayer = () => {
     if (window.YT && window.YT.Player) {
-      playerRef.current = new window.YT.Player("youtube-player", {
+      // Initialize first player
+      playerRef.current = new window.YT.Player("youtube-player-1", {
         videoId: youtubeVideoId,
         playerVars: {
           autoplay: 0,
@@ -99,7 +114,7 @@ const VideoShowcase = () => {
         },
         events: {
           onReady: () => {
-            console.log("YouTube player ready");
+            console.log("YouTube player 1 ready");
             setPlayerReady(true);
           },
           onStateChange: (event: { data: number }) => {
@@ -113,10 +128,38 @@ const VideoShowcase = () => {
           },
         },
       });
+
+      // Initialize second player
+      playerRef2.current = new window.YT.Player("youtube-player-2", {
+        videoId: youtubeVideoId,
+        playerVars: {
+          autoplay: 0,
+          mute: 1,
+          controls: 1,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+        },
+        events: {
+          onReady: () => {
+            console.log("YouTube player 2 ready");
+            setPlayerReady2(true);
+          },
+          onStateChange: (event: { data: number }) => {
+            if (event.data === window.YT.PlayerState.PLAYING) {
+              setIsPlaying2(true);
+            } else if (event.data === window.YT.PlayerState.PAUSED) {
+              setIsPlaying2(false);
+            } else if (event.data === window.YT.PlayerState.ENDED) {
+              setIsPlaying2(false);
+            }
+          },
+        },
+      });
     }
   };
 
-  // Manual control functions
+  // Manual control functions for first video
   const togglePlayPause = () => {
     if (!playerRef.current) return;
     
@@ -152,7 +195,7 @@ const VideoShowcase = () => {
   };
 
   const toggleFullscreen = () => {
-    const playerElement = document.getElementById('youtube-player');
+    const playerElement = document.getElementById('youtube-player-1');
     if (playerElement) {
       if (document.fullscreenElement) {
         document.exitFullscreen();
@@ -162,7 +205,53 @@ const VideoShowcase = () => {
     }
   };
 
-  // Show/hide controls
+  // Manual control functions for second video
+  const togglePlayPause2 = () => {
+    if (!playerRef2.current) return;
+    
+    setUserInteracted2(true);
+    
+    try {
+      const currentState = playerRef2.current.getPlayerState();
+      if (currentState === window.YT.PlayerState.PLAYING) {
+        playerRef2.current.pauseVideo();
+      } else {
+        playerRef2.current.playVideo();
+        if (!hasStarted2) setHasStarted2(true);
+      }
+    } catch (error) {
+      console.error('Error toggling play/pause for video 2:', error);
+    }
+  };
+
+  const toggleMute2 = () => {
+    if (!playerRef2.current) return;
+    
+    try {
+      if (isMuted2) {
+        playerRef2.current.unMute();
+        setIsMuted2(false);
+      } else {
+        playerRef2.current.mute();
+        setIsMuted2(true);
+      }
+    } catch (error) {
+      console.error('Error toggling mute for video 2:', error);
+    }
+  };
+
+  const toggleFullscreen2 = () => {
+    const playerElement = document.getElementById('youtube-player-2');
+    if (playerElement) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        playerElement.requestFullscreen();
+      }
+    }
+  };
+
+  // Show/hide controls for first video
   const handleMouseEnter = () => {
     setShowControls(true);
     if (controlsTimeoutRef.current) {
@@ -173,6 +262,20 @@ const VideoShowcase = () => {
   const handleMouseLeave = () => {
     controlsTimeoutRef.current = setTimeout(() => {
       setShowControls(false);
+    }, 2000);
+  };
+
+  // Show/hide controls for second video
+  const handleMouseEnter2 = () => {
+    setShowControls2(true);
+    if (controlsTimeoutRef2.current) {
+      clearTimeout(controlsTimeoutRef2.current);
+    }
+  };
+
+  const handleMouseLeave2 = () => {
+    controlsTimeoutRef2.current = setTimeout(() => {
+      setShowControls2(false);
     }, 2000);
   };
 
@@ -217,6 +320,46 @@ const VideoShowcase = () => {
       }
     }
   }, [isIntersecting, hasStarted, playerReady, userInteracted]);
+
+  // Handle play/pause for second video based on intersection
+  useEffect(() => {
+    if (!playerReady2 || !playerRef2.current || userInteracted2) return;
+
+    if (isIntersecting) {
+      // Start playing when section comes into view
+      if (!hasStarted2) {
+        setHasStarted2(true);
+        setTimeout(() => {
+          if (playerRef2.current && playerRef2.current.playVideo) {
+            console.log('Starting video 2 playback');
+            playerRef2.current.playVideo();
+          }
+        }, 700); // Slight delay after first video
+      } else {
+        // Resume playing if paused
+        try {
+          const currentState = playerRef2.current.getPlayerState();
+          if (currentState === window.YT.PlayerState.PAUSED || currentState === window.YT.PlayerState.CUED) {
+            console.log('Resuming video 2 playback');
+            playerRef2.current.playVideo();
+          }
+        } catch (error) {
+          console.error('Error getting player 2 state:', error);
+        }
+      }
+    } else if (hasStarted2) {
+      // Pause when section goes out of view (only if video has started)
+      try {
+        const currentState = playerRef2.current.getPlayerState();
+        if (currentState === window.YT.PlayerState.PLAYING) {
+          console.log('Pausing video 2');
+          playerRef2.current.pauseVideo();
+        }
+      } catch (error) {
+        console.error('Error pausing video 2:', error);
+      }
+    }
+  }, [isIntersecting, hasStarted2, playerReady2, userInteracted2]);
 
   // Show loading state
   if (loading) {
@@ -286,120 +429,242 @@ const VideoShowcase = () => {
         </div>
 
         {/* Video Player Container */}
-        <div className="relative max-w-4xl mx-auto">
-          <div 
-            className="relative bg-black rounded-2xl overflow-hidden shadow-2xl group"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            {/* YouTube Video Player */}
-            <div className="aspect-video relative">
-              <div
-                id="youtube-player"
-                className="w-full h-full"
-                style={{ border: 0 }}
-              />
-              
-              {/* Custom Video Controls Overlay */}
-              <AnimatePresence>
-                {showControls && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
-                  >
-                    {/* Play/Pause Button - Center */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
-                      <motion.button
-                        onClick={togglePlayPause}
-                        className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-4 transition-all duration-300 group"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {isPlaying ? (
-                          <Pause className="w-8 h-8 text-white" />
-                        ) : (
-                          <Play className="w-8 h-8 text-white ml-1" />
-                        )}
-                      </motion.button>
-                    </div>
-
-                    {/* Bottom Controls */}
-                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-auto">
-                      {/* Left Controls */}
-                      <div className="flex items-center gap-3">
+        <div className="relative max-w-6xl mx-auto">
+          {/* Desktop: Side by side, Mobile: Stacked */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            
+            {/* First Video */}
+            <div 
+              className="relative bg-black rounded-2xl overflow-hidden shadow-2xl group"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              {/* YouTube Video Player 1 */}
+              <div className="aspect-video relative">
+                <div
+                  id="youtube-player-1"
+                  className="w-full h-full"
+                  style={{ border: 0 }}
+                />
+                
+                {/* Custom Video Controls Overlay */}
+                <AnimatePresence>
+                  {showControls && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
+                    >
+                      {/* Play/Pause Button - Center */}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
                         <motion.button
                           onClick={togglePlayPause}
-                          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 transition-all duration-300"
-                          whileHover={{ scale: 1.05 }}
+                          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-3 transition-all duration-300 group"
+                          whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.95 }}
                         >
                           {isPlaying ? (
-                            <Pause className="w-5 h-5 text-white" />
+                            <Pause className="w-6 h-6 text-white" />
                           ) : (
-                            <Play className="w-5 h-5 text-white ml-0.5" />
-                          )}
-                        </motion.button>
-
-                        <motion.button
-                          onClick={toggleMute}
-                          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 transition-all duration-300"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          {isMuted ? (
-                            <VolumeX className="w-5 h-5 text-white" />
-                          ) : (
-                            <Volume2 className="w-5 h-5 text-white" />
+                            <Play className="w-6 h-6 text-white ml-1" />
                           )}
                         </motion.button>
                       </div>
 
-                      {/* Right Controls */}
-                      <div className="flex items-center gap-3">
-                        <motion.button
-                          onClick={toggleFullscreen}
-                          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 transition-all duration-300"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Maximize2 className="w-5 h-5 text-white" />
-                        </motion.button>
-                      </div>
-                    </div>
+                      {/* Bottom Controls */}
+                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-auto">
+                        {/* Left Controls */}
+                        <div className="flex items-center gap-2">
+                          <motion.button
+                            onClick={togglePlayPause}
+                            className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-1.5 transition-all duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            {isPlaying ? (
+                              <Pause className="w-4 h-4 text-white" />
+                            ) : (
+                              <Play className="w-4 h-4 text-white ml-0.5" />
+                            )}
+                          </motion.button>
 
-                    {/* Video Status Indicator */}
-                    <div className="absolute top-4 left-4 pointer-events-none">
-                      <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
-                        <span className="text-white text-sm font-medium">
-                          {isPlaying ? 'Playing' : 'Paused'}
-                        </span>
-                      </div>
-                    </div>
+                          <motion.button
+                            onClick={toggleMute}
+                            className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-1.5 transition-all duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            {isMuted ? (
+                              <VolumeX className="w-4 h-4 text-white" />
+                            ) : (
+                              <Volume2 className="w-4 h-4 text-white" />
+                            )}
+                          </motion.button>
+                        </div>
 
-                    {/* Auto-play Indicator */}
-                    {!userInteracted && (
-                      <div className="absolute top-4 right-4 pointer-events-none">
-                        <div className="bg-blush-500/90 backdrop-blur-sm rounded-full px-3 py-1">
-                          <span className="text-black text-sm font-medium">
-                            Auto-play
+                        {/* Right Controls */}
+                        <div className="flex items-center gap-2">
+                          <motion.button
+                            onClick={toggleFullscreen}
+                            className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-1.5 transition-all duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <Maximize2 className="w-4 h-4 text-white" />
+                          </motion.button>
+                        </div>
+                      </div>
+
+                      {/* Video Status Indicator */}
+                      <div className="absolute top-3 left-3 pointer-events-none">
+                        <div className="bg-white/20 backdrop-blur-sm rounded-full px-2 py-1">
+                          <span className="text-white text-xs font-medium">
+                            {isPlaying ? 'Playing' : 'Paused'}
                           </span>
                         </div>
                       </div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
 
-              {/* Loading State */}
-              {!playerReady && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
-                    <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      {/* Auto-play Indicator */}
+                      {!userInteracted && (
+                        <div className="absolute top-3 right-3 pointer-events-none">
+                          <div className="bg-blush-500/90 backdrop-blur-sm rounded-full px-2 py-1">
+                            <span className="text-black text-xs font-medium">
+                              Auto-play
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Loading State */}
+                {!playerReady && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+            </div>
+
+            {/* Second Video */}
+            <div 
+              className="relative bg-black rounded-2xl overflow-hidden shadow-2xl group"
+              onMouseEnter={handleMouseEnter2}
+              onMouseLeave={handleMouseLeave2}
+            >
+              {/* YouTube Video Player 2 */}
+              <div className="aspect-video relative">
+                <div
+                  id="youtube-player-2"
+                  className="w-full h-full"
+                  style={{ border: 0 }}
+                />
+                
+                {/* Custom Video Controls Overlay */}
+                <AnimatePresence>
+                  {showControls2 && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
+                    >
+                      {/* Play/Pause Button - Center */}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
+                        <motion.button
+                          onClick={togglePlayPause2}
+                          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-3 transition-all duration-300 group"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          {isPlaying2 ? (
+                            <Pause className="w-6 h-6 text-white" />
+                          ) : (
+                            <Play className="w-6 h-6 text-white ml-1" />
+                          )}
+                        </motion.button>
+                      </div>
+
+                      {/* Bottom Controls */}
+                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-auto">
+                        {/* Left Controls */}
+                        <div className="flex items-center gap-2">
+                          <motion.button
+                            onClick={togglePlayPause2}
+                            className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-1.5 transition-all duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            {isPlaying2 ? (
+                              <Pause className="w-4 h-4 text-white" />
+                            ) : (
+                              <Play className="w-4 h-4 text-white ml-0.5" />
+                            )}
+                          </motion.button>
+
+                          <motion.button
+                            onClick={toggleMute2}
+                            className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-1.5 transition-all duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            {isMuted2 ? (
+                              <VolumeX className="w-4 h-4 text-white" />
+                            ) : (
+                              <Volume2 className="w-4 h-4 text-white" />
+                            )}
+                          </motion.button>
+                        </div>
+
+                        {/* Right Controls */}
+                        <div className="flex items-center gap-2">
+                          <motion.button
+                            onClick={toggleFullscreen2}
+                            className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-1.5 transition-all duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <Maximize2 className="w-4 h-4 text-white" />
+                          </motion.button>
+                        </div>
+                      </div>
+
+                      {/* Video Status Indicator */}
+                      <div className="absolute top-3 left-3 pointer-events-none">
+                        <div className="bg-white/20 backdrop-blur-sm rounded-full px-2 py-1">
+                          <span className="text-white text-xs font-medium">
+                            {isPlaying2 ? 'Playing' : 'Paused'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Auto-play Indicator */}
+                      {!userInteracted2 && (
+                        <div className="absolute top-3 right-3 pointer-events-none">
+                          <div className="bg-blush-500/90 backdrop-blur-sm rounded-full px-2 py-1">
+                            <span className="text-black text-xs font-medium">
+                              Auto-play
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Loading State */}
+                {!playerReady2 && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

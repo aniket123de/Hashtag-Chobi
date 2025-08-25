@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import VideoShowcase from "@/components/VideoShowcase";
 import Services from "@/components/Services";
+import PrismaticVideo from "@/components/PrismaticVideo";
 import Testimonials from "@/components/Testimonials";
 import Gallery from "@/components/Gallery";
 import CTA from "@/components/CTA";
@@ -33,6 +34,11 @@ const Index = () => {
       {/* Services Section */}
       <section id="services" aria-label="Services Section">
         <Services />
+      </section>
+
+      {/* Prismatic Video Section */}
+      <section id="prismatic-video" aria-label="Prismatic Video Section">
+        <PrismaticVideo youtubeVideoId="lpz7exWaiCE" />
       </section>
 
       {/* Client Testimonials Section */}

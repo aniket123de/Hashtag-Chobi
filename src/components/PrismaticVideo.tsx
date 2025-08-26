@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { VideoShowcaseHomeService } from '@/lib/services';
+import { VideoShowcaseHomeService, clearCacheEntry } from '@/lib/services';
 
 const PrismaticVideo: React.FC = () => {
   const [videoId, setVideoId] = useState<string>("lpz7exWaiCE");
 
   useEffect(() => {
     (async () => {
+      // Bust cache to ensure latest video loads
+      clearCacheEntry('video-showcase-home');
       const data = await VideoShowcaseHomeService.getData();
       if (data?.homePageVideoUrl) {
         const id = extractYouTubeId(data.homePageVideoUrl);
@@ -15,9 +17,30 @@ const PrismaticVideo: React.FC = () => {
   }, []);
 
   const extractYouTubeId = (url: string): string | null => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
+    try {
+      const u = new URL(url);
+      // youtu.be/<id>
+      if (u.hostname.includes('youtu.be')) {
+        const id = u.pathname.replace('/', '').trim();
+        return id.length === 11 ? id : null;
+      }
+      // youtube.com/shorts/<id>
+      if (u.pathname.startsWith('/shorts/')) {
+        const id = u.pathname.split('/shorts/')[1]?.split('/')[0]?.split('?')[0] || '';
+        return id.length === 11 ? id : null;
+      }
+      // youtube.com/embed/<id>
+      if (u.pathname.startsWith('/embed/')) {
+        const id = u.pathname.split('/embed/')[1]?.split('/')[0] || '';
+        return id.length === 11 ? id : null;
+      }
+      // youtube.com/watch?v=<id>
+      const vParam = u.searchParams.get('v');
+      if (vParam && vParam.length === 11) return vParam;
+      return null;
+    } catch {
+      return null;
+    }
   };
   return (
     <div className="relative w-full">

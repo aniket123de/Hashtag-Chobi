@@ -71,7 +71,7 @@ const Footer = () => {
                 {
                   href: "https://youtube.com/@raulhalder",
                   label: "Youtube",
-                  icon: <Youtube className="h-5 w-5" aria-hidden="true" />,
+                  icon: <Youtube className="h-6 w-7" aria-hidden="true" />,
                 },
               ].map(({ href, label, icon }) => (
                 <a

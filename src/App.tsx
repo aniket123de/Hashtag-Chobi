@@ -10,7 +10,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import GalleryExtended from "./pages/GalleryExtended";
 import VideoGallery from "./pages/VideoGallery";
 import NotFound from "./pages/NotFound";
-import Couple from "./pages/Couple";
 import CoupleDetail from "./pages/CoupleDetail";
 
 // Initialize React Query client for data fetching and caching
@@ -41,8 +40,7 @@ const App = () => (
             {/* Privacy policy page */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-            {/* Couple selection and detail pages */}
-            <Route path="/couple" element={<Couple />} />
+            {/* Couple detail pages */}
             <Route path="/couple/:id" element={<CoupleDetail />} />
 
             {/* Catch-all route for 404 Not Found */}

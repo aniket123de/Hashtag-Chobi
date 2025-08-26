@@ -1,7 +1,15 @@
+import { useEffect } from "react";
 import NewHeader from "@/components/NewHeader";
 import Footer from "@/components/Footer";
 
 const PrivacyPolicy = () => {
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
   return (
     <div className="min-h-screen">
       <NewHeader />

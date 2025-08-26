@@ -41,6 +41,11 @@ const PageLoader: React.FC<PageLoaderProps> = ({
   // Handle route changes
   useEffect(() => {
     if (!isInitialLoading) {
+      // Reset scroll position immediately on route change
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      
       setIsRouteChanging(true);
       setFadeOut(false); // Reset fade out for route changes
       

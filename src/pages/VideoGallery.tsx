@@ -118,6 +118,13 @@ const VideoGallery = () => {
   const playerRef = useRef<YouTubePlayer | null>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
   // Get categories
   const categories = ["All", ...Array.from(new Set(sampleVideos.map(video => video.category)))];
 

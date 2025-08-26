@@ -1,19 +1,29 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import NewHeader from "@/components/NewHeader";
 import Footer from "@/components/Footer";
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { CoupleSelectionsService, CoupleImagesExtendedService, type CoupleSelection, type CoupleImagesExtendedDoc, type CoupleImagesExtendedImage } from "@/lib/services";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from "lucide-react";
 
 const CoupleDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [data, setData] = useState<CoupleSelection | null>(null);
+  const [allCouples, setAllCouples] = useState<CoupleSelection[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [extended, setExtended] = useState<CoupleImagesExtendedDoc | null>(null);
   const [selectedImage, setSelectedImage] = useState<CoupleImagesExtendedImage | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+
+  // Immediate scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
 
   // Grid size helper matching GalleryExtended
   const getGridClass = (size: string) => {
@@ -34,13 +44,23 @@ const CoupleDetail = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Ensure scroll to top on route change
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
     (async () => {
       try {
         setLoading(true);
         const all = await CoupleSelectionsService.getAll();
+        setAllCouples(all);
         const found = all.find(item => item._id.toLowerCase() === String(id).toLowerCase()) || null;
         setData(found);
+        
+        // Set current index for navigation
+        const index = all.findIndex(item => item._id.toLowerCase() === String(id).toLowerCase());
+        setCurrentIndex(index);
+        
         const ext = await CoupleImagesExtendedService.getData();
         setExtended(ext);
       } finally {
@@ -48,6 +68,51 @@ const CoupleDetail = () => {
       }
     })();
   }, [id]);
+
+  // Navigation state
+  const hasNext = currentIndex >= 0 && currentIndex < allCouples.length - 1;
+  const hasPrevious = currentIndex > 0;
+
+  // Navigation functions
+  const goToPrevious = () => {
+    if (currentIndex > 0) {
+      // Reset scroll position before navigation
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      
+      const previousCouple = allCouples[currentIndex - 1];
+      navigate(`/couple/${previousCouple._id}`);
+    }
+  };
+
+  const goToNext = () => {
+    if (currentIndex < allCouples.length - 1) {
+      // Reset scroll position before navigation
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      
+      const nextCouple = allCouples[currentIndex + 1];
+      navigate(`/couple/${nextCouple._id}`);
+    }
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (selectedImage) return; // Don't navigate if viewing an image
+      
+      if (e.key === 'ArrowLeft' && hasPrevious) {
+        goToPrevious();
+      } else if (e.key === 'ArrowRight' && hasNext) {
+        goToNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [hasPrevious, hasNext, selectedImage]);
 
   // Derive filtered images and categories by selected couple title
   const allImages = extended?.images || [];
@@ -66,8 +131,58 @@ const CoupleDetail = () => {
 
       <section className="pt-24 pb-8 bg-gradient-to-b from-cream-50 to-white">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="mb-6">
-            <Link to="/couple" className="text-blush-600 hover:text-blush-700">← Back to Couple Selections</Link>
+          {/* Navigation header */}
+          <div className="flex items-center justify-between mb-6">
+            <Link 
+              to="/#services" 
+              className="text-blush-600 hover:text-blush-700 flex items-center gap-2"
+              onClick={() => {
+                // Small delay to ensure page loads before scrolling
+                setTimeout(() => {
+                  const servicesSection = document.getElementById('services');
+                  if (servicesSection) {
+                    servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }, 100);
+              }}
+            >
+              <ArrowLeft size={20} />
+              Back to Home
+            </Link>
+            
+            {!loading && allCouples.length > 0 && currentIndex >= 0 && (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-600 bg-white px-3 py-1 rounded-full border">
+                  {currentIndex + 1} of {allCouples.length}
+                </span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={goToPrevious}
+                    disabled={!hasPrevious}
+                    className={`p-2 rounded-full border transition-all ${
+                      hasPrevious 
+                        ? 'border-blush-300 text-blush-600 hover:bg-blush-50 bg-white' 
+                        : 'border-gray-200 text-gray-400 cursor-not-allowed bg-gray-50'
+                    }`}
+                    title={hasPrevious ? "Previous couple" : "No previous couple"}
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    onClick={goToNext}
+                    disabled={!hasNext}
+                    className={`p-2 rounded-full border transition-all ${
+                      hasNext 
+                        ? 'border-blush-300 text-blush-600 hover:bg-blush-50 bg-white' 
+                        : 'border-gray-200 text-gray-400 cursor-not-allowed bg-gray-50'
+                    }`}
+                    title={hasNext ? "Next couple" : "No next couple"}
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {loading ? (
@@ -187,6 +302,72 @@ const CoupleDetail = () => {
             )}
           </AnimatePresence>
         </>
+      )}
+
+      {/* Bottom Navigation */}
+      {!loading && allCouples.length > 1 && currentIndex >= 0 && (
+        <section className="py-12 bg-gray-50 border-t">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="flex items-center justify-between">
+              {/* Previous couple */}
+              <div className="flex-1">
+                {hasPrevious ? (
+                  <Link
+                    to={`/couple/${allCouples[currentIndex - 1]._id}`}
+                    className="group flex items-center gap-4 p-4 rounded-xl border bg-white hover:shadow-md transition-all"
+                  >
+                    <ChevronLeft className="text-blush-600 group-hover:translate-x-[-2px] transition-transform" size={24} />
+                    <div className="min-w-0">
+                      <p className="text-sm text-gray-500 mb-1">Previous</p>
+                      <h3 className="font-serif text-lg text-gray-900 truncate">
+                        {allCouples[currentIndex - 1].title}
+                      </h3>
+                    </div>
+                  </Link>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+
+              {/* Center - Current position */}
+              <div className="flex-shrink-0 mx-8 text-center">
+                <div className="flex items-center gap-2">
+                  {allCouples.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentIndex ? 'bg-blush-500 w-6' : 'bg-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <p className="text-sm text-gray-500 mt-2">
+                  {currentIndex + 1} of {allCouples.length}
+                </p>
+              </div>
+
+              {/* Next couple */}
+              <div className="flex-1 flex justify-end">
+                {hasNext ? (
+                  <Link
+                    to={`/couple/${allCouples[currentIndex + 1]._id}`}
+                    className="group flex items-center gap-4 p-4 rounded-xl border bg-white hover:shadow-md transition-all"
+                  >
+                    <div className="min-w-0 text-right">
+                      <p className="text-sm text-gray-500 mb-1">Next</p>
+                      <h3 className="font-serif text-lg text-gray-900 truncate">
+                        {allCouples[currentIndex + 1].title}
+                      </h3>
+                    </div>
+                    <ChevronRight className="text-blush-600 group-hover:translate-x-[2px] transition-transform" size={24} />
+                  </Link>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
       )}
 
       <Footer />

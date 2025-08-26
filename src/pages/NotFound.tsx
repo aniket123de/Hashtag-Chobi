@@ -7,6 +7,11 @@ const NotFound = () => {
   // Log the 404 error with the path that triggered the error
   useEffect(() => {
     console.error(`404 Error: User attempted to access non-existent route: ${location.pathname}`);
+    
+    // Scroll to top on component mount
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [location.pathname]);
 
   return (

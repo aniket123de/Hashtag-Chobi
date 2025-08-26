@@ -24,6 +24,7 @@ type Card = {
   category: string;
   content: React.ReactNode;
   href?: string; // Add optional href for navigation
+  onClick?: () => void; // Add optional custom click handler
 };
 
 export const CarouselContext = createContext<{
@@ -206,8 +207,11 @@ export const Card = ({
   layout?: boolean;
 }) => {
   const handleClick = () => {
-    if (card.href) {
-      // Navigate to the specified href
+    if (card.onClick) {
+      // Use custom click handler if provided
+      card.onClick();
+    } else if (card.href) {
+      // Fallback to window location for external links
       window.location.href = card.href;
     }
   };

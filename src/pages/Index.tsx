@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import NewHeader from "@/components/NewHeader";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -12,6 +13,16 @@ import Footer from "@/components/Footer";
 import CoupleSelections from "@/components/CoupleSelections";
 
 const Index = () => {
+  // Scroll to top on component mount (unless coming from couple detail with hash)
+  useEffect(() => {
+    // Check if there's a hash in the URL (like #services)
+    if (!window.location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Site Header */}

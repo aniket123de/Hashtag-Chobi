@@ -6,7 +6,10 @@ import CoupleSelections from "@/components/CoupleSelections";
 
 const Couple: React.FC = () => {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Enhanced scroll to top on component mount
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     document.body.style.overflow = 'auto';
     document.documentElement.style.overflow = 'auto';
   }, []);

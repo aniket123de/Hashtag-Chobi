@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
 	X,
@@ -18,6 +18,13 @@ import { ExtendedGalleryImage } from "@/lib/services";
 const GalleryExtended = () => {
 	const [selectedImage, setSelectedImage] = useState<ExtendedGalleryImage | null>(null);
 	const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+	// Scroll to top on component mount
+	useEffect(() => {
+		window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+		document.documentElement.scrollTop = 0;
+		document.body.scrollTop = 0;
+	}, []);
 
 	// Fetch extended gallery data from Firestore
 	const { data: extendedGallery, loading, error } = useExtendedGalleryData();

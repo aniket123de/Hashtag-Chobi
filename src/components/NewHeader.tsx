@@ -16,9 +16,7 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
   const shouldUseDarkVariant = variant === 'dark' || 
     location.pathname === '/gallery' || 
     location.pathname === '/videos' || 
-    location.pathname === '/couple1' || 
-    location.pathname === '/couple2' || 
-    location.pathname === '/couple3';
+    location.pathname.startsWith('/couple/');
 
   // Fetch hero data from Firestore for consistent CTA text
   const { data: heroData } = useHeroData();

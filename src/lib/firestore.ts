@@ -407,15 +407,31 @@ export async function getVideoShowcaseData(): Promise<VideoShowcaseData> {
 export async function getVideoShowcaseHome(): Promise<VideoShowcaseHome | null> {
   try {
     const database = getDb();
-    const ref = doc(database, "videoShowcase", "home");
-    const snapshot = await getDoc(ref);
-    if (!snapshot.exists()) return null;
-    const data = snapshot.data() as Partial<VideoShowcaseHome>;
-    if (!data?.homePageVideoUrl) return null;
+    // Try 'home' doc first
+    const homeRef = doc(database, "videoShowcase", "home");
+    const homeSnap = await getDoc(homeRef);
+    if (homeSnap.exists()) {
+      const data = homeSnap.data() as Partial<VideoShowcaseHome>;
+      if (data?.homePageVideoUrl) {
+        return {
+          homePageVideoUrl: data.homePageVideoUrl,
+          thumbnailUrl: data.thumbnailUrl || "",
+          cloudinaryId: data.cloudinaryId
+        };
+      }
+    }
+
+    // Fall back to 'main' doc and map its fields
+    const mainRef = doc(database, "videoShowcase", "main");
+    const mainSnap = await getDoc(mainRef);
+    if (!mainSnap.exists()) return null;
+    const mainData = mainSnap.data() as any;
+    const url: string | undefined = mainData?.homePageVideoUrl || mainData?.videoUrl;
+    if (!url) return null;
     return {
-      homePageVideoUrl: data.homePageVideoUrl,
-      thumbnailUrl: data.thumbnailUrl || "",
-      cloudinaryId: data.cloudinaryId
+      homePageVideoUrl: url,
+      thumbnailUrl: mainData?.thumbnailUrl || "",
+      cloudinaryId: mainData?.cloudinaryId
     };
   } catch (error) {
     console.error("Error fetching video showcase home:", error);

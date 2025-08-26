@@ -44,7 +44,7 @@ const Index = () => {
 
       {/* Prismatic Video Section */}
       <section id="prismatic-video" aria-label="Prismatic Video Section">
-        <PrismaticVideo youtubeVideoId="lpz7exWaiCE" />
+        <PrismaticVideo />
       </section>
 
       {/* Portfolio Gallery Section */}

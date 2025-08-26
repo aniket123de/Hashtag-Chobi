@@ -106,6 +106,13 @@ export type VideoShowcaseData = {
 	cloudinaryId?: string;
 };
 
+// Video Gallery Home Types
+export type VideoGalleryHome = {
+	homePageVideoUrl: string;
+	thumbnailUrl: string;
+	cloudinaryId?: string;
+};
+
 // Couple Selections Types
 export type CoupleSelection = {
 	_id: string;
@@ -391,6 +398,26 @@ export async function getVideoShowcaseData(): Promise<VideoShowcaseData> {
 		console.error("Error fetching video showcase data:", error);
 		return DEFAULT_VIDEO_SHOWCASE_DATA;
 	}
+}
+
+// Video Gallery Home Service
+export async function getVideoGalleryHome(): Promise<VideoGalleryHome | null> {
+    try {
+        const database = getDb();
+        const ref = doc(database, "videoGallery", "home");
+        const snapshot = await getDoc(ref);
+        if (!snapshot.exists()) return null;
+        const data = snapshot.data() as Partial<VideoGalleryHome>;
+        if (!data?.homePageVideoUrl) return null;
+        return {
+            homePageVideoUrl: data.homePageVideoUrl,
+            thumbnailUrl: data.thumbnailUrl || "",
+            cloudinaryId: data.cloudinaryId
+        };
+    } catch (error) {
+        console.error("Error fetching video gallery home:", error);
+        return null;
+    }
 }
 
 // Couple Selections Service

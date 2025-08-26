@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import NewHeader from "@/components/NewHeader";
 import Footer from "@/components/Footer";
 import { FadeInText } from "@/components/ui/fade-in-section";
+import { VideoGalleryHomeService } from "@/lib/services";
 
 // YouTube API type declarations
 declare global {
@@ -42,7 +43,7 @@ interface VideoData {
   featured: boolean;
 }
 
-// Sample video data - in production, this would come from your Firestore
+// Sample video data fallback (non-home) - ideally fetched from Firestore in future
 const sampleVideos: VideoData[] = [
   {
     id: "1",
@@ -108,6 +109,8 @@ const sampleVideos: VideoData[] = [
 
 const VideoGallery = () => {
   const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
+  const [homeVideoUrl, setHomeVideoUrl] = useState<string>("");
+  const [homeThumbnailUrl, setHomeThumbnailUrl] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -125,6 +128,17 @@ const VideoGallery = () => {
   const filteredVideos = selectedCategory === "All" 
     ? sampleVideos 
     : sampleVideos.filter(video => video.category === selectedCategory);
+
+  // Fetch homepage video from Firestore
+  useEffect(() => {
+    (async () => {
+      const data = await VideoGalleryHomeService.getData();
+      if (data?.homePageVideoUrl) {
+        setHomeVideoUrl(data.homePageVideoUrl);
+        setHomeThumbnailUrl(data.thumbnailUrl || "");
+      }
+    })();
+  }, []);
 
   // Extract YouTube video ID
   const getYouTubeVideoId = (url: string): string => {
@@ -330,6 +344,29 @@ const VideoGallery = () => {
               </button>
             </div>
           </div>
+
+          {/* Home Featured Video (from Firestore) */}
+          {homeVideoUrl && (
+            <div className="mb-12">
+              <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg cursor-pointer" onClick={() => setSelectedVideo({
+                id: "home",
+                title: "Featured Video",
+                description: "",
+                category: "Featured",
+                youtubeUrl: homeVideoUrl,
+                thumbnailUrl: homeThumbnailUrl || "/placeholder.svg",
+                duration: "",
+                featured: true,
+              })}>
+                <img src={homeThumbnailUrl || "/placeholder.svg"} alt="Featured Video" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
+                    <Play className="w-10 h-10 text-white ml-1" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Videos Grid/List */}
           <motion.div

@@ -10,6 +10,7 @@ import {
 	getExtendedGalleryData,
 	getCoupleSelections,
 	getCoupleImagesExtendedData,
+    getVideoGalleryHome,
 	type AboutData,
 	type GalleryItem,
 	type Service,
@@ -22,6 +23,7 @@ import {
 	type CoupleImagesExtendedDoc,
 	type CoupleImagesExtendedImage
 } from './firestore';
+import type { VideoGalleryHome } from './firestore';
 
 // Cache for storing fetched data
 const cache = new Map<string, { data: unknown; timestamp: number }>();
@@ -261,6 +263,22 @@ export class VideoShowcaseService {
 	}
 }
 
+// Video Gallery Home Service
+export class VideoGalleryHomeService {
+    static async getData(): Promise<VideoGalleryHome | null> {
+        const cacheKey = 'video-gallery-home';
+        if (isCacheValid(cacheKey)) return getCache(cacheKey);
+        try {
+            const data = await getVideoGalleryHome();
+            if (data) setCache(cacheKey, data);
+            return data;
+        } catch (error) {
+            console.error('VideoGalleryHomeService: Error fetching home video:', error);
+            return null;
+        }
+    }
+}
+
 // Couple Selections Service
 export class CoupleSelectionsService {
     static async getAll(): Promise<CoupleSelection[]> {
@@ -353,5 +371,6 @@ export type {
 	ExtendedGalleryImage,
 	CoupleSelection,
 	CoupleImagesExtendedDoc,
-	CoupleImagesExtendedImage
+	CoupleImagesExtendedImage,
+	VideoGalleryHome
 }; 

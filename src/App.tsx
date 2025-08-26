@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import GalleryExtended from "./pages/GalleryExtended";
+import VideoGallery from "./pages/VideoGallery";
 import NotFound from "./pages/NotFound";
 import Couple1 from "./pages/Couple1";
 import Couple2 from "./pages/Couple2";
@@ -34,6 +35,9 @@ const App = () => (
 
             {/* Extended gallery page */}
             <Route path="/gallery" element={<GalleryExtended />} />
+
+            {/* Video gallery page */}
+            <Route path="/videos" element={<VideoGallery />} />
 
             {/* Privacy policy page */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

@@ -25,7 +25,7 @@ interface LoadingProviderProps {
 
 export const LoadingProvider: React.FC<LoadingProviderProps> = ({ 
   children, 
-  initialLoadingDuration = 3500 
+  initialLoadingDuration = 4500 
 }) => {
   const [isAppLoading, setIsAppLoading] = useState(true);
   const [isContentLoading, setIsContentLoading] = useState(false);

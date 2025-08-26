@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Maximize2, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useVideoShowcaseData } from "@/hooks/useWebsiteData";
@@ -685,7 +686,7 @@ const VideoShowcase = () => {
           </FadeInText>
 
           {/* Statistics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto mb-12">
             {[
               { number: "500+", label: "Weddings Captured" },
               { number: "50k+", label: "Photos Delivered" },
@@ -710,6 +711,21 @@ const VideoShowcase = () => {
               </div>
             ))}
           </div>
+
+          {/* View More Button */}
+          <FadeInText
+            as="div"
+            className="text-center"
+            delay={1.2}
+          >
+            <Link
+              to="/videos"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
+            >
+              <span className="font-sans">View More Videos</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </Link>
+          </FadeInText>
         </div>
       </div>
     </section>

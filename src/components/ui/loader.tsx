@@ -15,13 +15,16 @@ const Loader: React.FC<LoaderProps> = ({ size = 'md', className = '' }) => {
 
   return (
     <div className={`loader-container ${sizeClasses[size]} ${className}`}>
-      <div className="wrapper">
-        <div className="circle"></div>
-        <div className="circle"></div>
-        <div className="circle"></div>
-        <div className="shadow"></div>
-        <div className="shadow"></div>
-        <div className="shadow"></div>
+      <div className="hourglassBackground">
+        <div className="hourglassContainer">
+          <div className="hourglassCurves" />
+          <div className="hourglassCapTop" />
+          <div className="hourglassGlassTop" />
+          <div className="hourglassSand" />
+          <div className="hourglassSandStream" />
+          <div className="hourglassCapBottom" />
+          <div className="hourglassGlass" />
+        </div>
       </div>
     </div>
   );

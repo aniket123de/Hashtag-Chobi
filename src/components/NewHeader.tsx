@@ -15,6 +15,7 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
   // Auto-detect if we need dark variant for white background pages
   const shouldUseDarkVariant = variant === 'dark' || 
     location.pathname === '/gallery' || 
+    location.pathname === '/videos' || 
     location.pathname === '/couple1' || 
     location.pathname === '/couple2' || 
     location.pathname === '/couple3';
@@ -23,7 +24,7 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
   const { data: heroData } = useHeroData();
 
   // Use hero data or fallback text
-  const ctaText = heroData?.ctaText || "Book Your Session";
+  const ctaText = heroData?.ctaText || "Book Your Dates";
 
   const allNavItems = [
     { name: "Home", link: "#hero" },

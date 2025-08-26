@@ -11,7 +11,7 @@ interface PageLoaderProps {
 const PageLoader: React.FC<PageLoaderProps> = ({ 
   children, 
   initialLoading = true,
-  loadingDuration = 3500 // Increased to 3.5 seconds to cover Hero animations
+  loadingDuration = 4500 // Increased to 4.5 seconds for better experience
 }) => {
   const [isInitialLoading, setIsInitialLoading] = useState(initialLoading);
   const [isRouteChanging, setIsRouteChanging] = useState(false);
@@ -21,10 +21,10 @@ const PageLoader: React.FC<PageLoaderProps> = ({
   // Handle initial app loading with smooth fade out
   useEffect(() => {
     if (initialLoading) {
-      // Start fade out 800ms before hiding completely for smoother transition
+      // Start fade out 1200ms before hiding completely for smoother transition
       const fadeTimer = setTimeout(() => {
         setFadeOut(true);
-      }, loadingDuration - 800);
+      }, loadingDuration - 1200);
       
       // Hide loader completely
       const hideTimer = setTimeout(() => {
@@ -65,8 +65,11 @@ const PageLoader: React.FC<PageLoaderProps> = ({
       <div className={`loader-overlay ${fadeOut ? 'fade-out' : ''}`}>
         <Loader size="lg" />
         <div className="mt-6 text-center">
-          <p className="text-gray-600 text-lg font-medium animate-pulse">
-            Loading your experience...
+          <p className="text-gray-700 text-lg font-medium animate-pulse">
+            Crafting Your Visual Experience...
+          </p>
+          <p className="text-gray-500 text-sm mt-2">
+            #HashtagChobi - Capturing Moments That Matter
           </p>
         </div>
       </div>

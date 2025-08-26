@@ -105,7 +105,7 @@ export const DEFAULT_HERO_DATA: HeroData = {
 	title: "Capturing Life's Beautiful Moments",
 	subtitle: "Professional Photography Services",
 	description: "From weddings to corporate events, we specialize in creating timeless memories through our lens.",
-	ctaText: "Book Your Session",
+	ctaText: "Book Your Dates",
 	backgroundImage: "/src/assets/image/HERO.jpg"
 };
 

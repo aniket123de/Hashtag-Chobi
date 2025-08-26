@@ -323,8 +323,8 @@ export const MobileNavMenu = ({
                   else {
                     const isDarkMobileVariant = navVariant === 'dark';
                     const buttonClasses = isDarkMobileVariant 
-                      ? "w-full bg-black hover:bg-gray-800 text-white border border-gray-600 hover:border-gray-500 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-                      : "w-full bg-white hover:bg-gray-50 text-black border border-gray-200 hover:border-gray-300 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200";
+                      ? "w-full bg-black hover:bg-gray-800 border border-gray-600 hover:border-gray-500 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 navbar-button-white-text"
+                      : "w-full bg-gray-900 hover:bg-black border border-gray-700 hover:border-gray-600 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 navbar-button-white-text";
                     
                     return (
                       <motion.div
@@ -445,22 +445,22 @@ export const NavbarButton = ({
   // Dynamic button styling based on navbar visibility state and page variant
   const getButtonStyles = () => {
     if (isDarkVariant) {
-      // For gallery/couple pages - black button
-      return "bg-black hover:bg-gray-800 text-white border border-gray-600 hover:border-gray-500";
+      // For gallery/couple pages - black button with white text
+      return "bg-black hover:bg-gray-800 border border-gray-600 hover:border-gray-500";
     } else {
-      // For main page - white button (original behavior)
+      // For main page - always dark button with white text
       if (visible) {
         // When navbar is scrolled (dark background)
-        return "bg-white hover:bg-white text-black border border-white/20 hover:border-white";
+        return "bg-black hover:bg-gray-800 border border-gray-600 hover:border-gray-500";
       } else {
-        // When navbar is transparent
-        return "bg-white hover:bg-white text-black border border-white/30 hover:border-white/50 backdrop-blur-sm";
+        // When navbar is transparent - solid dark button with white text
+        return "bg-gray-900 hover:bg-black border border-gray-700 hover:border-gray-600";
       }
     }
   };
 
   const baseStyles =
-    "px-4 py-2 rounded-full text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition-all duration-300 inline-block text-center font-poppins shadow-lg hover:shadow-xl";
+    "px-4 py-2 rounded-full text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition-all duration-300 inline-block text-center font-poppins shadow-lg hover:shadow-xl !text-white";
 
   const variantStyles = {
     primary: getButtonStyles(),
@@ -474,7 +474,7 @@ export const NavbarButton = ({
   return (
     <Tag
       href={href || undefined}
-      className={cn(baseStyles, variantStyles[variant], className)}
+      className={cn(baseStyles, variantStyles[variant], "navbar-button-white-text", className)}
       {...props}
     >
       {children}

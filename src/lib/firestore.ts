@@ -106,12 +106,15 @@ export type VideoShowcaseData = {
 	cloudinaryId?: string;
 };
 
-// Video Gallery Home Types
-export type VideoGalleryHome = {
+// Video Showcase Home (for prismatic video)
+export type VideoShowcaseHome = {
 	homePageVideoUrl: string;
 	thumbnailUrl: string;
 	cloudinaryId?: string;
 };
+
+// Video Gallery Home Types
+ 
 
 // Couple Selections Types
 export type CoupleSelection = {
@@ -400,24 +403,24 @@ export async function getVideoShowcaseData(): Promise<VideoShowcaseData> {
 	}
 }
 
-// Video Gallery Home Service
-export async function getVideoGalleryHome(): Promise<VideoGalleryHome | null> {
-    try {
-        const database = getDb();
-        const ref = doc(database, "videoGallery", "home");
-        const snapshot = await getDoc(ref);
-        if (!snapshot.exists()) return null;
-        const data = snapshot.data() as Partial<VideoGalleryHome>;
-        if (!data?.homePageVideoUrl) return null;
-        return {
-            homePageVideoUrl: data.homePageVideoUrl,
-            thumbnailUrl: data.thumbnailUrl || "",
-            cloudinaryId: data.cloudinaryId
-        };
-    } catch (error) {
-        console.error("Error fetching video gallery home:", error);
-        return null;
-    }
+// Fetch video for prismatic/home section
+export async function getVideoShowcaseHome(): Promise<VideoShowcaseHome | null> {
+  try {
+    const database = getDb();
+    const ref = doc(database, "videoShowcase", "home");
+    const snapshot = await getDoc(ref);
+    if (!snapshot.exists()) return null;
+    const data = snapshot.data() as Partial<VideoShowcaseHome>;
+    if (!data?.homePageVideoUrl) return null;
+    return {
+      homePageVideoUrl: data.homePageVideoUrl,
+      thumbnailUrl: data.thumbnailUrl || "",
+      cloudinaryId: data.cloudinaryId
+    };
+  } catch (error) {
+    console.error("Error fetching video showcase home:", error);
+    return null;
+  }
 }
 
 // Couple Selections Service

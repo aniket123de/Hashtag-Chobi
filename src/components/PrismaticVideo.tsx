@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { VideoShowcaseHomeService } from '@/lib/services';
 
-interface PrismaticVideoProps {
-  youtubeVideoId?: string;
-}
+const PrismaticVideo: React.FC = () => {
+  const [videoId, setVideoId] = useState<string>("lpz7exWaiCE");
 
-const PrismaticVideo: React.FC<PrismaticVideoProps> = ({ 
-  youtubeVideoId = "lpz7exWaiCE" // Default video ID (you can change this)
-}) => {
+  useEffect(() => {
+    (async () => {
+      const data = await VideoShowcaseHomeService.getData();
+      if (data?.homePageVideoUrl) {
+        const id = extractYouTubeId(data.homePageVideoUrl);
+        if (id) setVideoId(id);
+      }
+    })();
+  }, []);
+
+  const extractYouTubeId = (url: string): string | null => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
   return (
     <div className="relative w-full">
       {/* Video Section with Content */}
@@ -28,7 +40,7 @@ const PrismaticVideo: React.FC<PrismaticVideoProps> = ({
         {/* Background Video - YouTube Embed */}
         <iframe
           className="absolute"
-          src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&loop=1&playlist=${youtubeVideoId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&start=0`}
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&start=0`}
           title="Background Video"
           frameBorder="0"
           allow="autoplay; encrypted-media"

@@ -202,7 +202,7 @@ const Contact = () => {
                 className="text-2xl font-serif font-semibold text-gray-800 mb-6 tracking-wide"
                 delay={0.2}
               >
-                Send us a message
+                Send Us a Message
               </FadeInText>
 
               <form className="space-y-6" onSubmit={handleSubmit} noValidate>
@@ -344,7 +344,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-medium text-gray-800 font-sans">Email</h4>
                     <Link to="mailto:Hashtagchobi@gmail.com" className="hover:text-blush-400">
-                    Hashtagchobi@gmail.com
+                    hashtagchobi@gmail.com
                     </Link>
                   </div>
                 </div>
@@ -359,7 +359,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-medium text-gray-800 font-sans">Location</h4>
                     <address className="not-italic text-gray-600">
-                      103/1a raja dinendra street
+                      103/1A Raja Dinendra Street
                       <br />
                       Kolkata - 700006
                     </address>

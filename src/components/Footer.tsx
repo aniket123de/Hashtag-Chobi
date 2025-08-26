@@ -153,7 +153,7 @@ const Footer = () => {
                   className="hover:text-blush-500"
                   aria-label="Email us"
                 >
-                  Hashtagchobi@gmail.com
+                  hashtagchobi@gmail.com
                 </Link>
               </div>
 
@@ -161,7 +161,7 @@ const Footer = () => {
               <div className="flex items-start">
                 <MapPin className="w-4 h-4 mr-3 text-blush-500 mt-1" />
                 <address className="not-italic">
-                  103/1a raja dinendra street
+                  103/1A Raja Dinendra Street
                   <br />
                   Kolkata - 700006
                 </address>

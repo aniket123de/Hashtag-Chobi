@@ -222,7 +222,7 @@ const Gallery = () => {
           >
             <Link
               to="/gallery"
-              className="inline-flex items-center gap-3 bg-blush-500 hover:bg-blush-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans group"
+              className="inline-flex items-center gap-3 bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans group"
             >
               View Complete Gallery
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

@@ -1,6 +1,8 @@
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { useAbout } from "@/hooks/useAbout";
 import { DEFAULT_ABOUT_DATA } from "@/lib/firestore";
+import { useLoading } from "@/contexts/LoadingContext";
+import { useEffect } from "react";
 
 const About = () => {
   const { data = DEFAULT_ABOUT_DATA, isLoading } = useAbout();

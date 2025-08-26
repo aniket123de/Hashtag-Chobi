@@ -2,10 +2,10 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface LoadingContextType {
   isAppLoading: boolean;
-  isContentLoading: boolean;
-  setContentLoading: (loading: boolean) => void;
-  registerLoadingComponent: (id: string) => void;
-  unregisterLoadingComponent: (id: string) => void;
+  setAppLoading: (loading: boolean) => void;
+  isDataLoading: boolean;
+  setDataLoading: (loading: boolean) => void;
+  shouldShowContent: boolean;
 }
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
@@ -25,11 +25,10 @@ interface LoadingProviderProps {
 
 export const LoadingProvider: React.FC<LoadingProviderProps> = ({ 
   children, 
-  initialLoadingDuration = 4500 
+  initialLoadingDuration = 3500 
 }) => {
   const [isAppLoading, setIsAppLoading] = useState(true);
-  const [isContentLoading, setIsContentLoading] = useState(false);
-  const [loadingComponents, setLoadingComponents] = useState<Set<string>>(new Set());
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   // Handle initial app loading
   useEffect(() => {
@@ -40,34 +39,27 @@ export const LoadingProvider: React.FC<LoadingProviderProps> = ({
     return () => clearTimeout(timer);
   }, [initialLoadingDuration]);
 
-  const registerLoadingComponent = (id: string) => {
-    setLoadingComponents(prev => new Set(prev).add(id));
-    setIsContentLoading(true);
+  const setAppLoading = (loading: boolean) => {
+    setIsAppLoading(loading);
   };
 
-  const unregisterLoadingComponent = (id: string) => {
-    setLoadingComponents(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(id);
-      if (newSet.size === 0) {
-        setIsContentLoading(false);
-      }
-      return newSet;
-    });
+  const setDataLoading = (loading: boolean) => {
+    setIsDataLoading(loading);
   };
 
-  const setContentLoading = (loading: boolean) => {
-    setIsContentLoading(loading);
+  // Content should show after app loading is complete
+  const shouldShowContent = !isAppLoading;
+
+  const value = {
+    isAppLoading,
+    setAppLoading,
+    isDataLoading,
+    setDataLoading,
+    shouldShowContent,
   };
 
   return (
-    <LoadingContext.Provider value={{
-      isAppLoading,
-      isContentLoading,
-      setContentLoading,
-      registerLoadingComponent,
-      unregisterLoadingComponent
-    }}>
+    <LoadingContext.Provider value={value}>
       {children}
     </LoadingContext.Provider>
   );

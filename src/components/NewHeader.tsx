@@ -13,9 +13,9 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
   const location = useLocation();
 
   // Auto-detect if we need dark variant for white background pages
-  const shouldUseDarkVariant = variant === 'dark' || 
-    location.pathname === '/gallery' || 
-    location.pathname === '/videos' || 
+  const shouldUseDarkVariant = variant === 'dark' ||
+    location.pathname === '/gallery' ||
+    location.pathname === '/videos' ||
     location.pathname.startsWith('/couple/');
 
   // Fetch hero data from Firestore for consistent CTA text
@@ -42,7 +42,7 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
       window.location.href = "/";
       return;
     }
-    
+
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -101,7 +101,7 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
             }
           }}
           as="button"
-          className="flex-shrink-0 text-xs focus:outline-none ml-4"
+          className="flex-shrink-0 text-xs focus:outline-none ml-4 !bg-white/20 hover:!bg-white/30 !backdrop-blur-sm !text-white hover:!text-white !border-white/30 hover:!border-white/50"
           navVariant={shouldUseDarkVariant ? 'dark' : 'default'}
         >
           {ctaText}
@@ -148,11 +148,10 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
                 handleItemClick(e);
                 setIsMobileMenuOpen(false);
               }}
-              className={`block text-lg font-semibold transition-colors duration-200 font-sans ${
-                shouldUseDarkVariant 
-                  ? 'text-gray-900 hover:text-blush-600' 
-                  : 'text-gray-900 hover:text-blush-600'
-              }`}
+              className={`block text-lg font-semibold transition-colors duration-200 font-sans ${shouldUseDarkVariant
+                ? 'text-gray-900 hover:text-blush-600'
+                : 'text-gray-900 hover:text-blush-600'
+                }`}
             >
               {item.name}
             </a>
@@ -168,7 +167,7 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
               setIsMobileMenuOpen(false);
             }}
             as="button"
-            className="w-full mt-4 focus:outline-none"
+            className="w-full mt-4 focus:outline-none !bg-golden-500 hover:!bg-golden-600 !text-black hover:!text-black"
             navVariant={shouldUseDarkVariant ? 'dark' : 'default'}
           >
             {ctaText}

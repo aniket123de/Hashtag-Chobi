@@ -83,7 +83,7 @@ export const Navbar = ({ children, className, variant = 'default' }: NavbarProps
         if (typeof child.type === "string") return child;
         return React.cloneElement(
           child as React.ReactElement<{ visible?: boolean; variant?: 'default' | 'dark' }>,
-          { visible: visible ? true : undefined, variant }
+          { visible, variant }
         );
       })}
     </motion.div>
@@ -206,7 +206,7 @@ export const MobileNav = ({ children, className, visible, variant = 'default' }:
         if (typeof child.type === "string") return child;
         return React.cloneElement(
           child as React.ReactElement<{ visible?: boolean; variant?: 'default' | 'dark'; navVariant?: 'default' | 'dark' }>,
-          { visible: visible ? true : undefined, variant, navVariant: variant }
+          { visible, variant, navVariant: variant }
         );
       })}
     </motion.div>
@@ -231,7 +231,7 @@ export const MobileNavHeader = ({
         if (typeof child.type === "string") return child;
         return React.cloneElement(
           child as React.ReactElement<{ visible?: boolean; navVariant?: 'default' | 'dark' }>,
-          { visible: visible ? true : undefined, navVariant }
+          { visible, navVariant }
         );
       })}
     </div>
@@ -322,9 +322,8 @@ export const MobileNavMenu = ({
                   // If it's a button
                   else {
                     const isDarkMobileVariant = navVariant === 'dark';
-                    const buttonClasses = isDarkMobileVariant 
-                      ? "w-full bg-black hover:bg-gray-800 border border-gray-600 hover:border-gray-500 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 navbar-button-white-text"
-                      : "w-full bg-gray-900 hover:bg-black border border-gray-700 hover:border-gray-600 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 navbar-button-white-text";
+                    // For mobile, we always use black text since the mobile menu has a white background
+                    const buttonClasses = "w-full bg-golden-500 hover:bg-golden-600 text-black border border-golden-400 hover:border-golden-500 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200";
                     
                     return (
                       <motion.div
@@ -442,25 +441,33 @@ export const NavbarButton = ({
 )) => {
   const isDarkVariant = navVariant === 'dark';
   
+  // Debug log
+  console.log('NavbarButton state:', { 
+    isDarkVariant, 
+    visible, 
+    navVariant,
+    shouldBeWhite: !isDarkVariant && !visible
+  });
+  
   // Dynamic button styling based on navbar visibility state and page variant
   const getButtonStyles = () => {
     if (isDarkVariant) {
-      // For gallery/couple pages - black button with white text
-      return "bg-black hover:bg-gray-800 border border-gray-600 hover:border-gray-500";
+      // For gallery/couple pages - golden button with black text
+      return "bg-golden-500 hover:bg-golden-600 text-black hover:text-black border border-golden-400 hover:border-golden-500";
     } else {
-      // For main page - always dark button with white text
+      // For main page
       if (visible) {
-        // When navbar is scrolled (dark background)
-        return "bg-black hover:bg-gray-800 border border-gray-600 hover:border-gray-500";
+        // When navbar is scrolled (dark background) - golden button with black text
+        return "bg-golden-500 hover:bg-golden-600 text-black hover:text-black border border-golden-400 hover:border-golden-500";
       } else {
-        // When navbar is transparent - solid dark button with white text
-        return "bg-gray-900 hover:bg-black border border-gray-700 hover:border-gray-600";
+        // When navbar is transparent - light translucent button with dark text
+        return "bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white hover:text-white border border-white/30 hover:border-white/50";
       }
     }
   };
 
   const baseStyles =
-    "px-4 py-2 rounded-full text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition-all duration-300 inline-block text-center font-poppins shadow-lg hover:shadow-xl !text-white";
+    "px-4 py-2 rounded-full text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition-all duration-300 inline-block text-center font-poppins shadow-lg hover:shadow-xl";
 
   const variantStyles = {
     primary: getButtonStyles(),
@@ -468,13 +475,14 @@ export const NavbarButton = ({
       "bg-transparent shadow-none text-white border border-white/30 hover:border-white/50",
     dark: "bg-gray-900 text-white border border-gray-700 hover:border-gray-600",
     gradient:
-      "bg-gradient-to-r from-blush-500 to-golden-500 text-white border-0",
+      "bg-golden-500 hover:bg-golden-600 text-black border-0",
   };
 
   return (
     <Tag
       href={href || undefined}
-      className={cn(baseStyles, variantStyles[variant], "navbar-button-white-text", className)}
+      className={cn(baseStyles, variantStyles[variant], className)}
+      data-navbar-state={`${isDarkVariant ? 'dark' : 'default'}-${visible ? 'visible' : 'transparent'}`}
       {...props}
     >
       {children}

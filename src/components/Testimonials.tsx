@@ -132,7 +132,7 @@ const Testimonials = () => {
             <Button
               size="lg"
               onClick={() => window.location.reload()}
-              className="bg-blush-500 hover:bg-blush-600 text-black px-6 py-3 rounded-full"
+              className="bg-golden-500 hover:bg-golden-600 text-black px-6 py-3 rounded-full"
             >
               Retry
             </Button>
@@ -297,7 +297,7 @@ const Testimonials = () => {
             <Button
               size="lg"
               onClick={() => scrollToSection("contact")}
-              className="bg-blush-500 hover:bg-blush-600 text-black px-8 py-4 text-lg font-medium
+              className="bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium
                          rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
             >
               Start Planning Today

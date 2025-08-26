@@ -3,10 +3,11 @@ import { FadeInText } from "@/components/ui/fade-in-section";
 import { useHeroData } from "@/hooks/useWebsiteData";
 import { HeroData } from "@/lib/services";
 
-
 const Hero = () => {
-  // Fetch hero data from Firestore
+  // Fetch hero data from Firestore - start fetching immediately
   const { data: heroData, loading, error } = useHeroData();
+
+  // No need to manage loading state globally - let the content load naturally
 
   
 
@@ -47,13 +48,13 @@ const Hero = () => {
       {/* Main Content Container */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         {loading ? (
-          // Loading skeleton
+          // Simple loading state while data is being fetched
           <div className="animate-pulse">
-            <div className="h-16 md:h-20 bg-gray-300 rounded w-96 mx-auto mb-6"></div>
-            <div className="h-6 md:h-8 bg-gray-300 rounded w-80 mx-auto mb-8"></div>
+            <div className="h-16 md:h-20 bg-white/20 rounded w-96 mx-auto mb-6"></div>
+            <div className="h-6 md:h-8 bg-white/20 rounded w-80 mx-auto mb-8"></div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <div className="h-12 bg-gray-300 rounded-full w-48"></div>
-              <div className="h-12 bg-gray-300 rounded-full w-48"></div>
+              <div className="h-12 bg-white/20 rounded-full w-48"></div>
+              <div className="h-12 bg-white/20 rounded-full w-48"></div>
             </div>
           </div>
         ) : error ? (
@@ -93,7 +94,7 @@ const Hero = () => {
               <Button
                 size="lg"
                 onClick={() => scrollToSection("contact")}
-                className="bg-blush-500 hover:bg-blush-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                className="bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
                 aria-label={heroData.ctaText}
               >
                 {heroData.ctaText}
@@ -102,7 +103,7 @@ const Hero = () => {
                 variant="outline"
                 size="lg"
                 onClick={() => scrollToSection("gallery")}
-                className="border-2 border-golden-400 hover:text-golden-700 hover:bg-golden-50 px-8 py-4 text-lg font-medium rounded-full transition-all duration-300 font-sans"
+                className="bg-golden-500 hover:bg-golden-600 text-black border-2 border-golden-400 px-8 py-4 text-lg font-medium rounded-full transition-all duration-300 font-sans"
                 aria-label="View Our Portfolio"
               >
                 View Our Portfolio
@@ -111,12 +112,7 @@ const Hero = () => {
 
             
           </>
-        ) : (
-          // Fallback content (should not happen, but just in case)
-          <div className="text-gray-600">
-            <p>Loading content...</p>
-          </div>
-        )}
+        ) : null}
 
         {/* Scroll Indicator */}
         <div

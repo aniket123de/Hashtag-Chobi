@@ -307,7 +307,7 @@ const Contact = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full bg-blush-500 hover:bg-blush-600 text-black py-3 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                  className="w-full bg-golden-500 hover:bg-golden-600 text-black py-3 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
                   disabled={isSubmitting}
                   aria-busy={isSubmitting}
                 >
@@ -377,7 +377,7 @@ const Contact = () => {
                 <Link to="tel:+917003216321" aria-label="Call Us Now">
                   <Button
                     size="lg"
-                    className="bg-white text-black hover:bg-gray-50 px-6 py-2 rounded-full font-medium font-sans"
+                    className="bg-golden-500 hover:bg-golden-600 text-black px-6 py-2 rounded-full font-medium font-sans"
                   >
                     Call Us Now
                   </Button>

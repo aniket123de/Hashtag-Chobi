@@ -81,7 +81,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({
     );
   }
 
-  // Show route transition loading
+  // Show route transition loading only
   if (isRouteChanging) {
     return (
       <>

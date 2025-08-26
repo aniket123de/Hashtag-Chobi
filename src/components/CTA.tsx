@@ -68,7 +68,7 @@ const CTA = () => {
             <Button
               size="lg"
               onClick={() => scrollToSection("contact")}
-              className="bg-white text-blush-600 hover:bg-gray-50 px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+              className="bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
             >
               Schedule Your Consultation
             </Button>
@@ -77,7 +77,7 @@ const CTA = () => {
             <Link to="tel:+15551234567" aria-label="Call Us Now">
               <Button
                 size="lg"
-                className="bg-blush-500 hover:bg-blush-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                className="bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
               >
                 Call Us Now
               </Button>

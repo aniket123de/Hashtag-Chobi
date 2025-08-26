@@ -5,42 +5,7 @@ import { Link } from "react-router-dom";
 import NewHeader from "@/components/NewHeader";
 import Footer from "@/components/Footer";
 import { FadeInText } from "@/components/ui/fade-in-section";
-
-// YouTube API type declarations
-declare global {
-  interface Window {
-    YT: {
-      Player: new (elementId: string, config: unknown) => YouTubePlayer;
-      PlayerState: {
-        PLAYING: number;
-        PAUSED: number;
-        ENDED: number;
-        CUED: number;
-      };
-    };
-    onYouTubeIframeAPIReady: () => void;
-  }
-}
-
-interface YouTubePlayer {
-  playVideo(): void;
-  pauseVideo(): void;
-  mute(): void;
-  unMute(): void;
-  getPlayerState(): number;
-  destroy(): void;
-}
-
-interface VideoData {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  youtubeUrl: string;
-  thumbnailUrl: string;
-  duration: string;
-  featured: boolean;
-}
+import { YouTubePlayer, VideoData } from "@/types/youtube";
 
 // Sample video data fallback (non-home) - ideally fetched from Firestore in future
 const sampleVideos: VideoData[] = [

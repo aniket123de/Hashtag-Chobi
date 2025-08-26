@@ -16,15 +16,15 @@
 @layer base {
   :root {
     /* Base Colors */
-    --background: 28 100% 97%; /* #fff2ed */
+    --background: 30 100% 97%; /* #FFF7F0 */
     --foreground: 222.2 84% 4.9%; /* Dark gray */
 
     /* Card Colors */
-    --card: 28 100% 97%; /* #fff2ed */
+    --card: 30 100% 97%; /* #FFF7F0 */
     --card-foreground: 222.2 84% 4.9%; /* Dark gray */
 
     /* Popover Colors */
-    --popover: 28 100% 97%; /* #fff2ed */
+    --popover: 30 100% 97%; /* #FFF7F0 */
     --popover-foreground: 222.2 84% 4.9%; /* Dark gray */
 
     /* Primary Colors */
@@ -56,10 +56,10 @@
     --radius: 0.5rem; /* Medium rounded corners */
 
     /* Sidebar Colors */
-    --sidebar-background: 28 100% 97%; /* #fff2ed */
+    --sidebar-background: 30 100% 97%; /* #FFF7F0 */
     --sidebar-foreground: 240 5.3% 26.1%; /* Dark gray */
     --sidebar-primary: 240 5.9% 10%; /* Darker gray */
-    --sidebar-primary-foreground: 28 100% 97%; /* #fff2ed */
+    --sidebar-primary-foreground: 30 100% 97%; /* #FFF7F0 */
     --sidebar-accent: 240 4.8% 95.9%; /* Light gray */
     --sidebar-accent-foreground: 240 5.9% 10%; /* Dark gray */
     --sidebar-border: 220 13% 91%; /* Light gray border */

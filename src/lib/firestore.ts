@@ -72,7 +72,9 @@ export type HeroData = {
 	description: string;
 	ctaText: string;
 	backgroundImage: string;
+	footerImage?: string; // Optional - used in Footer component
 	cloudinaryId?: string;
+	footerCloudinaryId?: string;
 };
 
 // VideoShowcase Types
@@ -81,6 +83,7 @@ export type VideoShowcaseData = {
 	subtitle: string;
 	description: string;
 	videoUrl: string;
+	videoUrl2: string;
 	thumbnailUrl: string;
 	cloudinaryId?: string;
 };
@@ -105,8 +108,9 @@ export const DEFAULT_HERO_DATA: HeroData = {
 	title: "Capturing Life's Beautiful Moments",
 	subtitle: "Professional Photography Services",
 	description: "From weddings to corporate events, we specialize in creating timeless memories through our lens.",
-	ctaText: "Book Your Dates",
-	backgroundImage: "/src/assets/image/HERO.jpg"
+	ctaText: "Book Your Session",
+	backgroundImage: "/src/assets/image/HERO.jpg",
+	footerImage: ""
 };
 
 export const DEFAULT_VIDEO_SHOWCASE_DATA: VideoShowcaseData = {
@@ -114,6 +118,7 @@ export const DEFAULT_VIDEO_SHOWCASE_DATA: VideoShowcaseData = {
 	subtitle: "Cinematic Wedding Stories",
 	description: "Experience the magic of our wedding photography and videography through this cinematic showcase. Watch how we capture the essence of love, joy, and celebration in every frame.",
 	videoUrl: "https://www.youtube.com/watch?v=XDp_YjH62B4",
+	videoUrl2: "https://www.youtube.com/watch?v=XDp_YjH62B4",
 	thumbnailUrl: "/src/assets/image/VIDEO_THUMBNAIL.jpg"
 };
 
@@ -296,7 +301,9 @@ export async function getHeroData(): Promise<HeroData> {
 			description: data.description ?? DEFAULT_HERO_DATA.description,
 			ctaText: data.ctaText ?? DEFAULT_HERO_DATA.ctaText,
 			backgroundImage: data.backgroundImage ?? DEFAULT_HERO_DATA.backgroundImage,
-			cloudinaryId: data.cloudinaryId
+			footerImage: data.footerImage ?? DEFAULT_HERO_DATA.footerImage,
+			cloudinaryId: data.cloudinaryId,
+			footerCloudinaryId: data.footerCloudinaryId
 		};
 	} catch (error) {
 		console.error("Error fetching hero data:", error);
@@ -324,6 +331,7 @@ export async function getVideoShowcaseData(): Promise<VideoShowcaseData> {
 			subtitle: data.subtitle ?? DEFAULT_VIDEO_SHOWCASE_DATA.subtitle,
 			description: data.description ?? DEFAULT_VIDEO_SHOWCASE_DATA.description,
 			videoUrl: data.videoUrl ?? DEFAULT_VIDEO_SHOWCASE_DATA.videoUrl,
+			videoUrl2: data.videoUrl2 ?? DEFAULT_VIDEO_SHOWCASE_DATA.videoUrl2,
 			thumbnailUrl: data.thumbnailUrl ?? DEFAULT_VIDEO_SHOWCASE_DATA.thumbnailUrl,
 			cloudinaryId: data.cloudinaryId
 		};

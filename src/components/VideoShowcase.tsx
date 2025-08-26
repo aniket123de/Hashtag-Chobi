@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX, Maximize2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -44,6 +44,7 @@ const VideoShowcase = () => {
   };
 
   const youtubeVideoId = videoShowcaseData?.videoUrl ? getYouTubeVideoId(videoShowcaseData.videoUrl) : "XDp_YjH62B4";
+  const youtubeVideoId2 = videoShowcaseData?.videoUrl2 ? getYouTubeVideoId(videoShowcaseData.videoUrl2) : "XDp_YjH62B4";
 
   // State to control video playback
   const [isPlaying, setIsPlaying] = useState(false);
@@ -73,34 +74,8 @@ const VideoShowcase = () => {
     triggerOnce: false, // Allow multiple triggers for play/pause
   });
 
-  // Load YouTube Player API
-  useEffect(() => {
-    // Load YouTube API script if not already loaded
-    if (!window.YT) {
-      const script = document.createElement("script");
-      script.src = "https://www.youtube.com/iframe_api";
-      document.body.appendChild(script);
-
-      window.onYouTubeIframeAPIReady = () => {
-        initializePlayer();
-      };
-    } else {
-      initializePlayer();
-    }
-
-    return () => {
-      // Cleanup
-      if (playerRef.current) {
-        playerRef.current.destroy();
-      }
-      if (playerRef2.current) {
-        playerRef2.current.destroy();
-      }
-    };
-  }, [youtubeVideoId]); // Re-initialize when video ID changes
-
-  // Initialize YouTube player
-  const initializePlayer = () => {
+  // Initialize YouTube player (memoized to satisfy exhaustive-deps)
+  const initializePlayer = useCallback(() => {
     if (window.YT && window.YT.Player) {
       // Initialize first player
       playerRef.current = new window.YT.Player("youtube-player-1", {
@@ -132,7 +107,7 @@ const VideoShowcase = () => {
 
       // Initialize second player
       playerRef2.current = new window.YT.Player("youtube-player-2", {
-        videoId: youtubeVideoId,
+        videoId: youtubeVideoId2,
         playerVars: {
           autoplay: 0,
           mute: 1,
@@ -158,7 +133,33 @@ const VideoShowcase = () => {
         },
       });
     }
-  };
+  }, [youtubeVideoId]);
+
+  // Load YouTube Player API
+  useEffect(() => {
+    // Load YouTube API script if not already loaded
+    if (!window.YT) {
+      const script = document.createElement("script");
+      script.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(script);
+
+      window.onYouTubeIframeAPIReady = () => {
+        initializePlayer();
+      };
+    } else {
+      initializePlayer();
+    }
+
+    return () => {
+      // Cleanup
+      if (playerRef.current) {
+        playerRef.current.destroy();
+      }
+      if (playerRef2.current) {
+        playerRef2.current.destroy();
+      }
+    };
+  }, [initializePlayer]);
 
   // Manual control functions for first video
   const togglePlayPause = () => {
@@ -402,11 +403,13 @@ const VideoShowcase = () => {
     subtitle: "Cinematic Wedding Stories",
     description: "Experience the magic of our wedding photography and videography through this cinematic showcase. Watch how we capture the essence of love, joy, and celebration in every frame.",
     videoUrl: "https://www.youtube.com/watch?v=XDp_YjH62B4",
+    videoUrl2: "https://www.youtube.com/watch?v=XDp_YjH62B4",
     thumbnailUrl: "/src/assets/image/VIDEO_THUMBNAIL.jpg"
   };
 
   return (
     <section
+      id="video-showcase"
       ref={elementRef}
       className="py-20 bg-gradient-to-b from-white to-gray-50"
     >

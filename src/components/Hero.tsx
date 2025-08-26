@@ -3,9 +3,14 @@ import { FadeInText } from "@/components/ui/fade-in-section";
 import { useHeroData } from "@/hooks/useWebsiteData";
 import { HeroData } from "@/lib/services";
 
+
 const Hero = () => {
   // Fetch hero data from Firestore
   const { data: heroData, loading, error } = useHeroData();
+
+  
+
+
 
   /**
    * Smoothly scrolls to a section by its ID
@@ -103,6 +108,8 @@ const Hero = () => {
                 View Our Portfolio
               </Button>
             </div>
+
+            
           </>
         ) : (
           // Fallback content (should not happen, but just in case)
@@ -121,6 +128,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+
     </section>
   );
 };

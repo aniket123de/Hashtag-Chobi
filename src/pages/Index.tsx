@@ -9,6 +9,7 @@ import Gallery from "@/components/Gallery";
 import CTA from "@/components/CTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import CoupleSelections from "@/components/CoupleSelections";
 
 const Index = () => {
   return (
@@ -31,9 +32,9 @@ const Index = () => {
         <VideoShowcase />
       </section>
 
-      {/* Services Section */}
-      <section id="services" aria-label="Services Section">
-        <Services />
+      {/* Couple Selections Section (replaces Services in this position) */}
+      <section id="services" aria-label="Couple Selections">
+        <CoupleSelections />
       </section>
 
       {/* Client Testimonials Section */}

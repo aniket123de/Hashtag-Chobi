@@ -1,0 +1,38 @@
+import { useEffect } from "react";
+import NewHeader from "@/components/NewHeader";
+import Footer from "@/components/Footer";
+import { FadeInText } from "@/components/ui/fade-in-section";
+import CoupleSelections from "@/components/CoupleSelections";
+
+const Couple: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background overflow-auto">
+      <NewHeader />
+
+      <section className="pt-24 pb-8 bg-gradient-to-b from-cream-50 to-white">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <FadeInText as="h1" className="text-4xl md:text-6xl font-serif text-gray-900 mb-4" delay={0.1}>
+            Couple Selections
+          </FadeInText>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Explore our curated love stories. Click any card to view details.
+          </p>
+        </div>
+      </section>
+
+      <CoupleSelections />
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Couple;
+
+

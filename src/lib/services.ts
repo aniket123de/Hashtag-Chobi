@@ -8,6 +8,8 @@ import {
 	getVideoShowcaseData,
 	getAllWebsiteData,
 	getExtendedGalleryData,
+	getCoupleSelections,
+	getCoupleImagesExtendedData,
 	type AboutData,
 	type GalleryItem,
 	type Service,
@@ -15,7 +17,10 @@ import {
 	type HeroData,
 	type VideoShowcaseData,
 	type ExtendedGalleryDoc,
-	type ExtendedGalleryImage
+	type ExtendedGalleryImage,
+	type CoupleSelection,
+	type CoupleImagesExtendedDoc,
+	type CoupleImagesExtendedImage
 } from './firestore';
 
 // Cache for storing fetched data
@@ -138,6 +143,24 @@ export class ExtendedGalleryService {
 	}
 }
 
+// Couple Images Extended Service
+export class CoupleImagesExtendedService {
+    static async getData(): Promise<CoupleImagesExtendedDoc> {
+        const cacheKey = 'couple-images-extended-data';
+        if (isCacheValid(cacheKey)) {
+            return getCache(cacheKey);
+        }
+        try {
+            const data = await getCoupleImagesExtendedData();
+            setCache(cacheKey, data);
+            return data;
+        } catch (error) {
+            console.error('CoupleImagesExtendedService: Error fetching data:', error);
+            throw error;
+        }
+    }
+}
+
 // Services Service
 export class ServicesService {
 	static async getAll(): Promise<Service[]> {
@@ -238,6 +261,26 @@ export class VideoShowcaseService {
 	}
 }
 
+// Couple Selections Service
+export class CoupleSelectionsService {
+    static async getAll(): Promise<CoupleSelection[]> {
+        const cacheKey = 'couple-selections-all';
+
+        if (isCacheValid(cacheKey)) {
+            return getCache(cacheKey);
+        }
+
+        try {
+            const data = await getCoupleSelections();
+            setCache(cacheKey, data);
+            return data;
+        } catch (error) {
+            console.error('CoupleSelectionsService: Error fetching couple selections:', error);
+            return [];
+        }
+    }
+}
+
 // Main Website Service - combines all services
 export class WebsiteService {
 	static async getAllData() {
@@ -259,18 +302,20 @@ export class WebsiteService {
 
 	static async getHomePageData() {
 		try {
-			const [hero, services, testimonials, videoShowcase] = await Promise.all([
+			const [hero, services, testimonials, videoShowcase, coupleSelections] = await Promise.all([
 				HeroService.getData(),
 				ServicesService.getAll(),
 				TestimonialsService.getFeatured(3),
-				VideoShowcaseService.getData()
+				VideoShowcaseService.getData(),
+				CoupleSelectionsService.getAll()
 			]);
 
 			return {
 				hero,
 				services,
 				testimonials,
-				videoShowcase
+				videoShowcase,
+				coupleSelections
 			};
 		} catch (error) {
 			console.error('WebsiteService: Error fetching home page data:', error);
@@ -305,5 +350,8 @@ export type {
 	HeroData,
 	VideoShowcaseData,
 	ExtendedGalleryDoc,
-	ExtendedGalleryImage
+	ExtendedGalleryImage,
+	CoupleSelection,
+	CoupleImagesExtendedDoc,
+	CoupleImagesExtendedImage
 }; 

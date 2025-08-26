@@ -10,9 +10,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import GalleryExtended from "./pages/GalleryExtended";
 import VideoGallery from "./pages/VideoGallery";
 import NotFound from "./pages/NotFound";
-import Couple1 from "./pages/Couple1";
-import Couple2 from "./pages/Couple2";
-import Couple3 from "./pages/Couple3";
+import Couple from "./pages/Couple";
+import CoupleDetail from "./pages/CoupleDetail";
 
 // Initialize React Query client for data fetching and caching
 const queryClient = new QueryClient();
@@ -42,10 +41,9 @@ const App = () => (
             {/* Privacy policy page */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-            {/* Couple album pages */}
-            <Route path="/couple1" element={<Couple1 />} />
-            <Route path="/couple2" element={<Couple2 />} />
-            <Route path="/couple3" element={<Couple3 />} />
+            {/* Couple selection and detail pages */}
+            <Route path="/couple" element={<Couple />} />
+            <Route path="/couple/:id" element={<CoupleDetail />} />
 
             {/* Catch-all route for 404 Not Found */}
             {/* Place custom routes above this to ensure proper routing */}

@@ -15,7 +15,8 @@ import {
 	type HeroData,
 	type VideoShowcaseData,
 	type ExtendedGalleryDoc,
-	type ExtendedGalleryImage
+	type ExtendedGalleryImage,
+	type CoupleSelection
 } from '../lib/services';
 
 // Generic hook for data fetching
@@ -170,5 +171,6 @@ export type {
 	HeroData,
 	VideoShowcaseData,
 	ExtendedGalleryDoc,
-	ExtendedGalleryImage
+	ExtendedGalleryImage,
+	CoupleSelection
 }; 

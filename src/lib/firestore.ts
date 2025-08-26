@@ -41,6 +41,24 @@ export type ExtendedGalleryDoc = {
 	images: ExtendedGalleryImage[];
 };
 
+// Couple Images Extended Types
+export type CoupleImagesExtendedImage = {
+    id: string;
+    url: string;
+    alt: string;
+    category: string;
+    title: string;
+    description: string;
+    size: string;
+    coupleSelectionTitle?: string;
+    cloudinaryId?: string;
+};
+
+export type CoupleImagesExtendedDoc = {
+    pageContent: unknown;
+    images: CoupleImagesExtendedImage[];
+};
+
 // Services Types
 export type Service = {
 	_id: string;
@@ -85,6 +103,16 @@ export type VideoShowcaseData = {
 	videoUrl: string;
 	videoUrl2: string;
 	thumbnailUrl: string;
+	cloudinaryId?: string;
+};
+
+// Couple Selections Types
+export type CoupleSelection = {
+	_id: string;
+	title: string;
+	description: string;
+	image: string;
+	order: number;
 	cloudinaryId?: string;
 };
 
@@ -236,6 +264,30 @@ export async function getExtendedGalleryData(): Promise<ExtendedGalleryDoc> {
 	}
 }
 
+// Couple Images Extended Service
+export async function getCoupleImagesExtendedData(): Promise<CoupleImagesExtendedDoc> {
+    try {
+        const database = getDb();
+        const ref = doc(database, "coupleImagesExtended", "main");
+        const snapshot = await getDoc(ref);
+
+        if (!snapshot.exists()) {
+            return { pageContent: {}, images: [] };
+        }
+
+        const data = snapshot.data() as Partial<CoupleImagesExtendedDoc> | undefined;
+        if (!data) return { pageContent: {}, images: [] };
+
+        return {
+            pageContent: data.pageContent ?? {},
+            images: Array.isArray(data.images) ? (data.images as CoupleImagesExtendedImage[]) : []
+        };
+    } catch (error) {
+        console.error("Error fetching couple images extended data:", error);
+        return { pageContent: {}, images: [] };
+    }
+}
+
 // Services Service
 export async function getServicesData(): Promise<Service[]> {
 	try {
@@ -338,6 +390,25 @@ export async function getVideoShowcaseData(): Promise<VideoShowcaseData> {
 	} catch (error) {
 		console.error("Error fetching video showcase data:", error);
 		return DEFAULT_VIDEO_SHOWCASE_DATA;
+	}
+}
+
+// Couple Selections Service
+export async function getCoupleSelections(): Promise<CoupleSelection[]> {
+	try {
+		const database = getDb();
+		const selectionsRef = collection(database, "coupleSelections");
+		const selectionsQuery = query(selectionsRef, orderBy("order", "asc"));
+		const snapshot = await getDocs(selectionsQuery);
+
+		if (snapshot.empty) {
+			return [];
+		}
+
+		return snapshot.docs.map(d => ({ _id: d.id, ...d.data() })) as CoupleSelection[];
+	} catch (error) {
+		console.error("Error fetching couple selections:", error);
+		return [];
 	}
 }
 

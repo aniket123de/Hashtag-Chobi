@@ -16,15 +16,15 @@
 @layer base {
   :root {
     /* Base Colors */
-    --background: 30 100% 97%; /* #FFF7F0 */
+    --background: 38 100% 94%; /* golden cream */
     --foreground: 222.2 84% 4.9%; /* Dark gray */
 
     /* Card Colors */
-    --card: 30 100% 97%; /* #FFF7F0 */
+    --card: 38 100% 94%; /* golden cream */
     --card-foreground: 222.2 84% 4.9%; /* Dark gray */
 
     /* Popover Colors */
-    --popover: 30 100% 97%; /* #FFF7F0 */
+    --popover: 38 100% 94%; /* golden cream */
     --popover-foreground: 222.2 84% 4.9%; /* Dark gray */
 
     /* Primary Colors */
@@ -56,7 +56,7 @@
     --radius: 0.5rem; /* Medium rounded corners */
 
     /* Sidebar Colors */
-    --sidebar-background: 30 100% 97%; /* #FFF7F0 */
+    --sidebar-background: 38 100% 94%; /* golden cream */
     --sidebar-foreground: 240 5.3% 26.1%; /* Dark gray */
     --sidebar-primary: 240 5.9% 10%; /* Darker gray */
     --sidebar-primary-foreground: 30 100% 97%; /* #FFF7F0 */
@@ -125,8 +125,9 @@
   }
 
   /* Apply background and text color globally */
-  body {
+  html, body, #root {
     @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
   }
 
   /* Additional custom base styles can go here */

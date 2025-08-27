@@ -42,25 +42,18 @@ const VideoShowcase = () => {
       playerRef.current = new window.YT.Player("youtube-player-1", {
         videoId: youtubeVideoId,
         playerVars: {
-          autoplay: 1,
-          mute: 1,
+          autoplay: 0,
+          mute: 0,
           controls: 1,
           modestbranding: 1,
           rel: 0,
           showinfo: 0,
           fs: 1,
-          playsinline: 1,
         },
         events: {
           onReady: () => {
             console.log("YouTube player 1 ready");
             setPlayerReady(true);
-            try {
-              playerRef.current?.mute();
-              playerRef.current?.playVideo();
-            } catch (err) {
-              console.debug("Autoplay start failed for player 1", err);
-            }
           },
         },
       });
@@ -69,25 +62,18 @@ const VideoShowcase = () => {
       playerRef2.current = new window.YT.Player("youtube-player-2", {
         videoId: youtubeVideoId2,
         playerVars: {
-          autoplay: 1,
-          mute: 1,
+          autoplay: 0,
+          mute: 0,
           controls: 1,
           modestbranding: 1,
           rel: 0,
           showinfo: 0,
           fs: 1,
-          playsinline: 1,
         },
         events: {
           onReady: () => {
             console.log("YouTube player 2 ready");
             setPlayerReady2(true);
-            try {
-              playerRef2.current?.mute();
-              playerRef2.current?.playVideo();
-            } catch (err) {
-              console.debug("Autoplay start failed for player 2", err);
-            }
           },
         },
       });

@@ -2,6 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LoadingProvider, useLoading } from "@/contexts/LoadingContext";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useHeroData } from "@/hooks/useWebsiteData";
 import Loader from "@/components/ui/loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -18,9 +21,24 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const { isAppLoading, shouldShowContent } = useLoading();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+  const { data: heroData } = useHeroData();
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
 
-  // Show loader only while app is initializing
-  if (isAppLoading) {
+  useEffect(() => {
+    setHeroImageLoaded(false);
+    if (!isHome) return;
+    const src = heroData?.backgroundImage;
+    if (!src) return;
+    const img = new Image();
+    img.onload = () => setHeroImageLoaded(true);
+    img.onerror = () => setHeroImageLoaded(true);
+    img.src = src;
+  }, [isHome, heroData?.backgroundImage]);
+
+  // Show loader while app initializing OR (on home) until hero image fetched
+  if (isAppLoading || (isHome && !heroImageLoaded)) {
     return (
       <div className="fixed inset-0 bg-gradient-to-br from-cream-50 via-blush-50 to-golden-50 flex flex-col items-center justify-center z-50">
         <Loader size="lg" />

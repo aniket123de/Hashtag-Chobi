@@ -129,7 +129,7 @@ const CoupleDetail = () => {
     <div className="min-h-screen bg-background overflow-auto">
       <NewHeader />
 
-      <section className="pt-24 pb-8 bg-gradient-to-b from-cream-50 to-white">
+      <section className="pt-24 pb-16 bg-gradient-to-b from-cream-50 to-white">
         <div className="max-w-5xl mx-auto px-6">
           {/* Navigation header */}
           <div className="flex items-center justify-between mb-6">
@@ -193,19 +193,25 @@ const CoupleDetail = () => {
           ) : !data ? (
             <div className="text-gray-600">Couple not found.</div>
           ) : (
-            <>
-              <FadeInText as="h1" className="text-4xl md:text-6xl font-serif text-gray-900 mb-6" delay={0.1}>
+            <div className="text-center">
+              <FadeInText
+                as="h1"
+                className="text-4xl md:text-6xl font-serif text-gray-900 mb-6"
+                delay={0.1}
+              >
                 {data.title}
+                <span className="block text-blush-500 italic">
+                  Wedding Gallery
+                </span>
               </FadeInText>
-
-              <div className="rounded-2xl overflow-hidden shadow mb-6">
-                <img src={data.image} alt={data.title} className="w-full h-auto object-cover" />
-              </div>
-
-              <p className="text-lg text-gray-700 leading-relaxed max-w-3xl">
+              <FadeInText
+                as="p"
+                className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-sans"
+                delay={0.3}
+              >
                 {data.description}
-              </p>
-            </>
+              </FadeInText>
+            </div>
           )}
         </div>
       </section>

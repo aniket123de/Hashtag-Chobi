@@ -425,7 +425,12 @@ export async function getVideoShowcaseHome(): Promise<VideoShowcaseHome | null> 
     const mainRef = doc(database, "videoShowcase", "main");
     const mainSnap = await getDoc(mainRef);
     if (!mainSnap.exists()) return null;
-    const mainData = mainSnap.data() as any;
+    const mainData = mainSnap.data() as Partial<{
+      homePageVideoUrl?: string;
+      videoUrl?: string;
+      thumbnailUrl?: string;
+      cloudinaryId?: string;
+    }>;
     const url: string | undefined = mainData?.homePageVideoUrl || mainData?.videoUrl;
     if (!url) return null;
     return {

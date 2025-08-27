@@ -55,8 +55,14 @@ const CoupleSelections = () => {
   ));
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative py-20">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center pointer-events-none z-0"
+        style={{ backgroundImage: "url(/src/assets/image/SERVICES.jpg)" }}
+        aria-hidden="true"
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mb-4">Couple Selections</h2>
           <p className="text-gray-600">Explore curated love stories</p>

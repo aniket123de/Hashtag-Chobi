@@ -84,16 +84,7 @@ const CTA = () => {
             </Link>
           </FadeInText>
 
-          {/* Additional info text */}
-          <FadeInText 
-            as="div" 
-            className="mt-8 text-white/80"
-            delay={0.7}
-          >
-            <p className="text-sm">
-              ✨ Free consultation • 24/7 support • 100% satisfaction guarantee
-            </p>
-          </FadeInText>
+          {/* Additional info text removed as per request */}
         </div>
       </div>
     </section>

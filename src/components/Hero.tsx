@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { useHeroData } from "@/hooks/useWebsiteData";
@@ -7,11 +8,18 @@ const Hero = () => {
   // Fetch hero data from Firestore - start fetching immediately
   const { data: heroData, loading, error } = useHeroData();
 
-  // No need to manage loading state globally - let the content load naturally
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  
-
-
+  // Preload hero background image to avoid showing a second loader/skeleton
+  useEffect(() => {
+    setImageLoaded(false);
+    const src = heroData?.backgroundImage;
+    if (!src) return;
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.onerror = () => setImageLoaded(true);
+    img.src = src;
+  }, [heroData?.backgroundImage]);
 
   /**
    * Smoothly scrolls to a section by its ID
@@ -30,8 +38,8 @@ const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden 
                  bg-gradient-to-br from-cream-50 via-blush-50 to-golden-50 pt-20"
     >
-      {/* Background Image - Only show when we have Firestore data */}
-      {heroData && heroData.backgroundImage && (
+      {/* Background Image - Only show when we have Firestore data and it is loaded */}
+      {heroData && heroData.backgroundImage && imageLoaded && (
         <img
           src={heroData.backgroundImage}
           alt=""
@@ -47,16 +55,9 @@ const Hero = () => {
 
       {/* Main Content Container */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        {loading ? (
-          // Simple loading state while data is being fetched
-          <div className="animate-pulse">
-            <div className="h-16 md:h-20 bg-white/20 rounded w-96 mx-auto mb-6"></div>
-            <div className="h-6 md:h-8 bg-white/20 rounded w-80 mx-auto mb-8"></div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <div className="h-12 bg-white/20 rounded-full w-48"></div>
-              <div className="h-12 bg-white/20 rounded-full w-48"></div>
-            </div>
-          </div>
+        {loading || !imageLoaded ? (
+          // Avoid showing a second loader/skeleton; keep space reserved
+          <></>
         ) : error ? (
           // Error state
           <div className="text-red-500">

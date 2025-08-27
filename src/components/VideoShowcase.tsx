@@ -42,18 +42,23 @@ const VideoShowcase = () => {
       playerRef.current = new window.YT.Player("youtube-player-1", {
         videoId: youtubeVideoId,
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           mute: 1,
           controls: 1,
           modestbranding: 1,
           rel: 0,
           showinfo: 0,
           fs: 1,
+          playsinline: 1,
         },
         events: {
           onReady: () => {
             console.log("YouTube player 1 ready");
             setPlayerReady(true);
+            try {
+              playerRef.current?.mute();
+              playerRef.current?.playVideo();
+            } catch (_) {}
           },
         },
       });
@@ -62,18 +67,23 @@ const VideoShowcase = () => {
       playerRef2.current = new window.YT.Player("youtube-player-2", {
         videoId: youtubeVideoId2,
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           mute: 1,
           controls: 1,
           modestbranding: 1,
           rel: 0,
           showinfo: 0,
           fs: 1,
+          playsinline: 1,
         },
         events: {
           onReady: () => {
             console.log("YouTube player 2 ready");
             setPlayerReady2(true);
+            try {
+              playerRef2.current?.mute();
+              playerRef2.current?.playVideo();
+            } catch (_) {}
           },
         },
       });
@@ -196,6 +206,20 @@ const VideoShowcase = () => {
                   className="w-full h-full"
                   style={{ border: 0 }}
                 />
+                {/* Fullscreen button overlay */}
+                <button
+                  onClick={() => {
+                    try {
+                      // YouTube iframe API supports requestFullScreen via player API in some contexts
+                      const iframe = document.querySelector('#youtube-player-1 iframe') as HTMLIFrameElement | null;
+                      if (iframe && iframe.requestFullscreen) iframe.requestFullscreen();
+                    } catch (_) {}
+                  }}
+                  className="absolute bottom-3 right-3 z-10 bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded"
+                  aria-label="Fullscreen video 1"
+                >
+                  Fullscreen
+                </button>
                 
                 {/* Loading State */}
                 {!playerReady && (
@@ -217,6 +241,19 @@ const VideoShowcase = () => {
                   className="w-full h-full"
                   style={{ border: 0 }}
                 />
+                {/* Fullscreen button overlay */}
+                <button
+                  onClick={() => {
+                    try {
+                      const iframe = document.querySelector('#youtube-player-2 iframe') as HTMLIFrameElement | null;
+                      if (iframe && iframe.requestFullscreen) iframe.requestFullscreen();
+                    } catch (_) {}
+                  }}
+                  className="absolute bottom-3 right-3 z-10 bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded"
+                  aria-label="Fullscreen video 2"
+                >
+                  Fullscreen
+                </button>
                 
                 {/* Loading State */}
                 {!playerReady2 && (

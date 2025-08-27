@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useHomePageData } from "@/hooks/useWebsiteData";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
+import ServicesBG from "@/assets/image/SERVICES.jpg";
 
 const CoupleSelections = () => {
   const { data, loading, error } = useHomePageData();
@@ -59,7 +60,7 @@ const CoupleSelections = () => {
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center pointer-events-none z-0"
-        style={{ backgroundImage: "url(/src/assets/image/SERVICES.jpg)" }}
+        style={{ backgroundImage: `url(${ServicesBG})` }}
         aria-hidden="true"
       />
       <div className="relative z-10 max-w-7xl mx-auto px-6">

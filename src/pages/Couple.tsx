@@ -21,10 +21,10 @@ const Couple: React.FC = () => {
       <section className="pt-24 pb-8 bg-gradient-to-b from-cream-50 to-white">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <FadeInText as="h1" className="text-4xl md:text-6xl font-serif text-gray-900 mb-4" delay={0.1}>
-            Couple Selections
+          A journey of two souls, one story
           </FadeInText>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Explore our curated love stories. Click any card to view details.
+          From promises to portraits, love beautifully captured.
           </p>
         </div>
       </section>

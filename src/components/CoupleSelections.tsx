@@ -65,8 +65,8 @@ const CoupleSelections = () => {
       />
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mb-4">Couple Selections</h2>
-          <p className="text-gray-600">Explore curated love stories</p>
+          <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mb-4">A journey of two souls, one story</h2>
+          <p className="text-gray-600">From promises to portraits, love beautifully captured</p>
         </div>
 
         <Carousel items={carouselItems} />

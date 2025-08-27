@@ -134,7 +134,10 @@ const Testimonials = () => {
             <Button
               size="lg"
               onClick={() => window.location.reload()}
-              className="bg-golden-500 hover:bg-golden-600 text-black px-6 py-3 rounded-full"
+              className="text-white px-6 py-3 rounded-full"
+              style={{ backgroundColor: '#B49E64' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
             >
               Retry
             </Button>
@@ -301,8 +304,11 @@ const Testimonials = () => {
             <Button
               size="lg"
               onClick={() => scrollToSection("contact")}
-              className="bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium
+              className="text-white px-8 py-4 text-lg font-medium
                          rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+              style={{ backgroundColor: '#B49E64' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
             >
               Start Planning Today
             </Button>

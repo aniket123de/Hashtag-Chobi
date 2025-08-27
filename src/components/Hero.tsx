@@ -35,8 +35,8 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden 
-                 bg-gradient-to-br from-cream-50 via-blush-50 to-golden-50 pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      style={{ backgroundColor: '#F0E9E0' }}
     >
       {/* Background Image - Only show when we have Firestore data and it is loaded */}
       {heroData && heroData.backgroundImage && imageLoaded && (
@@ -95,7 +95,10 @@ const Hero = () => {
               <Button
                 size="lg"
                 onClick={() => scrollToSection("contact")}
-                className="bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                className="text-white px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                style={{ backgroundColor: '#B49E64' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
                 aria-label={heroData.ctaText}
               >
                 {heroData.ctaText}
@@ -104,7 +107,19 @@ const Hero = () => {
                 variant="outline"
                 size="lg"
                 onClick={() => scrollToSection("gallery")}
-                className="bg-golden-500 hover:bg-golden-600 text-black border-2 border-golden-400 px-8 py-4 text-lg font-medium rounded-full transition-all duration-300 font-sans"
+                className="text-white border-2 px-8 py-4 text-lg font-medium rounded-full transition-all duration-300 font-sans"
+                style={{ 
+                  backgroundColor: '#B49E64', 
+                  borderColor: '#A08B57' 
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#A08B57';
+                  e.currentTarget.style.borderColor = '#958053';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#B49E64';
+                  e.currentTarget.style.borderColor = '#A08B57';
+                }}
                 aria-label="View Our Portfolio"
               >
                 View Our Portfolio

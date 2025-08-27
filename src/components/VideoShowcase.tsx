@@ -301,7 +301,10 @@ const VideoShowcase = () => {
           >
             <Link
               to="/videos"
-              className="inline-flex items-center gap-3 bg-golden-500 hover:bg-golden-600 text-black font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
+              className="inline-flex items-center gap-3 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
+              style={{ backgroundColor: '#B49E64' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
             >
               <span className="font-sans">View More Videos</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />

@@ -222,7 +222,10 @@ const Gallery = () => {
           >
             <Link
               to="/gallery"
-              className="inline-flex items-center gap-3 bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans group"
+              className="inline-flex items-center gap-3 text-white px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans group"
+              style={{ backgroundColor: '#B49E64' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
             >
               View Complete Gallery
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

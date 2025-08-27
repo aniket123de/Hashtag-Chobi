@@ -58,7 +58,9 @@ const VideoShowcase = () => {
             try {
               playerRef.current?.mute();
               playerRef.current?.playVideo();
-            } catch (_) {}
+            } catch (err) {
+              console.debug("Autoplay start failed for player 1", err);
+            }
           },
         },
       });
@@ -83,7 +85,9 @@ const VideoShowcase = () => {
             try {
               playerRef2.current?.mute();
               playerRef2.current?.playVideo();
-            } catch (_) {}
+            } catch (err) {
+              console.debug("Autoplay start failed for player 2", err);
+            }
           },
         },
       });
@@ -213,7 +217,9 @@ const VideoShowcase = () => {
                       // YouTube iframe API supports requestFullScreen via player API in some contexts
                       const iframe = document.querySelector('#youtube-player-1 iframe') as HTMLIFrameElement | null;
                       if (iframe && iframe.requestFullscreen) iframe.requestFullscreen();
-                    } catch (_) {}
+                    } catch (err) {
+                      console.debug("Fullscreen request failed for player 1", err);
+                    }
                   }}
                   className="absolute bottom-3 right-3 z-10 bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded"
                   aria-label="Fullscreen video 1"
@@ -247,7 +253,9 @@ const VideoShowcase = () => {
                     try {
                       const iframe = document.querySelector('#youtube-player-2 iframe') as HTMLIFrameElement | null;
                       if (iframe && iframe.requestFullscreen) iframe.requestFullscreen();
-                    } catch (_) {}
+                    } catch (err) {
+                      console.debug("Fullscreen request failed for player 2", err);
+                    }
                   }}
                   className="absolute bottom-3 right-3 z-10 bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded"
                   aria-label="Fullscreen video 2"

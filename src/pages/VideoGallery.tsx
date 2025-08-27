@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX, Maximize2, ArrowLeft, Filter, Grid3X3, List, X } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import NewHeader from "@/components/NewHeader";
 import Footer from "@/components/Footer";
 import { FadeInText } from "@/components/ui/fade-in-section";
 import { YouTubePlayer, VideoData } from "@/types/youtube";
+import { getExtendedVideos, type ExtendedVideo } from "@/lib/firestore";
 
 // Sample video data fallback (non-home) - ideally fetched from Firestore in future
 const sampleVideos: VideoData[] = [
@@ -79,6 +80,8 @@ const VideoGallery = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
   const [playerReady, setPlayerReady] = useState(false);
+  const [fetchedVideos, setFetchedVideos] = useState<VideoData[]>([]);
+  const [loadingVideos, setLoadingVideos] = useState<boolean>(true);
 
   const playerRef = useRef<YouTubePlayer | null>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -90,20 +93,54 @@ const VideoGallery = () => {
     document.body.scrollTop = 0;
   }, []);
 
-  // Get categories
-  const categories = ["All", ...Array.from(new Set(sampleVideos.map(video => video.category)))];
-
-  // Filter videos based on selected category
-  const filteredVideos = selectedCategory === "All" 
-    ? sampleVideos 
-    : sampleVideos.filter(video => video.category === selectedCategory);
-
   // Extract YouTube video ID
-  const getYouTubeVideoId = (url: string): string => {
+  const getYouTubeVideoId = useCallback((url: string): string => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : "XDp_YjH62B4";
-  };
+  }, []);
+
+  // Build thumbnail from YouTube URL
+  const getYouTubeThumbnail = useCallback((url: string): string => {
+    const id = getYouTubeVideoId(url);
+    return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+  }, [getYouTubeVideoId]);
+
+  // Fetch Extended Videos from Firestore
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoadingVideos(true);
+        const videos: ExtendedVideo[] = await getExtendedVideos();
+        const mapped: VideoData[] = videos.map((v) => ({
+          id: v._id,
+          title: v.category || 'Video',
+          description: v.description || '',
+          category: v.category || 'Video',
+          youtubeUrl: v.url,
+          thumbnailUrl: getYouTubeThumbnail(v.url),
+          duration: '',
+          featured: false,
+        }));
+        setFetchedVideos(mapped);
+      } catch (e) {
+        console.error('Failed to fetch extended videos:', e);
+        setFetchedVideos([]);
+      } finally {
+        setLoadingVideos(false);
+      }
+    })();
+  }, [getYouTubeThumbnail]);
+
+  const videosToShow = fetchedVideos.length > 0 ? fetchedVideos : sampleVideos;
+
+  // Get categories
+  const categories = ["All", ...Array.from(new Set(videosToShow.map(video => video.category)))];
+
+  // Filter videos based on selected category
+  const filteredVideos = selectedCategory === "All" 
+    ? videosToShow 
+    : videosToShow.filter(video => video.category === selectedCategory);
 
   // Load YouTube Player API
   useEffect(() => {
@@ -138,6 +175,7 @@ const VideoGallery = () => {
           modestbranding: 1,
           rel: 0,
           showinfo: 0,
+          playsinline: 1,
         },
         events: {
           onReady: () => {
@@ -156,7 +194,7 @@ const VideoGallery = () => {
         },
       });
     }
-  }, [selectedVideo]);
+  }, [selectedVideo, getYouTubeVideoId]);
 
   // Control functions
   const togglePlayPause = () => {
@@ -346,9 +384,11 @@ const VideoGallery = () => {
                     </div>
 
                     {/* Duration Badge */}
-                    <div className="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                      {video.duration}
-                    </div>
+                    {video.duration && (
+                      <div className="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                        {video.duration}
+                      </div>
+                    )}
 
                     {/* Featured Badge */}
                     {video.featured && (
@@ -381,7 +421,7 @@ const VideoGallery = () => {
           </motion.div>
 
           {/* Empty State */}
-          {filteredVideos.length === 0 && (
+          {filteredVideos.length === 0 && !loadingVideos && (
             <div className="text-center py-20">
               <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center">
                 <Play className="w-8 h-8 text-gray-400" />
@@ -513,9 +553,11 @@ const VideoGallery = () => {
                     <span className="bg-rose-500 text-white text-sm px-3 py-1 rounded-full">
                       {selectedVideo.category}
                     </span>
-                    <span className="text-gray-400 text-sm">
-                      Duration: {selectedVideo.duration}
-                    </span>
+                    {selectedVideo.duration && (
+                      <span className="text-gray-400 text-sm">
+                        Duration: {selectedVideo.duration}
+                      </span>
+                    )}
                   </div>
                 </div>
               </motion.div>

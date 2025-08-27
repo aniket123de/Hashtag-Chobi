@@ -279,8 +279,7 @@ export class VideoShowcaseHomeService {
     }
 }
 
-
-// Couple Selections Service
+// Couple Selections Service (restored)
 export class CoupleSelectionsService {
     static async getAll(): Promise<CoupleSelection[]> {
         const cacheKey = 'couple-selections-all';

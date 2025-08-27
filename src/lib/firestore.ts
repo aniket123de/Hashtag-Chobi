@@ -126,6 +126,17 @@ export type CoupleSelection = {
 	cloudinaryId?: string;
 };
 
+// Extended Videos Types
+export type ExtendedVideo = {
+    _id: string;
+    url: string;
+    category: string;
+    description: string;
+    createdAt?: number;
+};
+
+//
+
 // Default fallback for when the document doesn't exist
 export const DEFAULT_ABOUT_DATA: AboutData = {
 	title: "About Us",
@@ -443,6 +454,23 @@ export async function getVideoShowcaseHome(): Promise<VideoShowcaseHome | null> 
     return null;
   }
 }
+
+// Extended Videos Service
+export async function getExtendedVideos(): Promise<ExtendedVideo[]> {
+    try {
+        const database = getDb();
+        const refCol = collection(database, "extendedVideos");
+        const q = query(refCol, orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) return [];
+        return snapshot.docs.map(d => ({ _id: d.id, ...d.data() })) as ExtendedVideo[];
+    } catch (error) {
+        console.error("Error fetching extended videos:", error);
+        return [];
+    }
+}
+
+//
 
 // Couple Selections Service
 export async function getCoupleSelections(): Promise<CoupleSelection[]> {

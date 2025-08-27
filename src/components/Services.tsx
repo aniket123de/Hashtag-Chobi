@@ -82,7 +82,7 @@ const Services = () => {
             </div>
             
             <div className="pt-6 border-t border-gray-200">
-              <div className="w-full bg-blush-500 text-white font-medium py-3 px-6 rounded-lg text-center font-sans">
+              <div className="w-full text-white font-medium py-3 px-6 rounded-lg text-center font-sans" style={{ backgroundColor: '#B49E64' }}>
                 View Wedding Album
               </div>
             </div>
@@ -101,7 +101,8 @@ const Services = () => {
 
   return (
     <section
-      className="relative py-20 bg-gradient-to-b from-cream-50 to-white"
+      className="relative py-20"
+      style={{ backgroundColor: '#F0E9E0' }}
       aria-label="Wedding Albums"
     >
       {/* Background Image */}

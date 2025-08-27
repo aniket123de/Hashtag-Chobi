@@ -125,7 +125,8 @@ const VideoShowcase = () => {
     return (
       <section
         id="video-showcase"
-        className="py-20 bg-gradient-to-b from-white to-gray-50"
+        className="py-20"
+        style={{ backgroundColor: '#F0E9E0' }}
       >
         <div className="max-w-6xl mx-auto px-6">
           {/* Section Header Skeleton */}
@@ -149,7 +150,7 @@ const VideoShowcase = () => {
   // Show error state
   if (error) {
     return (
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="text-red-500">
@@ -175,7 +176,8 @@ const VideoShowcase = () => {
     <section
       id="video-showcase"
       ref={elementRef}
-      className="py-20 bg-gradient-to-b from-white to-gray-50"
+      className="py-20"
+      style={{ backgroundColor: '#F0E9E0' }}
     >
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
@@ -299,7 +301,10 @@ const VideoShowcase = () => {
           >
             <Link
               to="/videos"
-              className="inline-flex items-center gap-3 bg-golden-500 hover:bg-golden-600 text-black font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
+              className="inline-flex items-center gap-3 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
+              style={{ backgroundColor: '#B49E64' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
             >
               <span className="font-sans">View More Videos</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />

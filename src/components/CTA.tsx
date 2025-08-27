@@ -65,10 +65,13 @@ const CTA = () => {
             delay={0.5}
           >
             {/* Button to scroll to contact section */}
-            <Button
+                        <Button
               size="lg"
-              onClick={() => scrollToSection("contact")}
-              className="bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-white px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+              style={{ backgroundColor: '#B49E64' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
             >
               Schedule Your Consultation
             </Button>
@@ -77,7 +80,10 @@ const CTA = () => {
             <Link to="tel:+15551234567" aria-label="Call Us Now">
               <Button
                 size="lg"
-                className="bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                className="text-white px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                style={{ backgroundColor: '#B49E64' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
               >
                 Call Us Now
               </Button>

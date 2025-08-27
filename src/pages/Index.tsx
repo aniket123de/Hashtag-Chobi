@@ -24,7 +24,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#F0E9E0]">
       {/* Site Header */}
       <NewHeader />
 

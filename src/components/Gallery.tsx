@@ -11,7 +11,7 @@ const Gallery = () => {
   // Show loading state
   if (loading) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           {/* Header Section */}
           <div className="text-center mb-16">
@@ -56,7 +56,7 @@ const Gallery = () => {
   // Show error state
   if (error) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           {/* Header Section */}
           <div className="text-center mb-16">
@@ -99,7 +99,7 @@ const Gallery = () => {
   // If no gallery items, show empty state
   if (!galleryItems || galleryItems.length === 0) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           {/* Header Section */}
           <div className="text-center mb-16">
@@ -141,7 +141,7 @@ const Gallery = () => {
   const previewItems = galleryItems.slice(0, 6);
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
       <div className="max-w-6xl mx-auto px-6">
         {/* Header Section */}
         <div className="text-center mb-16">
@@ -222,7 +222,10 @@ const Gallery = () => {
           >
             <Link
               to="/gallery"
-              className="inline-flex items-center gap-3 bg-golden-500 hover:bg-golden-600 text-black px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans group"
+              className="inline-flex items-center gap-3 text-white px-8 py-4 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans group"
+              style={{ backgroundColor: '#B49E64' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
             >
               View Complete Gallery
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

@@ -307,7 +307,10 @@ const Contact = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full bg-golden-500 hover:bg-golden-600 text-black py-3 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                  className="w-full text-white py-3 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-sans"
+                  style={{ backgroundColor: '#B49E64' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
                   disabled={isSubmitting}
                   aria-busy={isSubmitting}
                 >
@@ -377,7 +380,10 @@ const Contact = () => {
                 <Link to="tel:+917003216321" aria-label="Call Us Now">
                   <Button
                     size="lg"
-                    className="bg-golden-500 hover:bg-golden-600 text-black px-6 py-2 rounded-full font-medium font-sans"
+                    className="text-white px-6 py-2 rounded-full font-medium font-sans"
+                    style={{ backgroundColor: '#B49E64' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
                   >
                     Call Us Now
                   </Button>

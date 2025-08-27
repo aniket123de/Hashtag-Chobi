@@ -10,7 +10,7 @@ const About = () => {
 
   if (isLoading) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="animate-pulse text-gray-500">Loading about...</div>
         </div>
@@ -19,7 +19,7 @@ const About = () => {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Image Section */}

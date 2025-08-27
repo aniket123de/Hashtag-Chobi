@@ -101,7 +101,8 @@ const Services = () => {
 
   return (
     <section
-      className="relative py-20 bg-gradient-to-b from-cream-50 to-white"
+      className="relative py-20"
+      style={{ backgroundColor: '#F0E9E0' }}
       aria-label="Wedding Albums"
     >
       {/* Background Image */}

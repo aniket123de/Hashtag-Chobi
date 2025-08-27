@@ -126,8 +126,12 @@
 
   /* Apply background and text color globally */
   html, body, #root {
-    @apply bg-background text-foreground;
-    background-color: hsl(var(--background));
+    @apply text-foreground;
+    background-color: #F0E9E0 !important;
+  }
+  
+  body {
+    background: #F0E9E0 !important;
   }
 
   /* Additional custom base styles can go here */

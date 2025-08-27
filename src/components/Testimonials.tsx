@@ -23,7 +23,8 @@ const Testimonials = () => {
   if (loading) {
     return (
       <section
-        className="py-20 bg-gradient-to-br from-golden-50 via-white to-blush-50"
+        className="py-20"
+        style={{ backgroundColor: '#F0E9E0' }}
         aria-label="Client Testimonials"
       >
         <div className="max-w-6xl mx-auto px-6">
@@ -94,7 +95,8 @@ const Testimonials = () => {
   if (error) {
     return (
       <section
-        className="py-20 bg-gradient-to-br from-golden-50 via-white to-blush-50"
+        className="py-20"
+        style={{ backgroundColor: '#F0E9E0' }}
         aria-label="Client Testimonials"
       >
         <div className="max-w-6xl mx-auto px-6">
@@ -146,7 +148,8 @@ const Testimonials = () => {
   if (!testimonials || testimonials.length === 0) {
     return (
       <section
-        className="py-20 bg-gradient-to-br from-golden-50 via-white to-blush-50"
+        className="py-20"
+        style={{ backgroundColor: '#F0E9E0' }}
         aria-label="Client Testimonials"
       >
         <div className="max-w-6xl mx-auto px-6">
@@ -190,7 +193,8 @@ const Testimonials = () => {
 
   return (
     <section
-      className="py-20 bg-gradient-to-br from-golden-50 via-white to-blush-50"
+      className="py-20"
+      style={{ backgroundColor: '#F0E9E0' }}
       aria-label="Client Testimonials"
     >
       <div className="max-w-6xl mx-auto px-6">

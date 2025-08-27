@@ -11,7 +11,7 @@ const Gallery = () => {
   // Show loading state
   if (loading) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           {/* Header Section */}
           <div className="text-center mb-16">
@@ -56,7 +56,7 @@ const Gallery = () => {
   // Show error state
   if (error) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           {/* Header Section */}
           <div className="text-center mb-16">
@@ -99,7 +99,7 @@ const Gallery = () => {
   // If no gallery items, show empty state
   if (!galleryItems || galleryItems.length === 0) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           {/* Header Section */}
           <div className="text-center mb-16">
@@ -141,7 +141,7 @@ const Gallery = () => {
   const previewItems = galleryItems.slice(0, 6);
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
       <div className="max-w-6xl mx-auto px-6">
         {/* Header Section */}
         <div className="text-center mb-16">

@@ -55,7 +55,7 @@ const PrismaticVideo: React.FC = () => {
           >
             <polygon
               points="0,0 80,20 100,0 100,0 0,0"
-              fill="#FCFAF9"
+              fill="#F0E9E0"
               className="drop-shadow-lg"
             />
           </svg>
@@ -105,7 +105,7 @@ const PrismaticVideo: React.FC = () => {
           >
             <polygon
               points="0,20 20,0 100,20 100,20 0,20"
-              fill="#FCFAF9"
+              fill="#F0E9E0"
               className="drop-shadow-lg"
             />
           </svg>

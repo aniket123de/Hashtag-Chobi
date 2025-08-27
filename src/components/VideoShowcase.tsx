@@ -125,7 +125,8 @@ const VideoShowcase = () => {
     return (
       <section
         id="video-showcase"
-        className="py-20 bg-gradient-to-b from-white to-gray-50"
+        className="py-20"
+        style={{ backgroundColor: '#F0E9E0' }}
       >
         <div className="max-w-6xl mx-auto px-6">
           {/* Section Header Skeleton */}
@@ -149,7 +150,7 @@ const VideoShowcase = () => {
   // Show error state
   if (error) {
     return (
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-20" style={{ backgroundColor: '#F0E9E0' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="text-red-500">
@@ -175,7 +176,8 @@ const VideoShowcase = () => {
     <section
       id="video-showcase"
       ref={elementRef}
-      className="py-20 bg-gradient-to-b from-white to-gray-50"
+      className="py-20"
+      style={{ backgroundColor: '#F0E9E0' }}
     >
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}

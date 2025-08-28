@@ -73,7 +73,7 @@ const CTA = () => {
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#A08B57'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#B49E64'}
             >
-              Schedule Your Consultation
+              Book your Dates
             </Button>
 
             {/* Phone call button wrapped in Link */}

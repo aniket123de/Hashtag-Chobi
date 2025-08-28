@@ -26,9 +26,9 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
   const allNavItems = [
     { name: "Home", link: "#hero" },
     { name: "About", link: "#about" },
-    { name: "Services", link: "#services" },
+    { name: "Stories", link: "#services" },
     { name: "Gallery", link: "#gallery" },
-    { name: "Stories", link: "#video-showcase" },
+    { name: "Films", link: "#video-showcase" },
     { name: "Contact", link: "#contact" },
   ];
 

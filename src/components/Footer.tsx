@@ -42,7 +42,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="mb-6">
               <img
-                src="/HashtagChobi-LOGO.png"
+                src="/LOGO.jpg"
                 alt="Hashtag Chobi Logo"
                 className="h-[80px] w-auto object-contain cursor-pointer"
               />

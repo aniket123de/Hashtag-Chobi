@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Navbar, NavBody, NavItems, NavbarButton, MobileNav, MobileNavHeader, MobileNavMenu, MobileNavToggle } from "@/components/ui/resizable-navbar";
-import Logo from "../assets/image/HashtagChobi-LOGO.png";
 import { useHeroData } from "@/hooks/useWebsiteData";
 
 interface NewHeaderProps {
@@ -75,7 +74,7 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
       }}
     >
       <img
-        src={Logo}
+        src="/LOGO.jpg"
         alt="Hashtag Chobi Logo"
         className="block h-16 md:h-18 w-auto object-contain"
       />
@@ -123,7 +122,7 @@ const NewHeader = ({ variant }: NewHeaderProps) => {
             }}
           >
             <img
-              src={Logo}
+              src="/LOGO.jpg"
               alt="Hashtag Chobi Logo"
               className="block h-16 w-auto object-contain"
             />
